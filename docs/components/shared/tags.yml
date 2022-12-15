@@ -1,0 +1,9 @@
+# The tag order here controls the default sorting in Swagger UI.
+tags:
+  - name: Auth
+  - name: Admin
+  - name: Contact
+  - name: FAQ
+  - name: Text
+  - name: Upload file
+  - name: User

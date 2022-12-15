@@ -1,0 +1,144 @@
+paths:
+  /users:
+    get:
+      summary: 'Geral - Rota utilizada para listar todos os usuários'
+      description: >
+        ## Portal admin → lista usuários ativos e inativos.
+
+        ## App → lista somente usuários ativos.
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StatusParameter'
+        - $ref: '#/components/parameters/UserTypeParameter'
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/PaginationSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+
+    post:
+      summary: "App [UserType] - Rota 03/03 para o fluxo de 'Criar conta'"
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UserSchema'
+                - $ref: '#/components/schemas/AdressObjectSchema'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UserSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Geral - Rota utilizada para exibir um usuário'
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UserSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users/myself:
+    get:
+      summary: 'Geral - Rota utilizada para exibir informações do usuário logado'
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UserSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users/{id}/update-status:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    patch:
+      summary: 'Portal admin - Rota utilizada para ativar/inativar um usuário'
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusSchema'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'

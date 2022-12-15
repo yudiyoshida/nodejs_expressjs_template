@@ -1,0 +1,17 @@
+components:
+  schemas:
+    TextSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        type:
+          type: string
+          readOnly: true
+          example: 'about'
+        content:
+          type: string
+          required: true
+          example: 'Texto aqui'

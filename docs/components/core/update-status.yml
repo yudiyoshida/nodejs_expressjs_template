@@ -1,0 +1,10 @@
+components:
+  schemas:
+    UpdateStatusSchema:
+      type: object
+      properties:
+        status:
+          type: string
+          required: true
+          enum: ['ativo', 'inativo']
+          example: ativo

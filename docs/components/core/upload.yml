@@ -1,0 +1,13 @@
+components:
+  schemas:
+    UploadSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          readOnly: true
+          example: 'file01.png'
+        url:
+          type: string
+          readOnly: true
+          example: 'http://127.0.0.1:3000/files/file01.png'

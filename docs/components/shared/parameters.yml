@@ -1,0 +1,38 @@
+components:
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    IdParameter:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: number
+        example: 1
+
+    PageParameter:
+      in: query
+      name: page
+      schema:
+        type: number
+        example: 1
+
+    LimitParameter:
+      in: query
+      name: limit
+      schema:
+        type: number
+        example: 10
+
+    StatusParameter:
+      in: query
+      name: status
+      schema:
+        type: string
+        enum: ['ativo', 'inativo', 'pendente']
+
+    UserTypeParameter:
+      in: query
+      name: type
+      schema:
+        type: string
+        enum: ['app', 'web']

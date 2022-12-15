@@ -1,0 +1,95 @@
+components:
+  schemas:
+    ForgotPasswordSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+
+    LoginSchema:
+      type: object
+      properties:
+        account:
+          allOf:
+            - $ref: '#/components/schemas/UserSchema'
+            - $ref: '#/components/schemas/PermissionArraySchema'
+        token:
+          type: string
+
+    LoginRequestBodySchema:
+      type: object
+      properties:
+        username:
+          type: string
+          required: true
+          example: 'user@email.com'
+        password:
+          type: string
+          required: true
+          example: '12345678'
+
+    ResetPasswordSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        code:
+          type: string
+          required: true
+          example: 'A1B2'
+        password:
+          type: string
+          required: true
+          example: '12345678'
+        confirmPassword:
+          type: string
+          required: true
+          example: '12345678'
+
+    ValidateCodeSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        code:
+          type: string
+          required: true
+          example: '1D48'
+
+    ValidateFieldsSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        # cpf:
+        #   type: string
+        #   required: true
+        #   example: '12345678900'
+        phone:
+          type: string
+          required: true
+          example: '00123456789'
+
+    UpdatePasswordSchema:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          required: true
+          example: '12345678'
+        newPassword:
+          type: string
+          required: true
+          example: '12341234'
+        confirmPassword:
+          type: string
+          required: true
+          example: '12341234'
