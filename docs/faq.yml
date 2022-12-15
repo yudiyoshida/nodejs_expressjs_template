@@ -1,0 +1,102 @@
+paths:
+  /faqs:
+    get:
+      summary: "Geral - Rota utilizada para listar as faqs"
+      tags:
+        - FAQS
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: "#/components/schemas/FaqSchema"
+                  - $ref: "#/components/schemas/PaginationSchema"
+        "500":
+          $ref: "#/components/responses/500"
+    post:
+      summary: "Portal admin - Rota utilizada para cadastrar uma faq"
+      tags:
+        - FAQS
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqSchema"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"
+
+  /faqs/{id}:
+    parameters:
+      - $ref: "#/components/parameters/IdParameter"
+    put:
+      summary: "Portal admin - Rota utilizada para editar uma faq"
+      tags:
+        - FAQS
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqSchema"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
+    delete:
+      summary: "Portal admin - Rota utilizada para deletar uma faq"
+      tags:
+        - FAQS
+      security:
+        - BearerAuth: []
+      responses:
+        "204":
+          $ref: "#/components/responses/204"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"

@@ -1,0 +1,110 @@
+// This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Scalar types: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types
+// Attributes: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attributes
+// Attributes functions: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attribute-functions
+// Relations: https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+// Native type MySQL: https://www.prisma.io/docs/concepts/database-connectors/mysql#native-type-mappings
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+model Security {
+  id              Int       @id @default(autoincrement())
+  email           String    @unique @db.VarChar(255)
+  code            String?   @db.VarChar(255)
+  code_expires_in DateTime? @db.DateTime()
+  validated       Boolean   @default(false)
+}
+
+model Permission {
+  id     Int             @id @default(autoincrement())
+  title  AdminPermission @unique
+  admins User[]
+}
+
+model User {
+  id              Int          @id @default(autoincrement())
+  is_admin        Boolean      @default(false)
+  type            UserType
+  name            String       @db.VarChar(255)
+  email           String       @unique @db.VarChar(255)
+  password        String       @db.Text
+  status          Status       @default(ativo)
+  cpf             String?      @unique @db.VarChar(255)
+  phone           String?      @db.VarChar(255)
+  birthday        DateTime?    @db.Date
+  image_url       String?      @db.Text
+  image_key       String?      @db.Text
+  code            String?      @db.VarChar(255)
+  code_expires_in DateTime?    @db.DateTime()
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  addresses       Address[]
+  permissions     Permission[]
+}
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  nickname   String?  @db.VarChar(255)
+  zipcode    String   @db.VarChar(255)
+  street     String   @db.VarChar(255)
+  number     String   @db.VarChar(255)
+  complement String?  @db.VarChar(255)
+  reference  String?  @db.VarChar(255)
+  district   String   @db.VarChar(255)
+  city       String   @db.VarChar(255)
+  state      String   @db.VarChar(255)
+  lat        String?  @db.VarChar(255)
+  lng        String?  @db.VarChar(255)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     Int?
+}
+
+model Faq {
+  id        Int      @id @default(autoincrement())
+  question  String   @db.VarChar(255)
+  answer    String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Text {
+  id        Int      @id @default(autoincrement())
+  type      TextType @unique
+  content   String   @db.LongText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AdminPermission {
+  admins
+  faqs
+  texts
+  users
+}
+
+enum UserType {
+  admin
+  app
+  web
+}
+
+enum TextType {
+  about
+  privacy
+  terms
+}
+
+enum Status {
+  ativo
+  inativo
+  pendente
+}
