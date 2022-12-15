@@ -1,0 +1,18 @@
+export default {
+  password: false,
+  code: false,
+  code_expires_in: false,
+  id: true,
+  is_admin: true,
+  type: true,
+  name: true,
+  email: true,
+  status: true,
+  cpf: true,
+  phone: true,
+  birthday: true,
+  image_url: true,
+  image_key: true,
+  createdAt: true,
+  updatedAt: true,
+};

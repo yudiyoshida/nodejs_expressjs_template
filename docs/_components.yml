@@ -1,0 +1,471 @@
+components:
+  # Security scheme definitions
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  # Reusable path, query, header and cookie parameters
+  parameters:
+    IdParameter:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: number
+        example: 1
+
+    PageParameter:
+      in: query
+      name: page
+      schema:
+        type: number
+        example: 1
+
+    LimitParameter:
+      in: query
+      name: limit
+      schema:
+        type: number
+        example: 10
+
+    StatusParameter:
+      in: query
+      name: status
+      schema:
+        type: string
+        enum: ['ativo', 'inativo', 'pendente']
+
+    UserTypeParameter:
+      in: query
+      name: type
+      schema:
+        type: string
+        enum: ['app', 'web']
+
+  # Reusable schemas (data models)
+  schemas:
+    SucessSchema:
+      type: object
+      properties:
+        message:
+          type: string
+
+    ErrorSchema:
+      type: object
+      properties:
+        error:
+          type: string
+
+    PaginationSchema:
+      type: object
+      properties:
+        totalItems:
+          type: number
+          example: 100
+        totalPages:
+          type: number
+          example: 4
+        itemsPerPage:
+          type: number
+          example: 25
+        page:
+          type: number
+          example: 1
+
+    AdminSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        is_admin:
+          type: boolean
+          readOnly: true
+          example: true
+        name:
+          type: string
+          required: true
+          example: 'User 01'
+        email:
+          type: string
+          required: true
+          example: 'user@getnada.com'
+        password:
+          type: string
+          writeOnly: true
+          required: true
+          example: '12345678'
+        status:
+          type: string
+          readOnly: true
+          example: 'ativo'
+        image_url:
+          type: string
+          example: 'http://127.0.0.1:3000/files/file01.png'
+        image_key:
+          type: string
+          example: 'file01.png'
+        permissions:
+          type: array
+          writeOnly: true
+          items:
+            type: number
+            example: 1
+
+    AddressSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        nickname:
+          type: string
+          example: 'Campo opcional'
+        zipcode:
+          type: string
+          required: true
+          example: '12345678'
+        street:
+          type: string
+          required: true
+          example: 'Rua X'
+        number:
+          type: string
+          required: true
+          example: '404'
+        complement:
+          type: string
+          example: 'Campo opcional'
+        reference:
+          type: string
+          example: 'Campo opcional'
+        district:
+          type: string
+          required: true
+          example: 'Bairro X'
+        city:
+          type: string
+          required: true
+          example: 'Cidade X'
+        state:
+          type: string
+          required: true
+          example: 'Estado X'
+        lat:
+          type: string
+          example: '35.113008'
+        lng:
+          type: string
+          example: '-106.632209'
+        userId:
+          type: number
+          readOnly: true
+          example: 1
+
+    AdressObjectSchema:
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/AddressSchema'
+
+    ContactSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+          example: 'User teste'
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        message:
+          type: string
+          required: true
+          example: 'Mensagem de teste'
+
+    FaqSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        question:
+          type: string
+          required: true
+          example: 'Pergunta 01'
+        answer:
+          type: string
+          required: true
+          example: 'Resposta 01'
+
+    ForgotPasswordSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+
+    LoginSchema:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserSchema'
+        token:
+          type: string
+
+    PermissionSchema:
+      type: object
+      readOnly : true
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        title:
+          type: string
+          readOnly: true
+          example: Dashboard
+
+    ResetPasswordSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        code:
+          type: string
+          required: true
+          example: 'A1B2'
+        password:
+          type: string
+          required: true
+          example: '12345678'
+        confirm_password:
+          type: string
+          required: true
+          example: '12345678'
+
+    ValidateCodeSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        code:
+          type: string
+          required: true
+          example: '1D48'
+
+    ValidateFieldsSchema:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          example: 'user@email.com'
+        # cpf:
+        #   type: string
+        #   required: true
+        #   example: '12345678900'
+        phone:
+          type: string
+          required: true
+          example: '00123456789'
+
+    TextSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        type:
+          type: string
+          readOnly: true
+          example: 'about'
+        content:
+          type: string
+          required: true
+          example: 'Texto aqui'
+
+    UpdatePasswordSchema:
+      type: object
+      properties:
+        current_password:
+          type: string
+          required: true
+          example: '12345678'
+        new_password:
+          type: string
+          required: true
+          example: '12341234'
+        confirm_password:
+          type: string
+          required: true
+          example: '12341234'
+
+    UpdateStatusSchema:
+      type: object
+      properties:
+        status:
+          type: string
+          required: true
+          enum: ['ativo', 'inativo']
+          example: ativo
+
+    UploadSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          readOnly: true
+          example: 'file01.png'
+        url:
+          type: string
+          readOnly: true
+          example: 'http://127.0.0.1:3000/files/file01.png'
+
+    UserSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        is_admin:
+          type: boolean
+          readOnly: true
+          example: true
+        type:
+          type: string
+          readOnly: true
+          enum: ['admin', 'app', 'web']
+        name:
+          type: string
+          required: true
+          example: 'User 01'
+        email:
+          type: string
+          required: true
+          example: 'user@getnada.com'
+        password:
+          type: string
+          writeOnly: true
+          required: true
+          example: '12345678'
+        confirm_password:
+          type: string
+          writeOnly: true
+          required: true
+          example: '12345678'
+        status:
+          type: string
+          readOnly: true
+          example: 'ativo'
+        cpf:
+          type: string
+          required: true
+          example: '12345678900'
+        phone:
+          type: string
+          required: true
+          example: '12345678900'
+        birthday:
+          type: string
+          required: true
+          example: '1996-12-31'
+        image_url:
+          type: string
+          example: 'http://127.0.0.1:3000/files/file01.png'
+        image_key:
+          type: string
+          example: 'file01.png'
+        addressId:
+          type: number
+          readOnly: true
+          example: 1
+        permissions:
+          $ref: "#/components/schemas/PermissionSchema"
+
+  # Reusable request bodies
+  requestBodies:
+    LoginBody:
+      type: object
+      properties:
+        username:
+          type: string
+          required: true
+          example: 'user@email.com'
+        password:
+          type: string
+          required: true
+          example: '12345678'
+
+  # Reusable responses, such as 401 Unauthorized or 400 Bad Request
+  responses:
+    '204':
+      description: 'No Content'
+    '400':
+      description: 'Bad Request'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Parâmetro X é um campo obrigatório.'
+    '401':
+      description: 'Unauthorized'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Você precisa estar autenticado para prosseguir.'
+    '403':
+      description: 'Forbidden'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Sem permissão para acessar esse recurso.'
+    '404':
+      description: 'Not Found'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Recurso não encontrado na base de dados.'
+    '409':
+      description: 'Conflict'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Recurso já cadastrado na base de dados.'
+    '415':
+      description: 'Unsupported Media Type'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Tipo de arquivo não suportado.'
+    '500':
+      description: 'Internal Server Error'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorSchema'
+          example:
+            error: 'Erro interno no servidor.'

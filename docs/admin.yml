@@ -1,0 +1,176 @@
+paths:
+  /admins/permissions:
+    get:
+      summary: 'Portal admin - Rota utilizada para listar as permissões'
+      description:
+      tags:
+        - Admins
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PermissionSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /admins:
+    get:
+      summary: 'Portal admin - Rota utilizada para listar todos os usuários admins'
+      description:
+      tags:
+        - Admins
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/StatusParameter'
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: '#/components/schemas/AdminSchema'
+                  - $ref: '#/components/schemas/PaginationSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      summary: 'Portal admin - Rota utilizada para cadastrar um novo usuário admin'
+      description: >
+        ## permissions é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
+      tags:
+        - Admins
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/AdminSchema"
+                - $ref: "#/components/schemas/PermissionSchema"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/AdminSchema"
+                  - $ref: "#/components/schemas/PermissionSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"
+
+  /admins/{id}:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    get:
+      summary: 'Portal admin - Rota utilizada para exibir um usuário admin'
+      tags:
+        - Admins
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/AdminSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  # /admins/myself:
+  #   get:
+  #     summary: 'Portal admin - Rota utilizada para exibir informações do usuário admin logado'
+  #     tags:
+  #       - Admins
+  #     security:
+  #       - BearerAuth: []
+  #     responses:
+  #       '200':
+  #         description: 'OK'
+  #         content:
+  #           application/json:
+  #             schema:
+  #               allOf:
+  #                 - $ref: '#/components/schemas/AdminSchema'
+  #       '401':
+  #         $ref: '#/components/responses/401'
+  #       '500':
+  #         $ref: '#/components/responses/500'
+
+  /admins/{id}/update-status:
+    parameters:
+      - $ref: '#/components/parameters/IdParameter'
+    patch:
+      summary: 'Portal admin - Rota utilizada para ativar/inativar um usuário admin'
+      tags:
+        - Admins
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateStatusSchema'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'

@@ -1,0 +1,29 @@
+paths:
+  /upload-file:
+    post:
+      summary: "Geral - Rota utilizada para fazer upload de um arquivo"
+      description: >
+        ## Algumas rotas solicitam o envio de imagens (e.g. frente e verso do documento, imagem de perfil, etc).
+        Tais rotas utilizam apenas application/json como Content-Type no request body.
+        Logo, basta enviar a image_key e image_url no JSON, que podem ser obtidas nessa rota.
+      tags:
+        - Upload files
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadSchema"
+        "500":
+          $ref: "#/components/responses/500"
