@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist/",
     "build": "tsc && tsc-alias",
     "dev": "env-cmd -f .env ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules/ --watch docs/ --respawn src/server.ts",
-    "test": "env-cmd -f .env jest -i",
+    "test": "env-cmd -f .env.test jest -i",
     "start": "env-cmd -f .env node dist/server.js",
     "prisma:migration": "env-cmd -f .env npx prisma db push",
     "prisma:seed": "ts-node prisma/seed.ts"
