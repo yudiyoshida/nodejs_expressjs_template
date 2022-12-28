@@ -30,15 +30,15 @@ $ npm install
   - Crie uma copia do arquivo .env.example.
   - Modifique o nome da copia para `.env.test` e preencha com as informações necessárias do ambiente de **HOMOLOGAÇÃO**.
 
-03 - Builde o projeto:
-```bash
-$ npm run build
-```
-
-04 - Rode as migrations e seeds no ambiente de produção:
+03 - Rode as migrations e seeds no ambiente de produção:
 ```bash
 $ npm run prisma:migration
 $ npm run prisma:seed
+```
+
+04 - Builde o projeto:
+```bash
+$ npm run build
 ```
 
 05 - Inicie o projeto no modo de produção:
