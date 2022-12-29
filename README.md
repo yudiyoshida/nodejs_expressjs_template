@@ -9,7 +9,7 @@
 
 ## Pré-Requisitos
 
-  * NodeJS (v16.17.1).
+  * NodeJS (v16.17.1) e npm (v8.15.0).
   * MySQL (v8.0.31-debian).
 
 ## Executando o projeto
@@ -19,7 +19,7 @@
 $ npm install
 ```
 
-02 - Configure as variáveis de ambiente (.env):
+02 - Configure as variáveis de ambiente:
   - Crie uma copia do arquivo .env.example.
   - Modifique o nome da copia para `.env` e preencha com as informações necessárias.
 
@@ -36,4 +36,4 @@ $ npm start
 
 ## Documentação
 
-A documentação pode ser consultada através do endPoint: <strong>`/api-docs`</strong>
+A documentação pode ser consultada através do endpoint: `/api-docs`
