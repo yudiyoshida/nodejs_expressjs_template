@@ -10,8 +10,7 @@
 
 ## Pré-Requisitos
 
-  * NodeJS (v18.12.1).
-  * Npm (v9.2.0).
+  * NodeJS (v18.12.1) e npm (v9.2.0).
   * MySQL (v8.0.31-debian).
 
 ## Executando o projeto
@@ -41,11 +40,11 @@ $ npm run prisma:seed
 $ npm run build
 ```
 
-05 - Inicie o projeto no modo de produção:
+05 - Inicie o projeto:
 ```bash
 $ npm start
 ```
 
 ## Documentação
 
-A documentação pode ser consultada através do endPoint: `/api-docs`
+A documentação pode ser consultada através do endpoint: `/api-docs`
