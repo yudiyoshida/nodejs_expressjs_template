@@ -1,7 +1,7 @@
 components:
   # Reusable schemas (data models)
   schemas:
-    SucessSchema:
+    SuccessSchema:
       type: object
       properties:
         message:

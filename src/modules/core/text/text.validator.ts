@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express';
 import { TextType } from '@prisma/client';
-import { ICreateText } from './dtos/interfaces/text.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -12,7 +11,7 @@ class Validator extends BaseValidator {
   }
 
   public update: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<ICreateText> = yup.object().shape({
+    const schema = yup.object().shape({
       content: yup.string().trim().required(),
     });
 

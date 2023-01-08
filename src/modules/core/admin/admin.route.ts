@@ -20,6 +20,7 @@ router
     Controller.create,
   );
 
+//TODO: PUT /admins
 router
   .route('/:id')
   .get(

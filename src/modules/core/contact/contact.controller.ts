@@ -1,7 +1,7 @@
+import { RequestHandler } from 'express';
+
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
-
-import { RequestHandler } from 'express';
 
 class Controller {
   public sendEmail: RequestHandler = async(req, res, next) => {

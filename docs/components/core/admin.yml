@@ -1,0 +1,47 @@
+components:
+  schemas:
+    AdminSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        isAdmin:
+          type: boolean
+          readOnly: true
+          example: true
+        type:
+          type: string
+          readOnly: true
+          enum: ['admin', 'app', 'web']
+        name:
+          type: string
+          required: true
+          example: 'User 01'
+        email:
+          type: string
+          required: true
+          example: 'user@getnada.com'
+        status:
+          type: string
+          readOnly: true
+          example: 'ativo'
+        document:
+          type: string
+          required: true
+          example: '12345678900'
+        phone:
+          type: string
+          required: true
+          example: '12345678900'
+        birthday:
+          type: string
+          required: true
+          example: '1996-12-31'
+        imageUrl:
+          type: string
+          example: 'http://127.0.0.1:3000/files/file01.png'
+        imageKey:
+          type: string
+          example: 'file01.png'

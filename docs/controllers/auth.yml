@@ -43,7 +43,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SucessSchema"
+                $ref: "#/components/schemas/SuccessSchema"
               example:
                 message: "Código de recuperação de senha enviado no seu email!"
         "400":
@@ -72,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SucessSchema"
+                $ref: "#/components/schemas/SuccessSchema"
               example:
                 message: "Senha atualizada com sucesso!"
         "400":
@@ -101,7 +101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SucessSchema"
+                $ref: "#/components/schemas/SuccessSchema"
               example:
                 message: "Senha atualizada com sucesso!"
         "400":
@@ -128,7 +128,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SucessSchema'
+                $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Código enviado no seu email!'
         '400':
@@ -155,7 +155,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SucessSchema'
+                $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'E-mail validado com sucesso!'
         '400':

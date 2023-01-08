@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import { ICreateFaq } from './dtos/interfaces/faq.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -11,9 +10,9 @@ class Validator extends BaseValidator {
   }
 
   public upsert: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<ICreateFaq> = yup.object().shape({
-      answer: yup.string().trim().required(),
+    const schema = yup.object().shape({
       question: yup.string().trim().required(),
+      answer: yup.string().trim().required(),
     });
 
     try {

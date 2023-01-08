@@ -7,7 +7,7 @@ class Service {
     this.repository = DataSource.security;
   }
 
-  public async findByEmailValidated(email: string) {
+  public async findByValidatedEmail(email: string) {
     return await this.repository.findFirst({
       where: { email, validated: true },
     });

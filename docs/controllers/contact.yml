@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SucessSchema"
+                $ref: "#/components/schemas/SuccessSchema"
               example:
                 message: "Mensagem enviada com sucesso! Em breve entraremos em contato."
         "400":

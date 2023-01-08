@@ -11,6 +11,8 @@
       "skipFiles": ["<node_internals>/**"],
       "runtimeArgs": [
         "-r",
+        "tsconfig-paths/register",
+        "-r",
         "ts-node/register"
       ],
       "args": [

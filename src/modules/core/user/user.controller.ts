@@ -58,7 +58,7 @@ class Controller {
   public create: RequestHandler = async(req, res, next) => {
     try {
       // Verifica se o email foi validado.
-      const email = await SecurityService.findByEmailValidated(req.body.email);
+      const email = await SecurityService.findByValidatedEmail(req.body.email);
       if (!email) throw new AppException(400, ErrorMessages.EMAIL_NOT_VALIDATED);
       if (!email.validated) throw new AppException(400, ErrorMessages.EMAIL_NOT_VALIDATED);
 

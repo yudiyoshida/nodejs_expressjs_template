@@ -35,4 +35,4 @@ components:
       name: type
       schema:
         type: string
-        enum: ['app', 'web']
+        enum: ['admin', 'app', 'web']

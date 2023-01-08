@@ -46,7 +46,7 @@ paths:
                         type: array
                         items:
                           allOf:
-                            - $ref: '#/components/schemas/UserSchema'
+                            - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PaginationSchema'
         '400':
           $ref: '#/components/responses/400'
@@ -70,7 +70,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: "#/components/schemas/UserSchema"
+                - $ref: "#/components/schemas/AdminSchema"
                 - $ref: "#/components/schemas/PermissionSchema"
       responses:
         "201":
@@ -79,7 +79,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/UserSchema"
+                  - $ref: "#/components/schemas/AdminSchema"
                   - $ref: "#/components/schemas/PermissionSchema"
         "400":
           $ref: "#/components/responses/400"
@@ -106,7 +106,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PermissionArraySchema'
         '400':
           $ref: '#/components/responses/400'
@@ -133,7 +133,7 @@ paths:
   #           application/json:
   #             schema:
   #               allOf:
-  #                 - $ref: '#/components/schemas/UserSchema'
+  #                 - $ref: '#/components/schemas/AdminSchema'
   #                 - $ref: '#/components/schemas/PermissionArraySchema'
   #       '401':
   #         $ref: '#/components/responses/401'
@@ -162,7 +162,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PermissionArraySchema'
         '400':
           $ref: '#/components/responses/400'

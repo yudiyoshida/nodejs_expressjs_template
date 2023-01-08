@@ -1,5 +1,5 @@
-import { Prisma, TextType } from '@prisma/client';
 import DataSource from '@database/data-source';
+import { Prisma, TextType } from '@prisma/client';
 
 class Service {
   private readonly repository;

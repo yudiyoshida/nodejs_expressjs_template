@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import { ISendEmail } from './dtos/interfaces/contact.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -11,10 +10,10 @@ class Validator extends BaseValidator {
   }
 
   public sendEmail: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<ISendEmail> = yup.object().shape({
-      message: yup.string().trim().required(),
-      email: yup.string().trim().email().lowercase().required(),
+    const schema = yup.object().shape({
       name: yup.string().trim().required(),
+      email: yup.string().trim().email().lowercase().required(),
+      message: yup.string().trim().required(),
     });
 
     try {

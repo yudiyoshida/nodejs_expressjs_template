@@ -11,7 +11,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorSchema'
           example:
-            error: 'Parâmetro X é um campo obrigatório.'
+            error: 'Parâmetro foobar é um campo obrigatório.'
 
     '401':
       description: 'Unauthorized'

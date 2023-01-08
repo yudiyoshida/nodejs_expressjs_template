@@ -26,5 +26,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UploadSchema"
+        "415":
+          $ref: "#/components/responses/415"
         "500":
           $ref: "#/components/responses/500"

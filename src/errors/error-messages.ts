@@ -12,6 +12,7 @@ export default {
 
   FAQ_NOT_FOUND: 'FAQ não encontrada na base de dados.',
   PERMISSION_NOT_FOUND: 'Permissão não encontrada na base de dados.',
+  TEXT_NOT_FOUND: 'Texto não encontrado na base de dados.',
 
   FORBIDDEN: 'Sem permissão para acessar esse recurso.',
   INACTIVE: 'Sua conta foi suspensa.',
