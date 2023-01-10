@@ -1,4 +1,4 @@
-import { IAuth } from '../../modules/core/auth/dtos/interfaces/auth.dto';
+import { IAuth } from '@interfaces/auth.dto';
 
 // to make the file a module and avoid the TypeScript error
 export {};

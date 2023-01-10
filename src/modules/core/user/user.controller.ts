@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Status, UserType } from '@prisma/client';
-import { UserWithAddresses } from './dtos/types/user.dto';
+import { UserWithAddressesDTO } from './dtos/user.dto';
 
 import Service from './user.service';
 import AuthService from '../auth/auth.service';
@@ -8,9 +8,7 @@ import SecurityService from '../security/security.service';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-
 import PaginationHelper from '@helpers/pagination';
-import PasswordHelper from '@helpers/password';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
@@ -34,7 +32,7 @@ class Controller {
 
   public findById: RequestHandler = async(req, res, next) => {
     try {
-      const result = await Service.findById(Number(req.params.id), UserWithAddresses);
+      const result = await Service.findById(Number(req.params.id), UserWithAddressesDTO);
       if (!result) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
       else res.status(200).json(result);
 
@@ -46,7 +44,7 @@ class Controller {
 
   public findMyself: RequestHandler = async(req, res, next) => {
     try {
-      const result = await Service.findById(req.auth.id, UserWithAddresses);
+      const result = await Service.findById(req.auth.id, UserWithAddressesDTO);
       res.status(200).json(result);
 
     } catch (err: any) {
@@ -57,26 +55,18 @@ class Controller {
 
   public create: RequestHandler = async(req, res, next) => {
     try {
+      const { user, address } = req.body;
+
       // Verifica se o email foi validado.
-      const email = await SecurityService.findByValidatedEmail(req.body.email);
+      const email = await SecurityService.findByValidatedEmail(user.email);
       if (!email) throw new AppException(400, ErrorMessages.EMAIL_NOT_VALIDATED);
       if (!email.validated) throw new AppException(400, ErrorMessages.EMAIL_NOT_VALIDATED);
 
       // Verifica se já existe um registro.
-      const user = await AuthService.findByUniqueFields(req.body);
-      if (user) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      const userExists = await AuthService.findByUniqueFields(user);
+      if (userExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
-      // Define valores padrões.
-      req.body.type = UserType.app;
-      req.body.status = Status.ativo;
-      req.body.password = PasswordHelper.hash(req.body.password);
-
-      // Separa as informações para cada entidade.
-      const { address } = req.body;
-      delete req.body.address;
-      delete req.body.confirmPassword;
-
-      const [result] = await Service.create(req.body, address);
+      const [result] = await Service.create(user, address);
       res.status(201).json(result);
 
     } catch (err: any) {
@@ -87,7 +77,7 @@ class Controller {
 
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
-      const user = await Service.findById(Number(req.params.id), UserWithAddresses);
+      const user = await Service.findById(Number(req.params.id), UserWithAddressesDTO);
       if (!user) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       const result = await Service.updateStatus(user.id, req.body.status);

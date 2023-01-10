@@ -18,12 +18,12 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/indent": ["error", 2],
     "arrow-body-style": ["error", "always"],
     "arrow-spacing": ["error", { "before": true, "after": true }],
     "camelcase": ["error", { "properties": "always" }],
     "comma-dangle": ["error", "always-multiline"],
     "comma-spacing": ["error", { "before": false, "after": true }],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "linebreak-style": ["error", "unix"],
     "no-multi-spaces": "error",

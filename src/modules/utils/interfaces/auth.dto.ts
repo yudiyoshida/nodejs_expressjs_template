@@ -1,4 +1,4 @@
-import { IGetAdminPermission } from '../../../admin-permission/dtos/interfaces/admin-permission.dto';
+import { IGetAdminPermission } from './admin-permission.dto';
 
 export interface IAuth {
   id: number;

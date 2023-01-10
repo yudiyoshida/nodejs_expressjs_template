@@ -1,8 +1,8 @@
-import { Prisma, Status } from '@prisma/client';
-import { IConnectAdminPermission } from '../admin-permission/dtos/interfaces/admin-permission.dto';
-import { AdminOmitFields, AdminWithPermissions } from './dtos/types/admin.dto';
-
 import DataSource from '@database/data-source';
+
+import { Prisma, Status } from '@prisma/client';
+import { IConnectAdminPermission } from '@interfaces/admin-permission.dto';
+import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 class Service {
   private readonly repository;
@@ -17,7 +17,7 @@ class Service {
         where: { status, isAdmin: true },
         take: limit,
         skip: ((page - 1) * limit),
-        select: AdminOmitFields,
+        select: AdminOmitSensitiveFieldsDTO,
       }),
       this.repository.count({
         where: { status, isAdmin: true },
@@ -40,7 +40,7 @@ class Service {
           connect: permissions,
         },
       },
-      select: AdminWithPermissions,
+      select: AdminWithPermissionsDTO,
     });
   }
 
@@ -48,7 +48,7 @@ class Service {
     return await this.repository.update({
       where: { id },
       data: { status },
-      select: AdminWithPermissions,
+      select: AdminWithPermissionsDTO,
     });
   }
 }

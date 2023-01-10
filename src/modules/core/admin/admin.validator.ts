@@ -1,9 +1,10 @@
 import { RequestHandler } from 'express';
-import { Status, UserType } from '@prisma/client';
+import { Prisma, Status, UserType } from '@prisma/client';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
 import BaseValidator from '@abstracts/validator';
+import PasswordHelper from '@helpers/password';
 
 class Validator extends BaseValidator {
   constructor() {
@@ -25,14 +26,13 @@ class Validator extends BaseValidator {
     });
 
     try {
+      // Valida inputs do client.
       req.body = await this.validateSchema(schema, req.body);
 
-      // Feita a validação dos dados informados pelo client-side,
-      // é hora de definir alguns valores padrões do fluxo.
-
-      req.body.isAdmin = true;
-      req.body.type = UserType.admin;
-      req.body.status = Status.ativo;
+      // Formata as informações antes de passar para os controllers.
+      req.body.password = PasswordHelper.generate();
+      req.body.admin = this.formatAdminBody(req.body);
+      req.body.permissions = this.formatPermissionBody(req.body.permissions);
       next();
 
     } catch (err: any) {
@@ -40,6 +40,32 @@ class Validator extends BaseValidator {
 
     }
   };
+
+  private formatAdminBody(body: any) {
+    const admin: Prisma.UserCreateInput = {
+      isAdmin: true,
+      type: UserType.admin,
+      name: body.name,
+      email: body.email,
+      password: PasswordHelper.hash(body.password),
+      status: Status.ativo,
+      phone: body.phone,
+      document: body.document,
+      birthday: body.birthday,
+      imageUrl: body.imageUrl,
+      imageKey: body.imageKey,
+    };
+
+    return admin;
+  }
+
+  private formatPermissionBody(ids: number[]) {
+    const permissions = ids.map((id) => {
+      return { id };
+    });
+
+    return permissions;
+  }
 }
 
 export default new Validator();

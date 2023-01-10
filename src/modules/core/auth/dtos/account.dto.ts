@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-const AccountOmitFields = Prisma.validator<Prisma.UserSelect>()({
+const AccountOmitFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
   isAdmin: true,
   type: true,
@@ -16,20 +16,20 @@ const AccountOmitFields = Prisma.validator<Prisma.UserSelect>()({
   updatedAt: true,
 });
 
-const AccountAllFields = Prisma.validator<Prisma.UserSelect>()({
-  ...AccountOmitFields,
+const AccountAllFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
+  ...AccountOmitFieldsDTO,
   password: true,
   code: true,
   codeExpiresIn: true,
 });
 
-const AccountWithPermissions = Prisma.validator<Prisma.UserSelect>()({
-  ...AccountOmitFields,
+const AccountWithPermissionsDTO = Prisma.validator<Prisma.UserSelect>()({
+  ...AccountOmitFieldsDTO,
   permissions: true,
 });
 
 export {
-  AccountOmitFields,
-  AccountAllFields,
-  AccountWithPermissions,
+  AccountOmitFieldsDTO,
+  AccountAllFieldsDTO,
+  AccountWithPermissionsDTO,
 };

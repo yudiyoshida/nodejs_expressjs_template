@@ -1,18 +1,17 @@
 import { RequestHandler } from 'express';
-import { Status, UserType } from '@prisma/client';
-import { IConnectAdminPermission } from '../admin-permission/dtos/interfaces/admin-permission.dto';
-import { AdminOmitFields, AdminWithPermissions } from './dtos/types/admin.dto';
+import { Status } from '@prisma/client';
+import { IConnectAdminPermission } from '@interfaces/admin-permission.dto';
+import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';
-import PermissionService from '../admin-permission/admin-permission.service';
 import AuthService from '../auth/auth.service';
+import PermissionService from '../admin-permission/admin-permission.service';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
 import Mail from '@libs/nodemailer';
 import PaginationHelper from '@helpers/pagination';
-import PasswordHelper from '@helpers/password';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
@@ -31,7 +30,7 @@ class Controller {
 
   public findById: RequestHandler = async(req, res, next) => {
     try {
-      const result = await Service.findById(Number(req.params.id), AdminWithPermissions);
+      const result = await Service.findById(Number(req.params.id), AdminWithPermissionsDTO);
       if (!result) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
       else res.status(200).json(result);
 
@@ -43,26 +42,20 @@ class Controller {
 
   public create: RequestHandler = async(req, res, next) => {
     try {
+      const { admin, permissions, password } = req.body;
+
       // Verifica se já existe um registro.
-      const user = await AuthService.findByUniqueFields(req.body);
+      const user = await AuthService.findByUniqueFields(admin);
       if (user) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
-      // Tratamento das permissões do novo admin.
-      const permissions = await this.checkPermissions(req.body.permissions);
-      delete req.body.permissions;
-
-      // Valores padrões.
-      const pass = PasswordHelper.generate();
-      req.body.isAdmin = true;
-      req.body.type = UserType.admin;
-      req.body.status = Status.ativo;
-      req.body.password = PasswordHelper.hash(pass);
+      // Checa se as permissões existem.
+      await this.checkPermissions(permissions);
 
       // Cadastra o novo usuário admin.
-      const result = await Service.create(req.body, permissions);
+      const result = await Service.create(admin, permissions);
 
       // Envio do email com a senha.
-      await Mail.sendEmail(req.body.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { pass });
+      await Mail.sendEmail(req.body.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
       res.status(201).json(result);
 
     } catch (err: any) {
@@ -73,7 +66,7 @@ class Controller {
 
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
-      const admin = await Service.findById(Number(req.params.id), AdminOmitFields);
+      const admin = await Service.findById(Number(req.params.id), AdminOmitSensitiveFieldsDTO);
       if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       const result = await Service.updateStatus(admin.id, req.body.status);
@@ -85,17 +78,13 @@ class Controller {
     }
   };
 
-  private async checkPermissions(permissions: number[]) {
-    const result: IConnectAdminPermission[] = [];
+  private async checkPermissions(permissions: IConnectAdminPermission[]) {
     await Promise.all(
       permissions.map(async(item) => {
-        const permission = await PermissionService.findById(item);
+        const permission = await PermissionService.findById(item.id);
         if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
-        result.push({ id: item });
       }),
     );
-
-    return result;
   }
 }
 

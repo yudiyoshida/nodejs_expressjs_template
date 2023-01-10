@@ -1,7 +1,4 @@
 import { RequestHandler } from 'express';
-import { ILogin } from './dtos/interfaces/login.dto';
-import { IForgotPassword, IResetPassword, IUpdatePassword } from './dtos/interfaces/password.dto';
-import { IValidateFields, IValidateCode } from './dtos/interfaces/register.dto';
 
 import yup from '@libs/yup';
 import PasswordHelper from '@helpers/password';
@@ -16,9 +13,9 @@ class Validator extends BaseValidator {
   }
 
   public login: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<ILogin> = yup.object().shape({
-      password: yup.string().required(),
+    const schema = yup.object().shape({
       username: yup.string().trim().lowercase().required(),
+      password: yup.string().required(),
     });
 
     try {
@@ -32,7 +29,7 @@ class Validator extends BaseValidator {
   };
 
   public forgotPassword: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IForgotPassword> = yup.object().shape({
+    const schema = yup.object().shape({
       email: yup.string().trim().email().lowercase().required(),
     });
 
@@ -47,11 +44,11 @@ class Validator extends BaseValidator {
   };
 
   public resetPassword: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IResetPassword> = yup.object().shape({
-      confirmPassword: yup.string().required(),
-      password: yup.string().min(8).required(),
-      code: yup.string().trim().required(),
+    const schema = yup.object().shape({
       email: yup.string().trim().email().lowercase().required(),
+      code: yup.string().trim().required(),
+      password: yup.string().min(8).required(),
+      confirmPassword: yup.string().required(),
     });
 
     try {
@@ -68,10 +65,10 @@ class Validator extends BaseValidator {
   };
 
   public updatePassword: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IUpdatePassword> = yup.object().shape({
-      confirmPassword: yup.string().required(),
-      newPassword: yup.string().min(8).required(),
+    const schema = yup.object().shape({
       currentPassword: yup.string().required(),
+      newPassword: yup.string().min(8).required(),
+      confirmPassword: yup.string().required(),
     });
 
     try {
@@ -88,9 +85,9 @@ class Validator extends BaseValidator {
   };
 
   public validateFields: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IValidateFields> = yup.object().shape({
-      phone: yup.string().trim().phone().required(),
+    const schema = yup.object().shape({
       email: yup.string().trim().email().lowercase().required(),
+      phone: yup.string().trim().phone().required(),
     });
 
     try {
@@ -104,9 +101,9 @@ class Validator extends BaseValidator {
   };
 
   public validateCode: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IValidateCode> = yup.object().shape({
-      code: yup.string().trim().required(),
+    const schema = yup.object().shape({
       email: yup.string().trim().email().lowercase().required(),
+      code: yup.string().trim().required(),
     });
 
     try {

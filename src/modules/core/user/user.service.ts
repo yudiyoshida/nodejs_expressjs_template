@@ -1,7 +1,7 @@
-import { Prisma, Status, UserType } from '@prisma/client';
-import { UserOmitFields, UserWithAddresses } from '../user/dtos/types/user.dto';
-
 import DataSource from '@database/data-source';
+
+import { Prisma, Status, UserType } from '@prisma/client';
+import { UserOmitSensitiveFieldsDTO, UserWithAddressesDTO } from './dtos/user.dto';
 
 class Service {
   private readonly repository;
@@ -18,7 +18,7 @@ class Service {
         where: { type, status, isAdmin: false },
         take: limit,
         skip: ((page - 1) * limit),
-        select: UserOmitFields,
+        select: UserOmitSensitiveFieldsDTO,
       }),
       this.repository.count({
         where: { type, status, isAdmin: false },
@@ -42,7 +42,7 @@ class Service {
             create: address,
           },
         },
-        select: UserWithAddresses,
+        select: UserWithAddressesDTO,
       }),
       this.securityRepository.delete({
         where: { email: data.email },
