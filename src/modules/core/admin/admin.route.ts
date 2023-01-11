@@ -20,7 +20,8 @@ router
     Controller.create,
   );
 
-//TODO: PUT /admins
+//TODO: PUT /admins/:id
+//TODO: DELETE /admins/:id
 router
   .route('/:id')
   .get(

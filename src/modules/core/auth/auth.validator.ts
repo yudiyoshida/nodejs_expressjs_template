@@ -1,11 +1,10 @@
 import { RequestHandler } from 'express';
 
 import yup from '@libs/yup';
-import PasswordHelper from '@helpers/password';
-
 import AppException from '@errors/app-exception';
 import BaseValidator from '@abstracts/validator';
 import ErrorMessages from '@errors/error-messages';
+import PasswordHelper from '@helpers/password';
 
 class Validator extends BaseValidator {
   constructor() {
@@ -86,6 +85,7 @@ class Validator extends BaseValidator {
 
   public validateFields: RequestHandler = async(req, res, next) => {
     const schema = yup.object().shape({
+      document: yup.string().trim().cpf().required(),
       email: yup.string().trim().email().lowercase().required(),
       phone: yup.string().trim().phone().required(),
     });

@@ -4,9 +4,8 @@ import { Prisma, Status, UserType } from '@prisma/client';
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-
-import PasswordHelper from '@helpers/password';
 import BaseValidator from '@abstracts/validator';
+import PasswordHelper from '@helpers/password';
 
 class Validator extends BaseValidator {
   constructor() {

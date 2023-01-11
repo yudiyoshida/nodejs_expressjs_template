@@ -9,7 +9,7 @@ class Service {
   }
 
   public async findById<T extends Prisma.UserSelect>(id: number, dto: T) {
-    return await this.repository.findFirst({
+    return await this.repository.findUnique({
       where: { id },
       select: dto,
     });
@@ -31,8 +31,8 @@ class Service {
     return await this.repository.findFirst({
       where: {
         OR: [
-          { email: data.email },
           { document: data.document },
+          { email: data.email },
           { phone: data.phone },
         ],
       },

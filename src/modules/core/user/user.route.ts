@@ -26,6 +26,8 @@ router
     Controller.findMyself,
   );
 
+//TODO: PUT /users/:id
+//TODO: DELETE /users/:id (CASCADE)
 router
   .route('/:id')
   .get(

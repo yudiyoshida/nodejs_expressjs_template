@@ -7,10 +7,9 @@ import Service from './admin.service';
 import AuthService from '../auth/auth.service';
 import PermissionService from '../admin-permission/admin-permission.service';
 
+import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-
-import Mail from '@libs/nodemailer';
 import PaginationHelper from '@helpers/pagination';
 
 class Controller {
@@ -55,7 +54,7 @@ class Controller {
       const result = await Service.create(admin, permissions);
 
       // Envio do email com a senha.
-      await Mail.sendEmail(req.body.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
+      await Mail.sendEmail(admin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
       res.status(201).json(result);
 
     } catch (err: any) {

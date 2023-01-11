@@ -6,13 +6,12 @@ import { AccountAllFieldsDTO, AccountWithPermissionsDTO } from './dtos/account.d
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import Mail from '@libs/nodemailer';
-import AppException from '@errors/app-exception';
-import ErrorMessages from '@errors/error-messages';
-
 import Service from './auth.service';
 import SecurityService from '../security/security.service';
 
+import Mail from '@libs/nodemailer';
+import AppException from '@errors/app-exception';
+import ErrorMessages from '@errors/error-messages';
 import CodeHelper from '@helpers/code';
 import PasswordHelper from '@helpers/password';
 
@@ -22,7 +21,7 @@ class Controller {
       const user = await Service.findByUserName(req.body.username);
       if (!user) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
       if (user.status === Status.pendente) throw new AppException(403, ErrorMessages.PENDING);
-      if (user.status == Status.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
+      if (user.status === Status.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
       if (user.status !== Status.ativo) throw new AppException(403, ErrorMessages.FORBIDDEN);
 
       const isPasswordCorrect = bcryptjs.compareSync(req.body.password, user.password);

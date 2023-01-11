@@ -29,7 +29,7 @@ class Validator extends BaseValidator {
       // Valida inputs do client.
       req.body = await this.validateSchema(schema, req.body);
 
-      // Formata as informações antes de passar para os controllers.
+      // Formata as informações antes de passar para o controller.
       req.body.password = PasswordHelper.generate();
       req.body.admin = this.formatAdminBody(req.body);
       req.body.permissions = this.formatPermissionBody(req.body.permissions);
