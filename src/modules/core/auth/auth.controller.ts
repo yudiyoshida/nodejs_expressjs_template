@@ -52,7 +52,7 @@ class Controller {
       if (!user) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
       if (user.status !== Status.ativo) throw new AppException(403, ErrorMessages.FORBIDDEN);
 
-      const { code, codeExpiresIn } = CodeHelper.generate(60);
+      const { code, codeExpiresIn } = CodeHelper.generate(15);
       await Service.storeCode(user.id, code, codeExpiresIn);
 
       await Mail.sendEmail(email, '[name] - Esqueceu sua senha?', 'forgot-password', { code });
