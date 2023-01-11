@@ -7,7 +7,7 @@ import DataSource from '@database/data-source';
 
 async function start() {
   try {
-    // Checking database connection before running server.
+    // Checking database connection before running the server.
     await DataSource.$connect();
 
     const server = (process.env.NODE_ENV === 'production') ? https.createServer(sslOptions, app) : http.createServer(app);
