@@ -51,7 +51,7 @@ abstract class BaseValidator {
 
   public updateStatus: RequestHandler = async(req, res, next) => {
     const schema = yup.object().shape({
-      status: yup.string().required().oneOf(this.status),
+      status: yup.string().trim().required().oneOf(this.status),
     });
 
     try {

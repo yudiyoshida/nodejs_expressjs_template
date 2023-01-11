@@ -1,9 +1,9 @@
+import { RequestHandler, Request, Response, NextFunction } from 'express';
+import { AdminPermission, UserType } from '@prisma/client';
+
+import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import passport from '@libs/passport';
-
-import { AdminPermission, UserType } from '@prisma/client';
-import { RequestHandler, Request, Response, NextFunction } from 'express';
 
 class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
@@ -56,10 +56,10 @@ class AuthMiddleware {
   public isAuthorized(permission: AdminPermission) {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
-        // Checa se é user admin.
+        // Checa se não é user admin.
         if (!req.auth.isAdmin) return next();
 
-        // Se for admin, então verifica se ele possui permissão no módulo.
+        // Se for admin, então verifica se possui permissão para acessar o recurso.
         for (const element of req.auth.permissions) {
           if (element.title === permission) return next();
         }

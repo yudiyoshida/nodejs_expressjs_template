@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-import { IConnectAdminPermission } from '@interfaces/admin-permission.dto';
+import { IAdminPermissionId } from '@interfaces/admin-permission.dto';
 import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';
@@ -78,7 +78,7 @@ class Controller {
     }
   };
 
-  private async checkPermissions(permissions: IConnectAdminPermission[]) {
+  private async checkPermissions(permissions: IAdminPermissionId[]) {
     await Promise.all(
       permissions.map(async(item) => {
         const permission = await PermissionService.findById(item.id);

@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 
 import { Prisma, Status } from '@prisma/client';
-import { IConnectAdminPermission } from '@interfaces/admin-permission.dto';
+import { IAdminPermissionId } from '@interfaces/admin-permission.dto';
 import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 class Service {
@@ -32,7 +32,7 @@ class Service {
     });
   }
 
-  public async create(data: Prisma.UserCreateInput, permissions: IConnectAdminPermission[]) {
+  public async create(data: Prisma.UserCreateInput, permissions: IAdminPermissionId[]) {
     return this.repository.create({
       data: {
         ...data,

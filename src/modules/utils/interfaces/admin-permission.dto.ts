@@ -1,8 +1,8 @@
-export interface IConnectAdminPermission {
-  id: number;
-}
-
-export interface IGetAdminPermission {
+export interface IAdminPermission {
   id: number;
   title: string;
+}
+
+export interface IAdminPermissionId {
+  id: number;
 }
