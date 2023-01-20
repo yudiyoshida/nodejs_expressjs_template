@@ -5,7 +5,7 @@ class PasswordHelper {
   public compare(password: string, confirmation: string) {
     return (password === confirmation);
   }
-  
+
   public generate() {
     return crypto.randomBytes(12).toString('hex').slice(0, 8);
   }

@@ -40,14 +40,14 @@ class Validator extends BaseValidator {
     try {
       // Valida inputs do client.
       req.body = await this.validateSchema(schema, req.body);
-    
+
       if (!PasswordHelper.compare(req.body.password, req.body.confirmPassword)) {
         throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
       }
 
       // Formata as informações antes de passar para os controllers.
       req.body.user = this.formatUserBody(req.body);
-      next();      
+      next();
 
 
     } catch (err: any) {

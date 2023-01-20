@@ -27,6 +27,7 @@
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "linebreak-style": ["error", "unix"],
     "no-multi-spaces": "error",
+    "no-trailing-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],

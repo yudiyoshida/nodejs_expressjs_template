@@ -5,7 +5,7 @@
   "author": "Yudi Matsuguma Yoshida <yudimatsuguma@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "esl:run": "npx eslint ./ --fix",
+    "eslint": "npx eslint ./ --fix",
     "prebuild": "rimraf dist/",
     "build": "tsc && tsc-alias",
     "dev": "env-cmd -f .env ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules/ --watch docs/ --respawn src/server.ts",
