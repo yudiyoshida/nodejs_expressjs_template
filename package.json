@@ -5,14 +5,14 @@
   "author": "Yudi Matsuguma Yoshida <yudimatsuguma@gmail.com>",
   "license": "ISC",
   "scripts": {
-    "eslint": "npx eslint ./ --fix",
+    "eslint": "eslint ./ --fix",
     "prebuild": "rimraf dist/",
     "build": "tsc && tsc-alias",
-    "dev": "env-cmd -f .env ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules/ --watch docs/ --respawn src/server.ts",
+    "dev": "env-cmd -f .env tsx watch src/server.ts",
     "test": "env-cmd -f .env.test jest -i",
     "start": "env-cmd -f .env node dist/server.js",
-    "prisma:migration": "env-cmd -f .env npx prisma db push",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:migration": "env-cmd -f .env prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.254.0",
@@ -62,10 +62,8 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0",
     "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.2",
-    "tsconfig-paths": "^4.1.2",
+    "tsx": "^3.12.2",
     "typescript": "^4.9.4"
   }
 }
