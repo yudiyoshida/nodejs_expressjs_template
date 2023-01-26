@@ -12,6 +12,7 @@
     "test": "env-cmd -f .env.test jest -i",
     "start": "env-cmd -f .env node dist/server.js",
     "prisma:migration": "env-cmd -f .env prisma db push",
+    "prisma:migration-test": "env-cmd -f .env.test prisma db push",
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
