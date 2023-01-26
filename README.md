@@ -1,10 +1,10 @@
 <h1 align="center">Node.js Express.js Template</h1>
 <div align="center">
-  <img width="auto" height="23em" src="https://img.shields.io/badge/JavaScript-323330?style=flat&logo=javascript&logoColor=F7DF1E" >
-  <img width="auto" height="23em" src="https://img.shields.io/badge/-TypeScript-323330?style=flat&logo=TypeScript">
-  <img width="auto" height="23em" src="https://img.shields.io/badge/Node.js-323330?style=flat&logo=Node.js&logoColor=white">
-  <img width="auto" height="23em" src="https://img.shields.io/badge/Express.js-323330?style=flate&logo=express">
-  <img width="auto" height="23em" src="https://img.shields.io/badge/MySQL-323330?style=flate&logo=mysql&logoColor=white">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/TypeScript-323330?style=flat&logo=TypeScript">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/Node.js-323330?style=flat&logo=Node.js">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/Express.js-323330?style=flat&logo=express">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/Prisma-323330?style=flat&logo=Prisma">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/MySQL-323330?style=flate&logo=mysql">
   <img width="auto" height="23em" src="https://img.shields.io/badge/Jest-323330?style=flat&logo=jest&logoColor=99424F">
 </div>
 
@@ -20,7 +20,7 @@
 $ npm install
 ```
 
-02 - Configure as variáveis de ambiente (homologação e produção):
+02 - Configure as variáveis de ambiente:
   - Crie uma copia do arquivo .env.example.
   - Modifique o nome da copia para `.env` e preencha com as informações necessárias.
 
