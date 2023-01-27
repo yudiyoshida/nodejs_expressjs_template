@@ -12,7 +12,7 @@ yup.setLocale({
         case 'boolean':
           return `${_ref.path} deve ser um booleano.`;
         case 'date':
-          return `${_ref.path} inválido(a).`;
+          return `${_ref.path} deve ser uma data no formato YYYY-MM-DD.`;
         case 'number':
           return `${_ref.path} deve ser um número.`;
         case 'string':
@@ -21,6 +21,8 @@ yup.setLocale({
     },
   },
   array: {
+    length: '${path} deve ter exatamente ${length} item(ns) na lista.',
+    max: '${path} deve ter no máximo ${max} item(ns) na lista.',
     min: '${path} deve ter no mínimo ${min} item(ns) na lista.',
   },
   date: {
@@ -29,8 +31,11 @@ yup.setLocale({
   },
   number: {
     integer: '${path} deve ser um número inteiro.',
+    lessThan: '${path} deve ser um número menor que ${less}.',
     max: '${path} inválido(a). Deve ser menor ou igual a ${max}.',
     min: '${path} inválido(a). Deve ser maior ou igual a ${min}.',
+    moreThan: '${path} deve ser um número maior que ${more}.',
+    negative: '${path} deve ser um número negativo.',
     positive: '${path} deve ser um número positivo.',
   },
   string: {
@@ -65,7 +70,6 @@ yup.addMethod<yup.StringSchema>(yup.string, 'cnpj', function() {
   });
 });
 
-// TODO: regex para transformar números com máscara (00) 00000-0000 em apenas números.
 yup.addMethod<yup.StringSchema>(yup.string, 'phone', function() {
   return this.transform((value, originalValue) => {
     if (!originalValue) throw new yup.ValidationError('phone inválido.', originalValue);
@@ -142,8 +146,11 @@ function cnpjIsValid(cnpj: string) {
 }
 
 function phoneIsValid(phone: string) {
-  phone = phone.replace(/[^0-9]/, '');
+  phone = phone.replace(/[\s()-]*/gim, '');
   if (phone.length !== 11) return false;
+
+  phone = phone.replace(/[0-9]/g, '');
+  if (phone.length > 0) return false;
 
   return true;
 }
