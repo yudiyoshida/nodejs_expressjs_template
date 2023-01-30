@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-import { IAuth } from '@interfaces/auth.dto';
+import { IAuth } from 'utils/interfaces/auth.dto';
 import { AccountAllFieldsDTO, AccountWithPermissionsDTO } from './dtos/account.dto';
 
 import bcryptjs from 'bcryptjs';
@@ -12,8 +12,8 @@ import SecurityService from '../security/security.service';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import CodeHelper from '@helpers/code';
-import PasswordHelper from '@helpers/password';
+import CodeHelper from 'shared/helpers/code';
+import PasswordHelper from 'shared/helpers/password';
 
 class Controller {
   public login: RequestHandler = async(req, res, next) => {

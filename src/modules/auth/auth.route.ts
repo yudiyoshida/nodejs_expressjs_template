@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import Auth from '@middlewares/auth';
+import Auth from 'shared/middlewares/auth';
 import Controller from './auth.controller';
 import Validator from './auth.validator';
 

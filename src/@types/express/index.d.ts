@@ -1,13 +1,13 @@
 import { IAuth } from '@interfaces/auth.dto';
 
-// to make the file a module and avoid the TypeScript error
+// to make the file a module and avoid the TypeScript error.
 export {};
 
 declare global {
   namespace Express {
     export interface Request {
       auth: IAuth;
-      multer: Express.Multer.File & Express.MulterS3.File
+      multer: Express.Multer.File & Express.MulterS3.File;
     }
   }
 }

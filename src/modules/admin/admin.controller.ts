@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-import { IAdminPermissionId } from '@interfaces/admin-permission.dto';
+import { IAdminPermissionId } from 'utils/interfaces/admin-permission.dto';
 import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';
@@ -10,7 +10,7 @@ import PermissionService from '../admin-permission/admin-permission.service';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import PaginationHelper from '@helpers/pagination';
+import PaginationHelper from 'shared/helpers/pagination';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {

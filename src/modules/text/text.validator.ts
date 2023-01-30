@@ -3,7 +3,7 @@ import { TextType } from '@prisma/client';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from 'utils/abstracts/validator';
 
 class Validator extends BaseValidator {
   constructor() {

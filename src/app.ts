@@ -9,7 +9,7 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerOptions from '@config/swagger';
 
-import routes from './modules/core/index.routes';
+import routes from './modules/index.routes';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';

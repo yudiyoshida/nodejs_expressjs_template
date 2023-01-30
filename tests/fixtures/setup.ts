@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { Prisma, PrismaClient, AdminPermission, Status, TextType, UserType } from '@prisma/client';
-import PasswordHelper from '../../src/modules/shared/helpers/password';
+import PasswordHelper from '../../src/shared/helpers/password';
 
 const prisma = new PrismaClient();
 

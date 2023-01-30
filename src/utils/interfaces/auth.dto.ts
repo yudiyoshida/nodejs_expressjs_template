@@ -1,4 +1,4 @@
-import { IAdminPermission } from './admin-permission.dto';
+import { IAdminPermission } from '@interfaces/admin-permission.dto';
 
 export interface IAuth {
   id: number;

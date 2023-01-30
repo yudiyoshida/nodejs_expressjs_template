@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { AdminPermission } from '@prisma/client';
 
-import Auth from '@middlewares/auth';
+import Auth from 'shared/middlewares/auth';
 import Controller from './faq.controller';
 import Validator from './faq.validator';
 

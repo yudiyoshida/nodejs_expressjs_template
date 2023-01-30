@@ -2,18 +2,17 @@ import { RequestHandler } from 'express';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from 'utils/abstracts/validator';
 
 class Validator extends BaseValidator {
   constructor() {
     super();
   }
 
-  public sendEmail: RequestHandler = async(req, res, next) => {
+  public upsert: RequestHandler = async(req, res, next) => {
     const schema = yup.object().shape({
-      name: yup.string().trim().required(),
-      email: yup.string().trim().email().lowercase().required(),
-      message: yup.string().trim().required(),
+      question: yup.string().trim().required(),
+      answer: yup.string().trim().required(),
     });
 
     try {
