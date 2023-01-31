@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import helmet from 'helmet';
 import multer from 'multer';
 
@@ -22,7 +22,7 @@ class App {
     this.app = express();
     this.middlewares();
     this.routes();
-    this.globalErrorHandler();
+    this.globalErrorHandlerRoute();
   }
 
   middlewares() {
@@ -41,7 +41,7 @@ class App {
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
   }
 
-  globalErrorHandler() {
+  globalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
       // Função para deletar o arquivo caso ocorra algum erro.
