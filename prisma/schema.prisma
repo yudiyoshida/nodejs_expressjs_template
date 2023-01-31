@@ -1,9 +1,9 @@
 // This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
-// Scalar types: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types
 // Attributes: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attributes
 // Attributes functions: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#attribute-functions
-// Relations: https://www.prisma.io/docs/concepts/components/prisma-schema/relations
 // Native type MySQL: https://www.prisma.io/docs/concepts/database-connectors/mysql#native-type-mappings
+// Relations: https://www.prisma.io/docs/concepts/components/prisma-schema/relations
+// Scalar types: https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#model-field-scalar-types
 
 generator client {
   provider = "prisma-client-js"
@@ -30,17 +30,17 @@ model Permission {
 
 model User {
   id            Int          @id @default(autoincrement())
-  isAdmin       Boolean      @default(false)
+  isAdmin       Boolean
   type          UserType
   name          String       @db.VarChar(512)
+  birthday      DateTime     @db.Date
+  document      String       @unique @db.VarChar(32)
+  phone         String       @unique @db.VarChar(32)
   email         String       @unique @db.VarChar(512)
   password      String       @db.Text
-  status        Status       @default(ativo)
-  phone         String       @unique @db.VarChar(32)
-  document      String       @unique @db.VarChar(32)
-  birthday      DateTime?    @db.Date
-  imageUrl      String?      @db.Text
+  status        Status
   imageKey      String?      @db.Text
+  imageUrl      String?      @db.Text
   code          String?      @db.VarChar(32)
   codeExpiresIn DateTime?    @db.DateTime(0)
   createdAt     DateTime     @default(now())

@@ -27,7 +27,7 @@ class Service {
     });
   }
 
-  public async findByUniqueFields(data: Prisma.UserWhereInput) {
+  public async findByUniqueFields(data: Prisma.UserCreateInput) {
     return await this.repository.findFirst({
       where: {
         OR: [

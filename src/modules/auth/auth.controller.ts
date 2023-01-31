@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-import { IAuth } from 'utils/interfaces/auth.dto';
+import { IAuth } from '@interfaces/auth';
 import { AccountAllFieldsDTO, AccountWithPermissionsDTO } from './dtos/account.dto';
 
 import bcryptjs from 'bcryptjs';

@@ -1,8 +1,8 @@
 import DataSource from '@database/data-source';
-
 import { Prisma, Status } from '@prisma/client';
-import { IAdminPermissionId } from 'utils/interfaces/admin-permission.dto';
-import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
+
+import { IAdminPermissionId } from '@interfaces/admin-permission';
+import { AdminDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 class Service {
   private readonly repository;
@@ -17,7 +17,7 @@ class Service {
         where: { status, isAdmin: true },
         take: limit,
         skip: ((page - 1) * limit),
-        select: AdminOmitSensitiveFieldsDTO,
+        select: AdminDTO,
       }),
       this.repository.count({
         where: { status, isAdmin: true },
@@ -25,10 +25,10 @@ class Service {
     ]);
   }
 
-  public async findById<T extends Prisma.UserSelect>(id: number, dto: T) {
+  public async findById(id: number) {
     return await this.repository.findFirst({
       where: { id, isAdmin: true },
-      select: dto,
+      select: AdminWithPermissionsDTO,
     });
   }
 
@@ -48,7 +48,7 @@ class Service {
     return await this.repository.update({
       where: { id },
       data: { status },
-      select: AdminWithPermissionsDTO,
+      select: AdminDTO,
     });
   }
 }

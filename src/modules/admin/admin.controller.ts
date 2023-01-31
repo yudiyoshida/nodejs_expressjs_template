@@ -1,7 +1,8 @@
 import { RequestHandler } from 'express';
-import { Status } from '@prisma/client';
-import { IAdminPermissionId } from 'utils/interfaces/admin-permission.dto';
-import { AdminOmitSensitiveFieldsDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
+import { Prisma, Status, UserType } from '@prisma/client';
+
+import { IAdminPermissionId } from '@interfaces/admin-permission';
+import { ICreateAdminDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';
 import AuthService from '../auth/auth.service';
@@ -10,7 +11,8 @@ import PermissionService from '../admin-permission/admin-permission.service';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import PaginationHelper from 'shared/helpers/pagination';
+import PaginationHelper from '@helpers/pagination';
+import PasswordHelper from '@helpers/password';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
@@ -29,7 +31,7 @@ class Controller {
 
   public findById: RequestHandler = async(req, res, next) => {
     try {
-      const result = await Service.findById(Number(req.params.id), AdminWithPermissionsDTO);
+      const result = await Service.findById(Number(req.params.id));
       if (!result) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
       else res.status(200).json(result);
 
@@ -41,7 +43,7 @@ class Controller {
 
   public create: RequestHandler = async(req, res, next) => {
     try {
-      const { admin, permissions, password } = req.body;
+      const { admin, permissions, password } = this.createAdminData(req.body);
 
       // Verifica se já existe um registro.
       const user = await AuthService.findByUniqueFields(admin);
@@ -65,7 +67,7 @@ class Controller {
 
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
-      const admin = await Service.findById(Number(req.params.id), AdminOmitSensitiveFieldsDTO);
+      const admin = await Service.findById(Number(req.params.id));
       if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       const result = await Service.updateStatus(admin.id, req.body.status);
@@ -84,6 +86,30 @@ class Controller {
         if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
       }),
     );
+  }
+
+  private createAdminData(body: ICreateAdminDTO) {
+    const password = PasswordHelper.generate();
+
+    const admin: Prisma.UserCreateInput = {
+      isAdmin: true,
+      type: UserType.admin,
+      name: body.name,
+      birthday: body.birthday,
+      document: body.document,
+      phone: body.phone,
+      email: body.email,
+      password: PasswordHelper.hash(password),
+      status: Status.ativo,
+      imageKey: body.imageKey,
+      imageUrl: body.imageUrl,
+    };
+
+    const permissions: IAdminPermissionId[] = body.permissions.map((id) => {
+      return { id };
+    });
+
+    return { admin, permissions, password };
   }
 }
 

@@ -1,35 +1,35 @@
 import { Prisma } from '@prisma/client';
 
-const AdminOmitSensitiveFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
+// input
+export interface ICreateAdminDTO {
+  name: string;
+  birthday: Date;
+  document: string;
+  phone: string;
+  email: string;
+  imageKey?: string;
+  imageUrl?: string;
+  permissions: number[];
+}
+
+// output
+export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
   isAdmin: true,
   type: true,
   name: true,
+  birthday: true,
+  document: true,
+  phone: true,
   email: true,
   status: true,
-  phone: true,
-  document: true,
-  birthday: true,
-  imageUrl: true,
   imageKey: true,
+  imageUrl: true,
   createdAt: true,
   updatedAt: true,
 });
 
-const AdminAllFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
-  ...AdminOmitSensitiveFieldsDTO,
-  password: true,
-  code: true,
-  codeExpiresIn: true,
-});
-
-const AdminWithPermissionsDTO = Prisma.validator<Prisma.UserSelect>()({
-  ...AdminOmitSensitiveFieldsDTO,
+export const AdminWithPermissionsDTO = Prisma.validator<Prisma.UserSelect>()({
+  ...AdminDTO,
   permissions: true,
 });
-
-export {
-  AdminOmitSensitiveFieldsDTO,
-  AdminAllFieldsDTO,
-  AdminWithPermissionsDTO,
-};

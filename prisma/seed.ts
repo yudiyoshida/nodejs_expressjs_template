@@ -13,11 +13,12 @@ class SeedPrisma {
       isAdmin: true,
       type: UserType.admin,
       name: 'Admin Master',
+      birthday: new Date('1996-01-03'),
+      document: '64948845043',
+      phone: '00123456789',
       email: 'admin@getnada.com',
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
-      phone: '00123456789',
-      document: '64948845043',
     };
     this.permissions = Object.values(AdminPermission);
     this.texts = Object.values(TextType);
