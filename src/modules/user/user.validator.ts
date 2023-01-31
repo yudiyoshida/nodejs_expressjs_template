@@ -21,7 +21,7 @@ class Validator extends BaseValidator {
       document: yup.string().trim().cpf().required(),
       birthday: yup.date().max(new Date()),
       password: yup.string().min(8).required(),
-      confirmPassword: yup.string().required(),
+      passwordConfirmation: yup.string().required(),
       imageUrl: yup.string().trim().url(),
       imageKey: yup.string().trim(),
       address: yup.object({
@@ -41,7 +41,7 @@ class Validator extends BaseValidator {
       // Valida inputs do client.
       req.body = await this.validateSchema(schema, req.body);
 
-      if (!PasswordHelper.compare(req.body.password, req.body.confirmPassword)) {
+      if (!PasswordHelper.compare(req.body.password, req.body.passwordConfirmation)) {
         throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
       }
 

@@ -1,5 +1,42 @@
 components:
   schemas:
+    AccountSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        isAdmin:
+          type: boolean
+          example: true
+        type:
+          type: string
+          enum: ['admin', 'app', 'web']
+        name:
+          type: string
+          example: 'User 01'
+        birthday:
+          type: string
+          example: '2000-12-01'
+        document:
+          type: string
+          example: '123.456.789-00'
+        phone:
+          type: string
+          example: '(00) 12345-6789'
+        email:
+          type: string
+          example: 'user@getnada.com'
+        status:
+          type: string
+          example: 'ativo'
+        imageUrl:
+          type: string
+          example: 'http://127.0.0.1:3000/files/image01.png'
+        imageKey:
+          type: string
+          example: 'image01.png'
+
     ForgotPasswordSchema:
       type: object
       properties:
@@ -13,7 +50,7 @@ components:
       properties:
         account:
           allOf:
-            - $ref: '#/components/schemas/UserSchema'
+            - $ref: '#/components/schemas/AccountSchema'
             - $ref: '#/components/schemas/PermissionArraySchema'
         token:
           type: string
@@ -45,7 +82,7 @@ components:
           type: string
           required: true
           example: '12345678'
-        confirmPassword:
+        passwordConfirmation:
           type: string
           required: true
           example: '12345678'
@@ -60,23 +97,23 @@ components:
         code:
           type: string
           required: true
-          example: '1D48'
+          example: 'A1B2'
 
     ValidateFieldsSchema:
       type: object
       properties:
+        document:
+          type: string
+          required: true
+          example: '123.456.789-00'
         email:
           type: string
           required: true
           example: 'user@email.com'
-        # cpf:
-        #   type: string
-        #   required: true
-        #   example: '12345678900'
         phone:
           type: string
           required: true
-          example: '00123456789'
+          example: '(00) 12345-6789'
 
     UpdatePasswordSchema:
       type: object
@@ -89,7 +126,7 @@ components:
           type: string
           required: true
           example: '12341234'
-        confirmPassword:
+        passwordConfirmation:
           type: string
           required: true
           example: '12341234'

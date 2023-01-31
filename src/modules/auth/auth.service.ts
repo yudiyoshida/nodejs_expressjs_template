@@ -1,6 +1,8 @@
 import DataSource from '@database/data-source';
 import { Prisma } from '@prisma/client';
 
+import { AccountDTO } from './dtos/auth.dto';
+
 class Service {
   private readonly repository;
 
@@ -8,10 +10,17 @@ class Service {
     this.repository = DataSource.user;
   }
 
-  public async findById<T extends Prisma.UserSelect>(id: number, dto: T) {
+  public async findById(id: number) {
     return await this.repository.findUnique({
       where: { id },
-      select: dto,
+      select: AccountDTO,
+    });
+  }
+
+  public async findByIdAllFields(id: number) {
+    return await this.repository.findUnique({
+      where: { id },
+      include: { permissions: true },
     });
   }
 
@@ -20,7 +29,7 @@ class Service {
       where: {
         OR: [
           { email: username },
-          { phone: username },
+          // { phone: username },
         ],
       },
       include: { permissions: true },

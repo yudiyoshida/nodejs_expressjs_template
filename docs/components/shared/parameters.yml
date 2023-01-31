@@ -9,19 +9,19 @@ components:
         type: number
         example: 1
 
-    PageParameter:
-      in: query
-      name: page
-      schema:
-        type: number
-        example: 1
-
     LimitParameter:
       in: query
       name: limit
       schema:
         type: number
         example: 10
+
+    PageParameter:
+      in: query
+      name: page
+      schema:
+        type: number
+        example: 1
 
     StatusParameter:
       in: query

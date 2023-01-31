@@ -1,5 +1,5 @@
-# The tag order here controls the default sorting in Swagger UI.
 tags:
+  # The tag order here controls the default sorting in Swagger UI
   - name: Auth
   - name: Admin
   - name: Contact

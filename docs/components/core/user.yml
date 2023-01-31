@@ -28,7 +28,7 @@ components:
           writeOnly: true
           required: true
           example: '12345678'
-        confirmPassword:
+        passwordConfirmation:
           type: string
           writeOnly: true
           required: true

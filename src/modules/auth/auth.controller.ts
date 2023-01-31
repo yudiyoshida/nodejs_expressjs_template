@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
+
 import { IAuth } from '@interfaces/auth';
-import { AccountAllFieldsDTO, AccountWithPermissionsDTO } from './dtos/account.dto';
 
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -12,19 +12,21 @@ import SecurityService from '../security/security.service';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import CodeHelper from 'shared/helpers/code';
-import PasswordHelper from 'shared/helpers/password';
+import CodeHelper from '@helpers/code';
+import PasswordHelper from '@helpers/password';
 
 class Controller {
   public login: RequestHandler = async(req, res, next) => {
     try {
-      const user = await Service.findByUserName(req.body.username);
+      const { username, password } = req.body;
+
+      const user = await Service.findByUserName(username);
       if (!user) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
       if (user.status === Status.pendente) throw new AppException(403, ErrorMessages.PENDING);
       if (user.status === Status.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
       if (user.status !== Status.ativo) throw new AppException(403, ErrorMessages.FORBIDDEN);
 
-      const isPasswordCorrect = bcryptjs.compareSync(req.body.password, user.password);
+      const isPasswordCorrect = bcryptjs.compareSync(password, user.password);
       if (!isPasswordCorrect) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
 
       const payload: IAuth = {
@@ -34,7 +36,7 @@ class Controller {
         permissions: user.permissions,
       };
       const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '7d' });
-      const account = await Service.findById(user.id, AccountWithPermissionsDTO);
+      const account = await Service.findById(user.id);
       res.status(200).json({ token, account });
 
     } catch (err: any) {
@@ -85,7 +87,7 @@ class Controller {
   public updatePassword: RequestHandler = async(req, res, next) => {
     try {
       const { currentPassword, newPassword } = req.body;
-      const user = await Service.findById(req.auth.id, AccountAllFieldsDTO);
+      const user = await Service.findByIdAllFields(req.auth.id);
       if (!user) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       const isPasswordCorrect = bcryptjs.compareSync(currentPassword, user.password);

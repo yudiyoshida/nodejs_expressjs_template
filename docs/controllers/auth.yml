@@ -2,8 +2,8 @@ paths:
   /auth/login:
     post:
       summary: 'Geral - Rota utilizada para login'
-      description: >
-        ## enum username = email | phone
+      # description: >
+        ## username pode ser um email ou phone.
       tags:
         - Auth
       requestBody:

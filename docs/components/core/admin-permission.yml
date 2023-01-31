@@ -6,18 +6,16 @@ components:
       properties:
         id:
           type: number
-          readOnly: true
           example: 1
         title:
           type: string
-          readOnly: true
           example: Dashboard
 
     PermissionArraySchema:
       type: object
+      readOnly : true
       properties:
         permissions:
           type: array
-          readOnly : true
           items:
             $ref: "#/components/schemas/PermissionSchema"

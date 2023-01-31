@@ -1,16 +1,16 @@
 components:
   # Reusable schemas (data models)
   schemas:
-    SuccessSchema:
-      type: object
-      properties:
-        message:
-          type: string
-
     ErrorSchema:
       type: object
       properties:
         error:
+          type: string
+
+    SuccessSchema:
+      type: object
+      properties:
+        message:
           type: string
 
     PaginationSchema:
