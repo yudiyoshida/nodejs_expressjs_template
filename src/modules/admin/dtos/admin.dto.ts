@@ -22,9 +22,12 @@ export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   document: true,
   phone: true,
   email: true,
+  password: false,
   status: true,
   imageKey: true,
   imageUrl: true,
+  code: false,
+  codeExpiresIn: false,
   createdAt: true,
   updatedAt: true,
 });

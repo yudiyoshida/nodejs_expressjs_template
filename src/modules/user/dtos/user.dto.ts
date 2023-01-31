@@ -1,6 +1,32 @@
 import { Prisma } from '@prisma/client';
 
-const UserOmitSensitiveFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
+// input
+export interface ICreateUserDTO {
+  type: string;
+  name: string;
+  birthday: Date;
+  document: string;
+  phone: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  imageKey?: string;
+  imageUrl?: string;
+  address: {
+    nickname?: string;
+    zipcode: string;
+    street: string;
+    number: string;
+    complement?: string;
+    reference?: string;
+    district: string;
+    city: string;
+    state: string;
+  }
+}
+
+// output
+export const UserDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
   isAdmin: true,
   type: true,
@@ -16,12 +42,7 @@ const UserOmitSensitiveFieldsDTO = Prisma.validator<Prisma.UserSelect>()({
   updatedAt: true,
 });
 
-const UserWithAddressesDTO = Prisma.validator<Prisma.UserSelect>()({
-  ...UserOmitSensitiveFieldsDTO,
+export const UserWithAddressesDTO = Prisma.validator<Prisma.UserSelect>()({
+  ...UserDTO,
   addresses: true,
 });
-
-export {
-  UserOmitSensitiveFieldsDTO,
-  UserWithAddressesDTO,
-};

@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 
 import { Prisma, Status, UserType } from '@prisma/client';
-import { UserOmitSensitiveFieldsDTO, UserWithAddressesDTO } from './dtos/user.dto';
+import { UserDTO, UserWithAddressesDTO } from './dtos/user.dto';
 
 class Service {
   private readonly repository;
@@ -18,7 +18,7 @@ class Service {
         where: { type, status, isAdmin: false },
         take: limit,
         skip: ((page - 1) * limit),
-        select: UserOmitSensitiveFieldsDTO,
+        select: UserDTO,
       }),
       this.repository.count({
         where: { type, status, isAdmin: false },
@@ -26,10 +26,10 @@ class Service {
     ]);
   }
 
-  public async findById<T extends Prisma.UserSelect>(id: number, dto: T) {
+  public async findById(id: number) {
     return await this.repository.findFirst({
       where: { id, isAdmin: false },
-      select: dto,
+      select: UserWithAddressesDTO,
     });
   }
 
@@ -54,6 +54,7 @@ class Service {
     return await this.repository.update({
       where: { id },
       data: { status },
+      select: UserDTO,
     });
   }
 }

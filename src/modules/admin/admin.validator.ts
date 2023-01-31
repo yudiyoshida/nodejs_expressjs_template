@@ -28,7 +28,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.errors[0]));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };

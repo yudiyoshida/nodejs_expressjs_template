@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { IUpsertFaqDTO } from './dtos/faq.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -10,7 +11,7 @@ class Validator extends BaseValidator {
   }
 
   public upsert: RequestHandler = async(req, res, next) => {
-    const schema = yup.object().shape({
+    const schema: yup.SchemaOf<IUpsertFaqDTO> = yup.object().shape({
       question: yup.string().trim().required(),
       answer: yup.string().trim().required(),
     });
@@ -20,7 +21,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };

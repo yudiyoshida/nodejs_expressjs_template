@@ -46,8 +46,8 @@ class Controller {
       const { admin, permissions, password } = this.createAdminData(req.body);
 
       // Verifica se já existe um registro.
-      const user = await AuthService.findByUniqueFields(admin);
-      if (user) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      const adminExists = await AuthService.findByUniqueFields(admin);
+      if (adminExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
       await this.checkPermissions(permissions);

@@ -1,5 +1,7 @@
 import { RequestHandler } from 'express';
-import { Prisma, Status, UserType } from '@prisma/client';
+import { UserType } from '@prisma/client';
+
+import { ICreateUserDTO } from './dtos/user.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -13,13 +15,13 @@ class Validator extends BaseValidator {
   }
 
   public create: RequestHandler = async(req, res, next) => {
-    const schema = yup.object().shape({
+    const schema: yup.SchemaOf<ICreateUserDTO> = yup.object().shape({
       type: yup.string().trim().required().oneOf([UserType.app, UserType.web]),
       name: yup.string().trim().required(),
       email: yup.string().trim().email().lowercase().required(),
       phone: yup.string().trim().phone().required(),
       document: yup.string().trim().cpf().required(),
-      birthday: yup.date().max(new Date()),
+      birthday: yup.date().max(new Date()).required(),
       password: yup.string().min(8).required(),
       passwordConfirmation: yup.string().required(),
       imageUrl: yup.string().trim().url(),
@@ -44,14 +46,10 @@ class Validator extends BaseValidator {
       if (!PasswordHelper.compare(req.body.password, req.body.passwordConfirmation)) {
         throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
       }
-
-      // Formata as informações antes de passar para os controllers.
-      req.body.user = this.formatUserBody(req.body);
       next();
 
-
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };
@@ -66,28 +64,10 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };
-
-  private formatUserBody(body: any) {
-    const user: Prisma.UserCreateInput = {
-      isAdmin: false,
-      type: body.type,
-      name: body.name,
-      email: body.email,
-      password: PasswordHelper.hash(body.password),
-      status: Status.ativo,
-      phone: body.phone,
-      document: body.document,
-      birthday: body.birthday,
-      imageUrl: body.imageUrl,
-      imageKey: body.imageKey,
-    };
-
-    return user;
-  }
 }
 
 export default new Validator();

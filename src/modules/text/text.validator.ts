@@ -1,6 +1,8 @@
 import { RequestHandler } from 'express';
 import { TextType } from '@prisma/client';
 
+import { IUpdateTextDTO } from './dtos/text.dto';
+
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
 import BaseValidator from '@abstracts/validator';
@@ -11,7 +13,7 @@ class Validator extends BaseValidator {
   }
 
   public update: RequestHandler = async(req, res, next) => {
-    const schema = yup.object().shape({
+    const schema: yup.SchemaOf<IUpdateTextDTO> = yup.object().shape({
       content: yup.string().trim().required(),
     });
 
@@ -20,7 +22,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };
@@ -35,7 +37,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.inner[0].message));
 
     }
   };
