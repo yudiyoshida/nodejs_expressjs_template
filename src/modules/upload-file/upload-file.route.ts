@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import multer from 'multer';
 import multerOptions from '@config/storage';
-import Controller from './upload.controller';
+import Controller from './upload-file.controller';
 
 const router = Router();
 

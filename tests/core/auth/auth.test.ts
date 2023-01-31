@@ -9,17 +9,6 @@ import SetupDatabase from '../../fixtures/setup';
 // - POST /auth/login (400, blank spaces in username)
 // - POST /auth/login (400, password required)
 
-// - GET /texts?type=abc (400, invalid type)
-// - GET /texts?type=about (200)
-// - UPDATE /texts (401)
-// - UPDATE /texts (403)
-// - UPDATE /texts (400, type required)
-// - UPDATE /texts?type=abc (400, invalid type)
-// - UPDATE /texts?type=about (400, type required)
-// - GET /texts?type=about (200)
-// - GET /texts?type=terms (200)
-// - GET /texts?type=privacy (200)
-
 beforeAll(async() => {
   await SetupDatabase.dropDatabase();
   await SetupDatabase.seedAdminFullAccess();

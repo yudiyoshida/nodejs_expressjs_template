@@ -6,7 +6,7 @@ import AuthRoutes from './auth/auth.route';
 import ContactRoutes from './contact/contact.route';
 import FAQRoutes from './faq/faq.route';
 import TextRoutes from './text/text.route';
-import UploadFileRoutes from './upload-file/upload.route';
+import UploadFileRoutes from './upload-file/upload-file.route';
 import UserRoutes from './user/user.route';
 
 const router = Router();

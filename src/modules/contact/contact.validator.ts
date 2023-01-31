@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
-import BaseValidator from 'utils/abstracts/validator';
+import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {
   constructor() {

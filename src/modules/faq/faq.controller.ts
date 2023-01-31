@@ -3,7 +3,7 @@ import { RequestHandler } from 'express';
 import Service from './faq.service';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import PaginationHelper from 'shared/helpers/pagination';
+import PaginationHelper from '@helpers/pagination';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {

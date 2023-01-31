@@ -6,33 +6,34 @@ import PasswordHelper from '../../src/shared/helpers/password';
 const prisma = new PrismaClient();
 
 class SetupDatabase {
-  private admin: Prisma.UserCreateInput;
+  private userAdmin: Prisma.UserCreateInput;
   private userApp: Prisma.UserCreateInput;
 
   public adminToken: string;
   public userToken: string;
 
   constructor() {
-    this.admin = {
+    this.userAdmin = {
       isAdmin: true,
       type: UserType.admin,
       name: 'Admin Master',
+      birthday: new Date('1996-01-03'),
+      document: '64948845043',
+      phone: '00123456789',
       email: 'admin@getnada.com',
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
-      phone: '00123456789',
-      document: '64948845043',
     };
     this.userApp = {
       isAdmin: false,
       type: UserType.app,
       name: 'User app',
+      birthday: new Date('1996-01-03'),
+      document: '67321917053',
+      phone: '10123456789',
       email: 'userapp@getnada.com',
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
-      phone: '10123456789',
-      document: '67321917053',
-      birthday: new Date('1996-01-03'),
     };
     this.adminToken = '';
     this.userToken = '';
@@ -49,7 +50,7 @@ class SetupDatabase {
 
   public async seedAdminFullAccess() {
     const admin = await prisma.user.create({
-      data: this.admin,
+      data: this.userAdmin,
     });
 
     for (const permission of Object.values(AdminPermission)) {

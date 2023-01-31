@@ -12,7 +12,7 @@ import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import BaseValidator from '@abstracts/validator';
-import PasswordHelper from 'shared/helpers/password';
+import PasswordHelper from '@helpers/password';
 
 class Validator extends BaseValidator {
   constructor() {
