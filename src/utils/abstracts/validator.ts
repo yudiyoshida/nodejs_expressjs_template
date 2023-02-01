@@ -22,7 +22,7 @@ abstract class BaseValidator {
   }
 
   protected validateSchema = async(schema: yup.AnyObjectSchema, dto: any) => {
-    dto = await schema.validate(dto, { abortEarly: false });
+    dto = await schema.validate(dto, { abortEarly: true });
     dto = await schema.cast(dto, { stripUnknown: true });
     return dto;
   };
@@ -33,7 +33,7 @@ abstract class BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -44,7 +44,7 @@ abstract class BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -59,7 +59,7 @@ abstract class BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };

@@ -30,7 +30,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -45,7 +45,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -66,7 +66,7 @@ class Validator extends BaseValidator {
       else throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -86,7 +86,7 @@ class Validator extends BaseValidator {
       else throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -103,7 +103,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
@@ -119,7 +119,7 @@ class Validator extends BaseValidator {
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.inner[0].message));
+      next(new AppException(400, err.message));
 
     }
   };
