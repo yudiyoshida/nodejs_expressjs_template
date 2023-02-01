@@ -141,6 +141,8 @@ paths:
   /auth/validate-code:
     post:
       summary: "Geral - Rota 02/03 para o fluxo de 'Criar conta'"
+      description: >
+        ## A rota 03/03 do fluxo de 'Criar conta' está na categoria User.
       tags:
         - Auth
       requestBody:

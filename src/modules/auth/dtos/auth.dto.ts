@@ -24,8 +24,8 @@ export interface IUpdatePasswordDTO {
 }
 
 export interface IValidateFieldsDTO {
-  email: string;
   document: string;
+  email: string;
   phone: string;
 }
 
