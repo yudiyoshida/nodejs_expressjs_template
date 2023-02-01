@@ -52,5 +52,6 @@ export const AccountDTO = Prisma.validator<Prisma.UserSelect>()({
   codeExpiresIn: false,
   createdAt: true,
   updatedAt: true,
+  addresses: false,
   permissions: true,
 });
