@@ -56,6 +56,7 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+
     post:
       summary: 'Portal admin - Rota utilizada para cadastrar um novo usuário admin'
       description: >
@@ -71,7 +72,7 @@ paths:
             schema:
               allOf:
                 - $ref: "#/components/schemas/AdminSchema"
-                - $ref: "#/components/schemas/PermissionSchema"
+                - $ref: "#/components/schemas/PermissionIdArraySchema"
       responses:
         "201":
           description: "Created"
@@ -80,13 +81,15 @@ paths:
               schema:
                 allOf:
                   - $ref: "#/components/schemas/AdminSchema"
-                  - $ref: "#/components/schemas/PermissionSchema"
+                  - $ref: "#/components/schemas/PermissionArraySchema"
         "400":
           $ref: "#/components/responses/400"
         "401":
           $ref: "#/components/responses/401"
         "403":
           $ref: "#/components/responses/403"
+        "409":
+          $ref: "#/components/responses/409"
         "500":
           $ref: "#/components/responses/500"
 
@@ -119,27 +122,6 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  # /admins/myself:
-  #   get:
-  #     summary: 'Portal admin - Rota utilizada para exibir informações do usuário admin logado'
-  #     tags:
-  #       - Admin
-  #     security:
-  #       - BearerAuth: []
-  #     responses:
-  #       '200':
-  #         description: 'OK'
-  #         content:
-  #           application/json:
-  #             schema:
-  #               allOf:
-  #                 - $ref: '#/components/schemas/AdminSchema'
-  #                 - $ref: '#/components/schemas/PermissionArraySchema'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '500':
-  #         $ref: '#/components/responses/500'
-
   /admins/{id}/update-status:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
@@ -163,7 +145,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
-                  - $ref: '#/components/schemas/PermissionArraySchema'
         '400':
           $ref: '#/components/responses/400'
         '401':

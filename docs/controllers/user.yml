@@ -34,11 +34,13 @@ paths:
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
 
     post:
-      summary: "App [UserType] - Rota 03/03 para o fluxo de 'Criar conta'"
+      summary: "Geral - Rota 03/03 para o fluxo de 'Criar conta'"
       tags:
         - User
       requestBody:
@@ -57,6 +59,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '409':
@@ -81,10 +84,13 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '401':
           $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -105,6 +111,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
+                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
         '401':
           $ref: '#/components/responses/401'
         '500':

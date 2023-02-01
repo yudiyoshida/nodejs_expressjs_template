@@ -19,14 +19,10 @@ components:
           type: string
           required: true
           example: 'User 01'
-        email:
+        birthday:
           type: string
           required: true
-          example: 'user@getnada.com'
-        status:
-          type: string
-          readOnly: true
-          example: 'ativo'
+          example: '1996-12-31'
         document:
           type: string
           required: true
@@ -35,13 +31,17 @@ components:
           type: string
           required: true
           example: '12345678900'
-        birthday:
+        email:
           type: string
           required: true
-          example: '1996-12-31'
-        imageUrl:
+          example: 'user@getnada.com'
+        status:
           type: string
-          example: 'http://127.0.0.1:3000/files/file01.png'
+          readOnly: true
+          example: 'ativo'
         imageKey:
           type: string
-          example: 'file01.png'
+          example: 'image01.png'
+        imageUrl:
+          type: string
+          example: 'http://127.0.0.1:3000/files/image01.png'

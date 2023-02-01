@@ -12,8 +12,8 @@ class Validator extends BaseValidator {
 
   public upsert: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IUpsertFaqDTO> = yup.object().shape({
-      question: yup.string().trim().required(),
       answer: yup.string().trim().required(),
+      question: yup.string().trim().required(),
     });
 
     try {

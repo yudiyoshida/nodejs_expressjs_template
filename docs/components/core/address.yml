@@ -56,3 +56,11 @@ components:
       properties:
         address:
           $ref: '#/components/schemas/AddressSchema'
+
+    AdressArrayObjectSchema:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressSchema'

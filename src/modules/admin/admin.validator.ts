@@ -12,16 +12,16 @@ class Validator extends BaseValidator {
 
   public create: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<ICreateAdminDTO> = yup.object().shape({
-      name: yup.string().trim().required(),
-      birthday: yup.date().max(new Date()).required(),
-      document: yup.string().trim().cpf().required(),
-      phone: yup.string().trim().phone().required(),
-      email: yup.string().trim().email().lowercase().required(),
-      imageKey: yup.string(),
-      imageUrl: yup.string().url(),
       permissions: yup.array().of(
         yup.number().positive().integer().required(),
       ).min(1).required(),
+      imageUrl: yup.string().url(),
+      imageKey: yup.string(),
+      email: yup.string().trim().email().lowercase().required(),
+      phone: yup.string().trim().phone().required(),
+      document: yup.string().trim().cpf().required(),
+      birthday: yup.date().max(new Date()).required(),
+      name: yup.string().trim().required(),
     });
     try {
       req.body = await this.validateSchema(schema, req.body);

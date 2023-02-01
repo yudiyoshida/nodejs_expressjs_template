@@ -19,3 +19,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PermissionSchema"
+
+    PermissionIdArraySchema:
+      type: object
+      writeOnly : true
+      properties:
+        permissions:
+            $ref: "#/components/schemas/ArrayNumbers"

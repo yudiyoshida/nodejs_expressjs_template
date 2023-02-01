@@ -28,3 +28,9 @@ components:
         page:
           type: number
           example: 1
+
+    ArrayNumbers:
+      type: array
+      items:
+        type: number
+        example: 1
