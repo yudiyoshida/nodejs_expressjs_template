@@ -2,7 +2,7 @@ export default {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: '[name] API REST Documentation',
+      title: '[name] REST API Documentation',
       version: '1.0.0',
     },
     servers: [

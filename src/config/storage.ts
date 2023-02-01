@@ -9,7 +9,6 @@ import AppException from '@errors/app-exception';
 const ALLOWED_MIMES = ['image/jpeg', 'image/png'];
 const MAX_SIZE_TWO_MEGABYTES = 2 * 1024 * 1024;
 
-// TODO: verificar se upload após ter um erro 415 funciona (api do ezrent dá requisição infinita ao tentar fazer upload após erro 415).
 const storageTypes = {
   local: multer.diskStorage({
     destination: process.env.STORAGE_LOCAL as string,
