@@ -12,7 +12,7 @@ class Service {
     this.securityRepository = DataSource.security;
   }
 
-  public async findAllUsers(limit: number, page: number, type: UserType, status: Status) {
+  public async findAll(limit: number, page: number, type: UserType, status: Status) {
     return await DataSource.$transaction([
       this.repository.findMany({
         where: { type, status, isAdmin: false },

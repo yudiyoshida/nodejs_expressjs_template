@@ -20,8 +20,8 @@ class Controller {
       // Se for admin, serão exibidos users ativos e inativos.
       // Caso contrário, só serão exibidos users ativos.
       const result = (req.auth.isAdmin)
-        ? await Service.findAllUsers(Number(limit), Number(page), type as UserType, status as Status)
-        : await Service.findAllUsers(Number(limit), Number(page), type as UserType, Status.ativo);
+        ? await Service.findAll(Number(limit), Number(page), type as UserType, status as Status)
+        : await Service.findAll(Number(limit), Number(page), type as UserType, Status.ativo);
 
       const resultPaginated = PaginationHelper.paginate(result, Number(limit), Number(page));
       res.status(200).json(resultPaginated);
