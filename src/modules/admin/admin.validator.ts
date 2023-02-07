@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { ICreateAdminDTO } from './dtos/admin.dto';
+import { IUpsertAdminDTO } from './dtos/admin.dto';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
@@ -10,8 +10,8 @@ class Validator extends BaseValidator {
     super();
   }
 
-  public create: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<ICreateAdminDTO> = yup.object().shape({
+  public upsert: RequestHandler = async(req, res, next) => {
+    const schema: yup.SchemaOf<IUpsertAdminDTO> = yup.object().shape({
       permissions: yup.array().of(
         yup.number().positive().integer().required(),
       ).min(1).required(),

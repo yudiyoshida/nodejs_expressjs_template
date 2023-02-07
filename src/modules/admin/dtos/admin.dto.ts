@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 
 // input
-export interface ICreateAdminDTO {
+export interface IUpsertAdminDTO {
   name: string;
   birthday: Date;
   document: string;

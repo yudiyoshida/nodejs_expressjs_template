@@ -1,6 +1,5 @@
 import DataSource from '@database/data-source';
 import { Prisma } from '@prisma/client';
-
 import { AccountDTO } from './dtos/auth.dto';
 
 class Service {
@@ -39,6 +38,21 @@ class Service {
   public async findByUniqueFields(data: Prisma.UserCreateInput) {
     return await this.repository.findFirst({
       where: {
+        OR: [
+          { document: data.document },
+          { email: data.email },
+          { phone: data.phone },
+        ],
+      },
+    });
+  }
+
+  public async findByUniqueFieldsExceptMe(id: number, data: any) {
+    return await this.repository.findFirst({
+      where: {
+        NOT: [
+          { id },
+        ],
         OR: [
           { document: data.document },
           { email: data.email },

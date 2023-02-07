@@ -44,6 +44,29 @@ class Service {
     });
   }
 
+  public async update(id: number, data: Prisma.UserUpdateInput, permissions: IAdminPermissionId[]) {
+    return DataSource.$transaction([
+      this.repository.update({
+        where: { id },
+        data: {
+          permissions: {
+            set: [],
+          },
+        },
+      }),
+      this.repository.update({
+        where: { id },
+        data: {
+          ...data,
+          permissions: {
+            connect: permissions,
+          },
+        },
+        select: AdminWithPermissionsDTO,
+      }),
+    ]);
+  }
+
   public async updateStatus(id: number, status: Status) {
     return await this.repository.update({
       where: { id },

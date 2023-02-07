@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 import { Prisma, Status, UserType } from '@prisma/client';
 
 import { IAdminPermissionId } from '@interfaces/admin-permission';
-import { ICreateAdminDTO } from './dtos/admin.dto';
+import { IUpsertAdminDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';
 import AuthService from '../auth/auth.service';
@@ -65,6 +65,31 @@ class Controller {
     }
   };
 
+  public update: RequestHandler = async(req, res, next) => {
+    try {
+      const { admin, permissions } = this.updateAdminData(req.body);
+
+      // Verifica se o usuário admin existe.
+      const account = await Service.findById(Number(req.params.id));
+      if (!account) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+
+      // Verifica se já existe um registro.
+      const adminExists = await AuthService.findByUniqueFieldsExceptMe(Number(req.params.id), admin);
+      if (adminExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+
+      // Checa se as permissões existem.
+      await this.checkPermissions(permissions);
+
+      // Atualiza o usuário admin.
+      const result = await Service.update(account.id, admin, permissions);
+      res.status(201).json(result[1]);
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
       const admin = await Service.findById(Number(req.params.id));
@@ -88,7 +113,7 @@ class Controller {
     );
   }
 
-  private createAdminData(body: ICreateAdminDTO) {
+  private createAdminData(body: IUpsertAdminDTO) {
     const password = PasswordHelper.generate();
 
     const admin: Prisma.UserCreateInput = {
@@ -110,6 +135,26 @@ class Controller {
     });
 
     return { admin, permissions, password };
+  }
+
+  private updateAdminData(body: IUpsertAdminDTO) {
+    const admin: Prisma.UserUpdateInput = {
+      isAdmin: true,
+      type: UserType.admin,
+      name: body.name,
+      birthday: body.birthday,
+      document: body.document,
+      phone: body.phone,
+      email: body.email,
+      imageKey: body.imageKey,
+      imageUrl: body.imageUrl,
+    };
+
+    const permissions: IAdminPermissionId[] = body.permissions.map((id) => {
+      return { id };
+    });
+
+    return { admin, permissions };
   }
 }
 

@@ -16,11 +16,10 @@ router
   )
   .post(
     Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
-    Validator.create,
+    Validator.upsert,
     Controller.create,
   );
 
-//TODO: PUT /admins/:id
 //TODO: DELETE /admins/:id
 router
   .route('/:id')
@@ -28,6 +27,11 @@ router
     Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
     Validator.pathParams,
     Controller.findById,
+  )
+  .put(
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Validator.pathParams, Validator.upsert,
+    Controller.update,
   );
 
 router
