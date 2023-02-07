@@ -12,7 +12,7 @@ class Service {
   }
 
   public async findAll(limit: number, page: number, status: Status) {
-    return await DataSource.$transaction([
+    return DataSource.$transaction([
       this.repository.findMany({
         where: { status, isAdmin: true },
         take: limit,
@@ -26,7 +26,7 @@ class Service {
   }
 
   public async findById(id: number) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: { id, isAdmin: true },
       select: AdminWithPermissionsDTO,
     });
@@ -67,8 +67,14 @@ class Service {
     ]);
   }
 
+  public async delete(id: number) {
+    return this.repository.delete({
+      where: { id },
+    });
+  }
+
   public async updateStatus(id: number, status: Status) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data: { status },
       select: AdminDTO,

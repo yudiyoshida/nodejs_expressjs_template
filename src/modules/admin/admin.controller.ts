@@ -90,6 +90,20 @@ class Controller {
     }
   };
 
+  public delete: RequestHandler = async(req, res, next) => {
+    try {
+      const admin = await Service.findById(Number(req.params.id));
+      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+
+      await Service.delete(admin.id);
+      res.sendStatus(204);
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
       const admin = await Service.findById(Number(req.params.id));

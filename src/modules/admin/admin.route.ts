@@ -20,7 +20,6 @@ router
     Controller.create,
   );
 
-//TODO: DELETE /admins/:id
 router
   .route('/:id')
   .get(
@@ -32,6 +31,11 @@ router
     Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
     Validator.pathParams, Validator.upsert,
     Controller.update,
+  )
+  .delete(
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Validator.pathParams,
+    Controller.delete,
   );
 
 router
