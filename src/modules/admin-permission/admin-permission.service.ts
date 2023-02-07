@@ -8,13 +8,13 @@ class Service {
   }
 
   public async findAll() {
-    return await this.repository.findMany({
+    return this.repository.findMany({
       orderBy: { id: 'asc' },
     });
   }
 
   public async findById(id: number) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { id },
     });
   }

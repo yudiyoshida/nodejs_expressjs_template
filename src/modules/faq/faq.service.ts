@@ -9,7 +9,7 @@ class Service {
   }
 
   public async findAll(limit: number, page: number) {
-    return await DataSource.$transaction([
+    return DataSource.$transaction([
       this.repository.findMany({
         take: limit,
         skip: ((page - 1) * limit),
@@ -20,26 +20,26 @@ class Service {
   }
 
   public async findById(id: number) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { id },
     });
   }
 
   public async create(data: Prisma.FaqCreateInput) {
-    return await this.repository.create({
+    return this.repository.create({
       data,
     });
   }
 
   public async update(id: number, data: Prisma.FaqUpdateInput) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data,
     });
   }
 
   public async delete(id: number) {
-    return await this.repository.delete({
+    return this.repository.delete({
       where: { id },
     });
   }

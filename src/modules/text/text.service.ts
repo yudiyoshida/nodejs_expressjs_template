@@ -9,13 +9,13 @@ class Service {
   }
 
   public async findByType(type: TextType) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { type },
     });
   }
 
   public async update(type: TextType, data: Prisma.TextUpdateInput) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { type },
       data,
     });

@@ -13,7 +13,7 @@ class Service {
   }
 
   public async findAll(limit: number, page: number, type: UserType, status: Status) {
-    return await DataSource.$transaction([
+    return DataSource.$transaction([
       this.repository.findMany({
         where: { type, status, isAdmin: false },
         take: limit,
@@ -27,7 +27,7 @@ class Service {
   }
 
   public async findById(id: number) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: { id, isAdmin: false },
       select: UserWithAddressesDTO,
     });
@@ -51,7 +51,7 @@ class Service {
   }
 
   public async updateStatus(id: number, status: Status) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data: { status },
       select: UserDTO,

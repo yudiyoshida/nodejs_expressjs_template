@@ -8,19 +8,19 @@ class Service {
   }
 
   public async findByValidatedEmail(email: string) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: { email, validated: true },
     });
   }
 
   public async findByEmailAndCode(email: string, code: string) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: { email, code },
     });
   }
 
   public async storeCode(email: string, code: string, codeExpiresIn: Date) {
-    return await this.repository.upsert({
+    return this.repository.upsert({
       where: {
         email,
       },
@@ -38,7 +38,7 @@ class Service {
   }
 
   public async validateCode(id: number) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data: {
         code: null,

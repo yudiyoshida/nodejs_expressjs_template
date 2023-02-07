@@ -10,21 +10,21 @@ class Service {
   }
 
   public async findById(id: number) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { id },
       select: AccountDTO,
     });
   }
 
   public async findByIdAllFields(id: number) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { id },
       include: { permissions: true },
     });
   }
 
   public async findByUserName(username: string) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: {
         OR: [
           { email: username },
@@ -36,7 +36,7 @@ class Service {
   }
 
   public async findByUniqueFields(data: Prisma.UserCreateInput) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: {
         OR: [
           { document: data.document },
@@ -48,7 +48,7 @@ class Service {
   }
 
   public async findByUniqueFieldsExceptMe(id: number, data: any) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: {
         NOT: [
           { id },
@@ -63,19 +63,19 @@ class Service {
   }
 
   public async findByEmail(email: string) {
-    return await this.repository.findUnique({
+    return this.repository.findUnique({
       where: { email },
     });
   }
 
   public async findByEmailAndCode(email: string, code: string) {
-    return await this.repository.findFirst({
+    return this.repository.findFirst({
       where: { email, code },
     });
   }
 
   public async storeCode(id: number, code: string, codeExpiresIn: Date) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data: {
         code,
@@ -85,7 +85,7 @@ class Service {
   }
 
   public async changePassword(id: number, password: string) {
-    return await this.repository.update({
+    return this.repository.update({
       where: { id },
       data: {
         password,
