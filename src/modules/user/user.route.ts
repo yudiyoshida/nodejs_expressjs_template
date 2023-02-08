@@ -24,6 +24,11 @@ router
   .get(
     Auth.isAuthenticated,
     Controller.findMyself,
+  )
+  .put(
+    Auth.isAuthenticated,
+    Validator.update,
+    Controller.update,
   );
 
 //TODO: PUT /users/:id

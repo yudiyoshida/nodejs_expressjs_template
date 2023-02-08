@@ -59,7 +59,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
+                  - $ref: '#/components/schemas/AdressObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '409':
@@ -84,7 +84,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
+                  - $ref: '#/components/schemas/AdressObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -111,7 +111,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressArrayObjectSchema'
+                  - $ref: '#/components/schemas/AdressObjectSchema'
         '401':
           $ref: '#/components/responses/401'
         '500':

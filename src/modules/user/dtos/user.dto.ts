@@ -25,6 +25,27 @@ export interface ICreateUserDTO {
   }
 }
 
+export interface IUpdateUserDTO {
+  name: string;
+  birthday: Date;
+  document: string;
+  phone: string;
+  email: string;
+  imageKey?: string;
+  imageUrl?: string;
+  address: {
+    nickname?: string;
+    zipcode: string;
+    street: string;
+    number: string;
+    complement?: string;
+    reference?: string;
+    district: string;
+    city: string;
+    state: string;
+  }
+}
+
 // output
 export const UserDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
@@ -45,7 +66,7 @@ export const UserDTO = Prisma.validator<Prisma.UserSelect>()({
   updatedAt: true,
 });
 
-export const UserWithAddressesDTO = Prisma.validator<Prisma.UserSelect>()({
+export const UserWithAddressDTO = Prisma.validator<Prisma.UserSelect>()({
   ...UserDTO,
-  addresses: true,
+  address: true,
 });

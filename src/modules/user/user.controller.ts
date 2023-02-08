@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Prisma, Status, UserType } from '@prisma/client';
 
-import { ICreateUserDTO } from './dtos/user.dto';
+import { ICreateUserDTO, IUpdateUserDTO } from './dtos/user.dto';
 
 import Service from './user.service';
 import AuthService from '../auth/auth.service';
@@ -78,6 +78,24 @@ class Controller {
     }
   };
 
+  public update: RequestHandler = async(req, res, next) => {
+    try {
+      const { user, address } = this.updateUserData(req.body);
+
+      // Verifica se já existe um registro.
+      const userExists = await AuthService.findByUniqueFieldsExceptMe(req.auth.id, user);
+      if (userExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+
+      // Atualiza o usuário.
+      const result = await Service.update(req.auth.id, user, address);
+      res.status(200).json(result);
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
       const user = await Service.findById(Number(req.params.id));
@@ -108,6 +126,32 @@ class Controller {
     };
 
     const address: Prisma.AddressCreateInput = {
+      nickname: body.address.nickname,
+      zipcode: body.address.zipcode,
+      street: body.address.street,
+      number: body.address.number,
+      complement: body.address.complement,
+      reference: body.address.reference,
+      district: body.address.district,
+      city: body.address.city,
+      state: body.address.state,
+    };
+
+    return { user, address };
+  }
+
+  private updateUserData(body: IUpdateUserDTO) {
+    const user: Prisma.UserUpdateInput = {
+      name: body.name,
+      birthday: body.birthday,
+      document: body.document,
+      phone: body.phone,
+      email: body.email,
+      imageKey: body.imageKey,
+      imageUrl: body.imageUrl,
+    };
+
+    const address: Prisma.AddressUpdateInput = {
       nickname: body.address.nickname,
       zipcode: body.address.zipcode,
       street: body.address.street,

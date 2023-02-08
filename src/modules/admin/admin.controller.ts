@@ -153,8 +153,6 @@ class Controller {
 
   private updateAdminData(body: IUpsertAdminDTO) {
     const admin: Prisma.UserUpdateInput = {
-      isAdmin: true,
-      type: UserType.admin,
       name: body.name,
       birthday: body.birthday,
       document: body.document,
