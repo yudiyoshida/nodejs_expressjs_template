@@ -63,6 +63,12 @@ class Service {
     });
   }
 
+  public async delete(id: number) {
+    return this.repository.delete({
+      where: { id },
+    });
+  }
+
   public async updateStatus(id: number, status: Status) {
     return this.repository.update({
       where: { id },

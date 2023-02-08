@@ -29,10 +29,12 @@ router
     Auth.isAuthenticated,
     Validator.update,
     Controller.update,
+  )
+  .delete(
+    Auth.isAuthenticated,
+    Controller.delete,
   );
 
-//TODO: PUT /users/:id
-//TODO: DELETE /users/:id (CASCADE)
 router
   .route('/:id')
   .get(
