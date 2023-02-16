@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 class SetupDatabase {
   private userAdmin: Prisma.UserCreateInput;
   private userApp: Prisma.UserCreateInput;
+  private userAddress: Prisma.AddressCreateInput;
 
   public adminToken: string;
   public userToken: string;
@@ -34,6 +35,17 @@ class SetupDatabase {
       email: 'userapp@getnada.com',
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
+    };
+    this.userAddress={
+      nickname: 'Home',
+      zipcode: '00000000',
+      street: 'Rua X',
+      number: '123',
+      complement: 'Apto 101',
+      reference: 'Próximo ao museu',
+      district: 'Bairro X',
+      city: 'Cidade X',
+      state: 'Estado X',
     };
     this.adminToken = '';
     this.userToken = '';
@@ -67,7 +79,12 @@ class SetupDatabase {
 
   public async seedUserApp() {
     await prisma.user.create({
-      data: this.userApp,
+      data: {
+        ...this.userApp,
+        address: {
+          create: this.userAddress,
+        },
+      },
     });
   }
 

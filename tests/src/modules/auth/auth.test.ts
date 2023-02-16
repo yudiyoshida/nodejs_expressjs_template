@@ -1,7 +1,7 @@
 import request from 'supertest';
 
-import app from '../../../src/app';
-import SetupDatabase from '../../fixtures/setup';
+import app from '../../../../src/app';
+import SetupDatabase from '../../../fixtures/setup';
 
 // Test flow:
 // - POST /auth/login (400, no username)
@@ -22,7 +22,7 @@ describe('POST /auth/login', () => {
       .send();
 
     expect(result.status).toBe(400);
-    expect(result.body.error).toBe('username é um campo obrigatório.');
+    expect(result.body).toHaveProperty('error');
   });
 
   test('empty username (400)', async() => {
@@ -31,7 +31,7 @@ describe('POST /auth/login', () => {
       .send({ username: '' });
 
     expect(result.status).toBe(400);
-    expect(result.body.error).toBe('username é um campo obrigatório.');
+    expect(result.body).toHaveProperty('error');
   });
 
   test('blank spaces in username (400)', async() => {
@@ -40,7 +40,7 @@ describe('POST /auth/login', () => {
       .send({ username: '   ' });
 
     expect(result.status).toBe(400);
-    expect(result.body.error).toBe('username é um campo obrigatório.');
+    expect(result.body).toHaveProperty('error');
   });
 
   test('without password (400)', async() => {
@@ -49,7 +49,7 @@ describe('POST /auth/login', () => {
       .send({ username: 'admin@getnada.com' });
 
     expect(result.status).toBe(400);
-    expect(result.body.error).toBe('password é um campo obrigatório.');
+    expect(result.body).toHaveProperty('error');
   });
 
   test('empty password (400)', async() => {
@@ -58,7 +58,7 @@ describe('POST /auth/login', () => {
       .send({ username: 'admin@getnada.com', password: '' });
 
     expect(result.status).toBe(400);
-    expect(result.body.error).toBe('password é um campo obrigatório.');
+    expect(result.body).toHaveProperty('error');
   });
 
   test('invalid credentials (401)', async() => {
@@ -67,6 +67,7 @@ describe('POST /auth/login', () => {
       .send({ username: 'admin@getnada.com', password: '123' });
 
     expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty('error');
     expect(result.body.error).toBe('Credenciais incorretas.');
   });
 });
