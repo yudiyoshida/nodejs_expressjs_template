@@ -9,7 +9,7 @@ class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
     passport.authenticate('jwt', { session: false, failWithError: true },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (err, payload, info) => {
+      (err: any, payload: any, info: any) => {
         if (err) return next(err);
         if (!payload) return next(new AppException(401, ErrorMessages.UNATHORIZED));
         else req.auth = payload;
