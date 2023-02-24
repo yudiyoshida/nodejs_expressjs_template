@@ -10,6 +10,7 @@ const router = Router();
 router
   .route('/')
   .get(
+    Validator.queryParams,
     Controller.findAll,
   )
   .post(
