@@ -10,6 +10,7 @@ const router = Router();
 router
   .route('/')
   .get(
+    FaqValidator.queryParams,
     FaqController.findAll,
   )
   .post(
