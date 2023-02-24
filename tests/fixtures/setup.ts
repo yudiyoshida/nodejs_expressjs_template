@@ -36,7 +36,7 @@ class SetupDatabase {
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
     };
-    this.userAddress={
+    this.userAddress = {
       nickname: 'Home',
       zipcode: '00000000',
       street: 'Rua X',
@@ -110,13 +110,13 @@ class SetupDatabase {
   }
 
   public async loginUser(app: any) {
-    const admin = await request(app)
+    const user = await request(app)
       .post('/auth/login')
       .send({
         'username': 'userapp@getnada.com',
         'password': '123456789',
       });
-    this.userToken = admin.body.token;
+    this.userToken = user.body.token;
   }
 }
 
