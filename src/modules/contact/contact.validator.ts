@@ -12,9 +12,9 @@ class Validator extends BaseValidator {
 
   public sendEmail: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<ISendEmailDTO> = yup.object().shape({
-      message: yup.string().trim().required(),
-      email: yup.string().trim().email().lowercase().required(),
       name: yup.string().trim().required(),
+      email: yup.string().trim().email().lowercase().required(),
+      message: yup.string().trim().required(),
     });
 
     try {
