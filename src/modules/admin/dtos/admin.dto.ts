@@ -15,7 +15,7 @@ export interface IUpsertAdminDTO {
 // output
 export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
-  isAdmin: true,
+  isAdmin: false,
   type: true,
   name: true,
   birthday: true,

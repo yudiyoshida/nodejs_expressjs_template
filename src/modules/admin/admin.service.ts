@@ -45,16 +45,19 @@ class Service {
   }
 
   public async update(id: number, data: Prisma.UserUpdateInput, permissions: IAdminPermissionId[]) {
-    return DataSource.$transaction([
-      this.repository.update({
+    return DataSource.$transaction(async(tx) => {
+      // Remove relacionamento entre user admin e permissions.
+      await tx.user.update({
         where: { id },
         data: {
           permissions: {
             set: [],
           },
         },
-      }),
-      this.repository.update({
+      });
+
+      // Atualiza user admin, inclusive as permissions.
+      return await tx.user.update({
         where: { id },
         data: {
           ...data,
@@ -63,8 +66,9 @@ class Service {
           },
         },
         select: AdminWithPermissionsDTO,
-      }),
-    ]);
+      });
+    });
+
   }
 
   public async delete(id: number) {

@@ -46,8 +46,8 @@ class Controller {
       const { admin, permissions, password } = this.createAdminData(req.body);
 
       // Verifica se já existe um registro.
-      const adminExists = await AuthService.findByUniqueFields(admin);
-      if (adminExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      const account = await AuthService.findByUniqueFields(admin);
+      if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
       await this.checkPermissions(permissions);
@@ -70,19 +70,19 @@ class Controller {
       const { admin, permissions } = this.updateAdminData(req.body);
 
       // Verifica se o usuário admin existe.
-      const account = await Service.findById(Number(req.params.id));
-      if (!account) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+      const adminExists = await Service.findById(Number(req.params.id));
+      if (!adminExists) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       // Verifica se já existe um registro.
-      const adminExists = await AuthService.findByUniqueFieldsExceptMe(Number(req.params.id), admin);
-      if (adminExists) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      const account = await AuthService.findByUniqueFieldsExceptMe(Number(req.params.id), admin);
+      if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
       await this.checkPermissions(permissions);
 
       // Atualiza o usuário admin.
-      const result = await Service.update(account.id, admin, permissions);
-      res.status(201).json(result[1]);
+      const result = await Service.update(adminExists.id, admin, permissions);
+      res.status(200).json(result);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -129,6 +129,7 @@ class Controller {
 
   private createAdminData(body: IUpsertAdminDTO) {
     const password = PasswordHelper.generate();
+    const permissions = this.formatAdminPermissions(body.permissions);
 
     const admin: Prisma.UserCreateInput = {
       isAdmin: true,
@@ -144,14 +145,11 @@ class Controller {
       imageUrl: body.imageUrl,
     };
 
-    const permissions: IAdminPermissionId[] = body.permissions.map((id) => {
-      return { id };
-    });
-
     return { admin, permissions, password };
   }
 
   private updateAdminData(body: IUpsertAdminDTO) {
+    const permissions = this.formatAdminPermissions(body.permissions);
     const admin: Prisma.UserUpdateInput = {
       name: body.name,
       birthday: body.birthday,
@@ -162,11 +160,13 @@ class Controller {
       imageUrl: body.imageUrl,
     };
 
-    const permissions: IAdminPermissionId[] = body.permissions.map((id) => {
+    return { admin, permissions };
+  }
+
+  private formatAdminPermissions(permissions: number[]): IAdminPermissionId[] {
+    return permissions.map((id) => {
       return { id };
     });
-
-    return { admin, permissions };
   }
 }
 
