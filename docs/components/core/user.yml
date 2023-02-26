@@ -7,10 +7,6 @@ components:
           type: number
           readOnly: true
           example: 1
-        isAdmin:
-          type: boolean
-          readOnly: true
-          example: true
         type:
           type: string
           readOnly: true

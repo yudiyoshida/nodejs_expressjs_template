@@ -146,9 +146,11 @@ class Controller {
       number: body.address.number,
       complement: body.address.complement,
       reference: body.address.reference,
-      district: body.address.district,
+      neighborhood: body.address.neighborhood,
       city: body.address.city,
       state: body.address.state,
+      lat: body.address.lat,
+      lng: body.address.lng,
     };
 
     return { user, address };
@@ -172,9 +174,11 @@ class Controller {
       number: body.address.number,
       complement: body.address.complement,
       reference: body.address.reference,
-      district: body.address.district,
+      neighborhood: body.address.neighborhood,
       city: body.address.city,
       state: body.address.state,
+      lat: body.address.lat,
+      lng: body.address.lng,
     };
 
     return { user, address };

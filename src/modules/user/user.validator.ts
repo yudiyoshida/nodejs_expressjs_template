@@ -16,27 +16,29 @@ class Validator extends BaseValidator {
 
   public create: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<ICreateUserDTO> = yup.object().shape({
-      address: yup.object({
-        state: yup.string().trim().required(),
-        city: yup.string().trim().required(),
-        district: yup.string().trim().required(),
-        reference: yup.string().trim(),
-        complement: yup.string().trim(),
-        number: yup.string().trim().required(),
-        street: yup.string().trim().required(),
-        zipcode: yup.string().trim().required(),
-        nickname: yup.string().trim(),
-      }),
-      imageUrl: yup.string().trim().url(),
-      imageKey: yup.string().trim(),
-      passwordConfirmation: yup.string().required(),
-      password: yup.string().min(8).required(),
-      email: yup.string().trim().email().lowercase().required(),
-      phone: yup.string().trim().phone().required(),
-      document: yup.string().trim().cpf().required(),
-      birthday: yup.date().max(new Date()).required(),
-      name: yup.string().trim().required(),
       type: yup.string().trim().required().oneOf([UserType.app, UserType.web]),
+      name: yup.string().trim().required(),
+      birthday: yup.date().max(new Date()).required(),
+      document: yup.string().trim().cpf().required(),
+      phone: yup.string().trim().phone().required(),
+      email: yup.string().trim().email().lowercase().required(),
+      password: yup.string().min(8).required(),
+      passwordConfirmation: yup.string().required(),
+      imageKey: yup.string().trim(),
+      imageUrl: yup.string().trim().url(),
+      address: yup.object({
+        nickname: yup.string().trim(),
+        zipcode: yup.string().trim().required(),
+        street: yup.string().trim().required(),
+        number: yup.string().trim().required(),
+        complement: yup.string().trim(),
+        reference: yup.string().trim(),
+        neighborhood: yup.string().trim().required(),
+        city: yup.string().trim().required(),
+        state: yup.string().trim().required(),
+        lat: yup.string().trim(),
+        lng: yup.string().trim(),
+      }),
     });
 
     try {
@@ -55,24 +57,26 @@ class Validator extends BaseValidator {
 
   public update: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IUpdateUserDTO> = yup.object().shape({
-      address: yup.object({
-        state: yup.string().trim().required(),
-        city: yup.string().trim().required(),
-        district: yup.string().trim().required(),
-        reference: yup.string().trim(),
-        complement: yup.string().trim(),
-        number: yup.string().trim().required(),
-        street: yup.string().trim().required(),
-        zipcode: yup.string().trim().required(),
-        nickname: yup.string().trim(),
-      }),
-      imageUrl: yup.string().trim().url(),
-      imageKey: yup.string().trim(),
-      email: yup.string().trim().email().lowercase().required(),
-      phone: yup.string().trim().phone().required(),
-      document: yup.string().trim().cpf().required(),
-      birthday: yup.date().max(new Date()).required(),
       name: yup.string().trim().required(),
+      birthday: yup.date().max(new Date()).required(),
+      document: yup.string().trim().cpf().required(),
+      phone: yup.string().trim().phone().required(),
+      email: yup.string().trim().email().lowercase().required(),
+      imageKey: yup.string().trim(),
+      imageUrl: yup.string().trim().url(),
+      address: yup.object({
+        nickname: yup.string().trim(),
+        zipcode: yup.string().trim().required(),
+        street: yup.string().trim().required(),
+        number: yup.string().trim().required(),
+        complement: yup.string().trim(),
+        reference: yup.string().trim(),
+        neighborhood: yup.string().trim().required(),
+        city: yup.string().trim().required(),
+        state: yup.string().trim().required(),
+        lat: yup.string().trim(),
+        lng: yup.string().trim(),
+      }),
     });
 
     try {

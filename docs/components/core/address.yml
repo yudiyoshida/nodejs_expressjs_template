@@ -28,7 +28,7 @@ components:
         reference:
           type: string
           example: 'Campo opcional'
-        district:
+        neighborhood:
           type: string
           required: true
           example: 'Bairro X'

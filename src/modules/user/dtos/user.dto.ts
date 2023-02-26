@@ -1,5 +1,19 @@
 import { Prisma } from '@prisma/client';
 
+interface IAddressDTO {
+  nickname?: string;
+  zipcode: string;
+  street: string;
+  number: string;
+  complement?: string;
+  reference?: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  lat?: string;
+  lng?: string;
+}
+
 // input
 export interface ICreateUserDTO {
   type: string;
@@ -12,17 +26,7 @@ export interface ICreateUserDTO {
   passwordConfirmation: string;
   imageKey?: string;
   imageUrl?: string;
-  address: {
-    nickname?: string;
-    zipcode: string;
-    street: string;
-    number: string;
-    complement?: string;
-    reference?: string;
-    district: string;
-    city: string;
-    state: string;
-  }
+  address: IAddressDTO;
 }
 
 export interface IUpdateUserDTO {
@@ -33,23 +37,13 @@ export interface IUpdateUserDTO {
   email: string;
   imageKey?: string;
   imageUrl?: string;
-  address: {
-    nickname?: string;
-    zipcode: string;
-    street: string;
-    number: string;
-    complement?: string;
-    reference?: string;
-    district: string;
-    city: string;
-    state: string;
-  }
+  address: IAddressDTO;
 }
 
 // output
 export const UserDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
-  isAdmin: true,
+  isAdmin: false,
   type: true,
   name: true,
   birthday: true,
