@@ -21,8 +21,8 @@ class Validator extends BaseValidator {
 
   public login: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<ILoginDTO> = yup.object().shape({
-      password: yup.string().required(),
       username: yup.string().trim().lowercase().required(),
+      password: yup.string().required(),
     });
 
     try {
@@ -52,10 +52,10 @@ class Validator extends BaseValidator {
 
   public resetPassword: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IResetPasswordDTO> = yup.object().shape({
-      passwordConfirmation: yup.string().required(),
-      password: yup.string().min(8).required(),
-      code: yup.string().trim().required(),
       email: yup.string().trim().email().lowercase().required(),
+      code: yup.string().trim().required(),
+      password: yup.string().min(8).required(),
+      passwordConfirmation: yup.string().required(),
     });
 
     try {
@@ -73,9 +73,9 @@ class Validator extends BaseValidator {
 
   public updatePassword: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IUpdatePasswordDTO> = yup.object().shape({
-      passwordConfirmation: yup.string().required(),
-      newPassword: yup.string().min(8).required(),
       currentPassword: yup.string().required(),
+      newPassword: yup.string().min(8).required(),
+      passwordConfirmation: yup.string().required(),
     });
 
     try {
@@ -93,9 +93,9 @@ class Validator extends BaseValidator {
 
   public validateFields: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IValidateFieldsDTO> = yup.object().shape({
-      phone: yup.string().trim().phone().required(),
-      email: yup.string().trim().email().lowercase().required(),
       document: yup.string().trim().cpf().required(),
+      email: yup.string().trim().email().lowercase().required(),
+      phone: yup.string().trim().phone().required(),
     });
 
     try {
@@ -110,8 +110,8 @@ class Validator extends BaseValidator {
 
   public validateCode: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IValidateCodeDTO> = yup.object().shape({
-      code: yup.string().trim().required(),
       email: yup.string().trim().email().lowercase().required(),
+      code: yup.string().trim().required(),
     });
 
     try {
