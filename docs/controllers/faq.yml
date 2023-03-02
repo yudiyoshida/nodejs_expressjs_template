@@ -4,6 +4,9 @@ paths:
       summary: "Geral - Rota utilizada para listar as faqs"
       tags:
         - FAQ
+      parameters:
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/LimitParameter'
       responses:
         "200":
           description: "OK"
