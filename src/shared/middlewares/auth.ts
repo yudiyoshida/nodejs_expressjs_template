@@ -1,5 +1,7 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { AdminPermission, UserType } from '@prisma/client';
+
+import { AdminPermission } from '@enums/admin-permission';
+import { UserType } from '@enums/user-type';
 
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';

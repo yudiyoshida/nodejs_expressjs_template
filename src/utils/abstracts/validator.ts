@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { Status } from '@prisma/client';
+import { Status } from '@enums/status';
 
 import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
