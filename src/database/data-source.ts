@@ -1,5 +1,8 @@
 import 'reflect-metadata';
+import path from 'path';
 import { DataSource } from 'typeorm';
+
+import Faq from 'modules/faq/faq.entity';
 
 class AppDataSource {
   private static db: DataSource;
@@ -15,8 +18,10 @@ class AppDataSource {
         url: process.env.DB_URL,
         synchronize: false,
         logging: false,
-        entities: [],
-        migrations: [],
+        migrations: [path.resolve(__dirname, '/migrations/*{.ts,.js}')],
+        entities: [
+          Faq,
+        ],
       });
     }
 

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { AdminPermission } from '@prisma/client';
+// import { AdminPermission } from '@enums/admin-permission';
 
-import Auth from '@middlewares/auth';
+// import Auth from '@middlewares/auth';
 import Controller from './faq.controller';
 import Validator from './faq.validator';
 
@@ -14,7 +14,7 @@ router
     Controller.findAll,
   )
   .post(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
+    // Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
     Validator.upsert,
     Controller.create,
   );
@@ -22,12 +22,12 @@ router
 router
   .route('/:id')
   .put(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
+    // Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
     Validator.pathParams, Validator.upsert,
     Controller.update,
   )
   .delete(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
+    // Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.faqs),
     Validator.pathParams,
     Controller.delete,
   );

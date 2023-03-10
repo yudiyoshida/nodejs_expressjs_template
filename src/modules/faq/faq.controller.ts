@@ -4,6 +4,7 @@ import Service from './faq.service';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
+import Faq from './faq.entity';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
@@ -22,7 +23,9 @@ class Controller {
 
   public create: RequestHandler = async(req, res, next) => {
     try {
-      const result = await Service.create(req.body);
+      const faq = this.faqCreateInput(req.body);
+
+      const result = await Service.save(faq);
       res.status(201).json(result);
 
     } catch (err: any) {
@@ -33,10 +36,12 @@ class Controller {
 
   public update: RequestHandler = async(req, res, next) => {
     try {
-      const faq = await Service.findById(Number(req.params.id));
+      let faq = await Service.findById(Number(req.params.id));
       if (!faq) throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
 
-      const result = await Service.update(faq.id, req.body);
+      faq = this.faqUpdateInput(faq, req.body);
+
+      const result = await Service.save(faq);
       res.status(200).json(result);
 
     } catch (err: any) {
@@ -50,7 +55,7 @@ class Controller {
       const faq = await Service.findById(Number(req.params.id));
       if (!faq) throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
 
-      await Service.delete(faq.id);
+      await Service.delete(faq);
       res.sendStatus(204);
 
     } catch (err: any) {
@@ -58,6 +63,21 @@ class Controller {
 
     }
   };
+
+  private faqCreateInput(body: Faq) {
+    const faq = new Faq();
+    faq.question = body.question;
+    faq.answer = body.answer;
+
+    return faq;
+  }
+
+  private faqUpdateInput(faq: Faq, body: Faq) {
+    faq.question = body.question;
+    faq.answer = body.answer;
+
+    return faq;
+  }
 }
 
 export default new Controller();
