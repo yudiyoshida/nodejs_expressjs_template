@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 import { Prisma, Status } from '@prisma/client';
 
-import { IAdminPermissionId } from '@interfaces/admin-permission';
+import { IAdminPermissionId } from 'modules/admin-permission/dtos/admin-permission';
 import { AdminDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 class Service {

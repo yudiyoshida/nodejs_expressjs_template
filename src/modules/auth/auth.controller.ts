@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
 
-import { IAuth } from '@interfaces/auth';
+import { IAuth } from 'modules/auth/dtos/auth.dto';
 
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';

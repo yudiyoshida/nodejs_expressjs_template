@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { Prisma, Status, UserType } from '@prisma/client';
 
-import { IAdminPermissionId } from '@interfaces/admin-permission';
+import { IAdminPermissionId } from 'modules/admin-permission/dtos/admin-permission';
 import { IUpsertAdminDTO } from './dtos/admin.dto';
 
 import Service from './admin.service';

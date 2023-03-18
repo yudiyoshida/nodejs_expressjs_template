@@ -1,6 +1,14 @@
 import { Prisma } from '@prisma/client';
+import { IAdminPermission } from 'modules/admin-permission/dtos/admin-permission';
 
 // input
+export interface IAuth {
+  id: number;
+  isAdmin: boolean;
+  type: string;
+  permissions: IAdminPermission[];
+}
+
 export interface ILoginDTO {
   username: string;
   password: string;
