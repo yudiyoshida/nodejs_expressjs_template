@@ -23,8 +23,8 @@ router
     Auth.isAuthenticated,
     Validator.updatePassword,
     Controller.updatePassword,
-  ).
-  post('/validate-fields',
+  )
+  .post('/validate-fields',
     Validator.validateFields,
     Controller.validateFields,
   )
