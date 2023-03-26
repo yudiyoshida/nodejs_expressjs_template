@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 import { Prisma, Status } from '@prisma/client';
 
-import { IAdminPermissionId } from 'modules/admin-permission/dtos/admin-permission';
+import { IAdminPermissionIdDTO } from 'modules/admin-permission/dtos/admin-permission';
 import { AdminDTO, AdminWithPermissionsDTO } from './dtos/admin.dto';
 
 class Service {
@@ -32,7 +32,7 @@ class Service {
     });
   }
 
-  public async create(data: Prisma.UserCreateInput, permissions: IAdminPermissionId[]) {
+  public async create(data: Prisma.UserCreateInput, permissions: IAdminPermissionIdDTO[]) {
     return this.repository.create({
       data: {
         ...data,
@@ -44,7 +44,7 @@ class Service {
     });
   }
 
-  public async update(id: number, data: Prisma.UserUpdateInput, permissions: IAdminPermissionId[]) {
+  public async update(id: number, data: Prisma.UserUpdateInput, permissions: IAdminPermissionIdDTO[]) {
     return DataSource.$transaction(async(tx) => {
       // Remove relacionamento entre user admin e permissions.
       await tx.user.update({
@@ -68,7 +68,6 @@ class Service {
         select: AdminWithPermissionsDTO,
       });
     });
-
   }
 
   public async delete(id: number) {

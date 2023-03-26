@@ -13,7 +13,7 @@ components:
         zipcode:
           type: string
           required: true
-          example: '12345678'
+          example: '00.000-000'
         street:
           type: string
           required: true
@@ -46,18 +46,14 @@ components:
         lng:
           type: string
           example: '-106.632209'
-        userId:
-          type: number
-          readOnly: true
-          example: 1
 
-    AdressObjectSchema:
+    AddressObjectSchema:
       type: object
       properties:
         address:
           $ref: '#/components/schemas/AddressSchema'
 
-    AdressArrayObjectSchema:
+    AddressesArrayObjectSchema:
       type: object
       properties:
         addresses:

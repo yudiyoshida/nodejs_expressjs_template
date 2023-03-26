@@ -1,11 +1,7 @@
 paths:
   /users:
     get:
-      summary: 'Geral - Rota utilizada para listar todos os usuários'
-      description: >
-        ## Portal admin → lista usuários ativos e inativos.
-
-        ## App → lista somente usuários ativos.
+      summary: 'Portal admin - Rota utilizada para listar todos os usuários'
       tags:
         - User
       security:
@@ -50,7 +46,7 @@ paths:
             schema:
               allOf:
                 - $ref: '#/components/schemas/UserSchema'
-                - $ref: '#/components/schemas/AdressObjectSchema'
+                # - $ref: '#/components/schemas/AddressObjectSchema'
       responses:
         '201':
           description: Created
@@ -59,7 +55,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressObjectSchema'
+                  # - $ref: '#/components/schemas/AddressObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '409':
@@ -69,9 +65,9 @@ paths:
 
   /users/myself:
     get:
-      summary: 'Geral - Rota utilizada para exibir informações do usuário logado'
+      summary: 'Apps - Rota utilizada para exibir informações do usuário logado'
       tags:
-        - User
+        - User (myself)
       security:
         - BearerAuth: []
       responses:
@@ -82,16 +78,16 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressObjectSchema'
+                  # - $ref: '#/components/schemas/AddressObjectSchema'
         '401':
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
 
     put:
-      summary: 'Geral - Rota utilizada para editar informações do usuário logado'
+      summary: 'Apps - Rota utilizada para editar informações do usuário logado'
       tags:
-        - User
+        - User (myself)
       security:
         - BearerAuth: []
       requestBody:
@@ -101,7 +97,7 @@ paths:
             schema:
               allOf:
                 - $ref: '#/components/schemas/UserSchema'
-                - $ref: '#/components/schemas/AdressObjectSchema'
+                # - $ref: '#/components/schemas/AddressObjectSchema'
       responses:
         '200':
           description: 'OK'
@@ -110,7 +106,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressObjectSchema'
+                  # - $ref: '#/components/schemas/AddressObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -121,9 +117,9 @@ paths:
           $ref: '#/components/responses/500'
 
     delete:
-      summary: 'Geral - Rota utilizada para excluir a conta do usuário logado'
+      summary: 'Apps - Rota utilizada para excluir a conta do usuário logado'
       tags:
-        - User
+        - User (myself)
       security:
         - BearerAuth: []
       responses:
@@ -138,7 +134,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     get:
-      summary: 'Geral - Rota utilizada para exibir um usuário'
+      summary: 'Portal admin - Rota utilizada para exibir um usuário'
       tags:
         - User
       security:
@@ -151,7 +147,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/UserSchema'
-                  - $ref: '#/components/schemas/AdressObjectSchema'
+                  # - $ref: '#/components/schemas/AdressObjectSchema'
         '400':
           $ref: '#/components/responses/400'
         '401':

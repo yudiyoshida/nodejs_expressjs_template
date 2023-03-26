@@ -11,11 +11,11 @@ const MAX_SIZE_TWO_MEGABYTES = 2 * 1024 * 1024;
 
 const storageTypes = {
   local: multer.diskStorage({
-    destination: process.env.STORAGE_LOCAL as string,
+    destination: process.env.STORAGE_LOCAL,
     filename: (req: Request, file: any, callback: any) => {
       const fileHash = crypto.randomBytes(16).toString('hex');
       file.key = `${fileHash}-${file.originalname}`;
-      file.location = `${process.env.APP_URL as string}/files/${file.key}`;
+      file.location = `${process.env.APP_URL}/files/${file.key}`;
       return callback(null, file.key, file.location);
     },
   }),
@@ -27,9 +27,9 @@ const storageTypes = {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
       },
     }),
+    acl: 'public-read',
     bucket: process.env.AWS_BUCKET_NAME as string,
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    acl: 'public-read',
     key: (req, file, callback) => {
       const fileHash = crypto.randomBytes(16).toString('hex');
       const filename = `${fileHash}-${file.originalname}`;

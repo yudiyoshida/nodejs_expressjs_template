@@ -26,28 +26,14 @@ class Validator extends BaseValidator {
       passwordConfirmation: yup.string().required(),
       imageKey: yup.string().trim(),
       imageUrl: yup.string().trim().url(),
-      address: yup.object({
-        nickname: yup.string().trim(),
-        zipcode: yup.string().trim().required(),
-        street: yup.string().trim().required(),
-        number: yup.string().trim().required(),
-        complement: yup.string().trim(),
-        reference: yup.string().trim(),
-        neighborhood: yup.string().trim().required(),
-        city: yup.string().trim().required(),
-        state: yup.string().trim().required(),
-        lat: yup.string().trim(),
-        lng: yup.string().trim(),
-      }),
     });
 
     try {
       req.body = await this.validateSchema(schema, req.body);
 
-      if (!PasswordHelper.compare(req.body.password, req.body.passwordConfirmation)) {
-        throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
-      }
-      next();
+      const { password, passwordConfirmation } = req.body;
+      if (PasswordHelper.compare(password, passwordConfirmation)) next();
+      else throw new AppException(400, ErrorMessages.PASSWORDS_MUST_MATCH);
 
     } catch (err: any) {
       next(new AppException(400, err.message));
@@ -55,7 +41,7 @@ class Validator extends BaseValidator {
     }
   };
 
-  public update: RequestHandler = async(req, res, next) => {
+  public updateMyself: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IUpdateUserDTO> = yup.object().shape({
       name: yup.string().trim().required(),
       birthday: yup.date().max(new Date()).required(),
@@ -64,19 +50,6 @@ class Validator extends BaseValidator {
       email: yup.string().trim().email().lowercase().required(),
       imageKey: yup.string().trim(),
       imageUrl: yup.string().trim().url(),
-      address: yup.object({
-        nickname: yup.string().trim(),
-        zipcode: yup.string().trim().required(),
-        street: yup.string().trim().required(),
-        number: yup.string().trim().required(),
-        complement: yup.string().trim(),
-        reference: yup.string().trim(),
-        neighborhood: yup.string().trim().required(),
-        city: yup.string().trim().required(),
-        state: yup.string().trim().required(),
-        lat: yup.string().trim(),
-        lng: yup.string().trim(),
-      }),
     });
 
     try {

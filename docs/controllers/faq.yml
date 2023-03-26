@@ -24,6 +24,7 @@ paths:
                   - $ref: "#/components/schemas/PaginationSchema"
         "500":
           $ref: "#/components/responses/500"
+
     post:
       summary: "Portal admin - Rota utilizada para cadastrar uma faq"
       tags:
@@ -84,6 +85,7 @@ paths:
           $ref: "#/components/responses/404"
         "500":
           $ref: "#/components/responses/500"
+
     delete:
       summary: "Portal admin - Rota utilizada para deletar uma faq"
       tags:

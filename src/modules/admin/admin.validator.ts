@@ -13,7 +13,6 @@ class Validator extends BaseValidator {
   public upsert: RequestHandler = async(req, res, next) => {
     const schema: yup.SchemaOf<IUpsertAdminDTO> = yup.object().shape({
       name: yup.string().trim().required(),
-      birthday: yup.date().max(new Date()).required(),
       document: yup.string().trim().cpf().required(),
       phone: yup.string().trim().phone().required(),
       email: yup.string().trim().email().lowercase().required(),

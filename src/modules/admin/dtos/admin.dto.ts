@@ -3,7 +3,6 @@ import { Prisma } from '@prisma/client';
 // input
 export interface IUpsertAdminDTO {
   name: string;
-  birthday: Date;
   document: string;
   phone: string;
   email: string;
@@ -18,7 +17,7 @@ export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   isAdmin: false,
   type: true,
   name: true,
-  birthday: true,
+  birthday: false,
   document: true,
   phone: true,
   email: true,
@@ -28,8 +27,8 @@ export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   imageUrl: true,
   code: false,
   codeExpiresIn: false,
-  createdAt: true,
-  updatedAt: true,
+  createdAt: false,
+  updatedAt: false,
 });
 
 export const AdminWithPermissionsDTO = Prisma.validator<Prisma.UserSelect>()({

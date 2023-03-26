@@ -1,6 +1,6 @@
 import path from 'path';
-import nodemailer from 'nodemailer';
 import hbs from 'nodemailer-express-handlebars';
+import nodemailer from 'nodemailer';
 import mailOptions from '@config/nodemailer';
 
 class Mail {
@@ -31,7 +31,7 @@ class Mail {
   async sendEmail(to: string, subject: string, template: string, context: any) {
     try {
       const options = {
-        from: process.env.SMTP_FROM as string,
+        from: process.env.SMTP_FROM,
         to,
         subject,
         template,

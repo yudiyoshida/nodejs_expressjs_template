@@ -18,8 +18,7 @@ class SetupDatabase {
       isAdmin: true,
       type: UserType.admin,
       name: 'Admin Master',
-      birthday: new Date('1996-01-03'),
-      document: '64948845043',
+      document: '00000000000',
       phone: '00123456789',
       email: 'admin@getnada.com',
       password: PasswordHelper.hash('123456789'),
@@ -43,7 +42,7 @@ class SetupDatabase {
       number: '123',
       complement: 'Apto 101',
       reference: 'Próximo ao museu',
-      district: 'Bairro X',
+      neighborhood: 'Bairro X',
       city: 'Cidade X',
       state: 'Estado X',
     };

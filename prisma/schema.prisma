@@ -33,7 +33,7 @@ model User {
   isAdmin       Boolean
   type          UserType
   name          String       @db.VarChar(512)
-  birthday      DateTime     @db.Date
+  birthday      DateTime?    @db.Date
   document      String       @unique @db.VarChar(32)
   phone         String       @unique @db.VarChar(32)
   email         String       @unique @db.VarChar(512)
@@ -85,10 +85,8 @@ model Text {
 }
 
 enum AdminPermission {
-  admins
-  faqs
-  texts
-  users
+  usuarios
+  configuracoes
 }
 
 enum UserType {

@@ -7,16 +7,16 @@ yup.setLocale({
     oneOf: '${path} inválido(a). Valores disponíveis: ${values}.',
     notType: function notType(_ref) {
       switch (_ref.type) {
-        case 'array':
-          return `${_ref.path} deve ser uma lista.`;
-        case 'boolean':
-          return `${_ref.path} deve ser um booleano.`;
-        case 'date':
-          return `${_ref.path} deve ser uma data no formato YYYY-MM-DD.`;
-        case 'number':
-          return `${_ref.path} deve ser um número.`;
-        case 'string':
-          return `${_ref.path} deve ser uma string.`;
+      case 'array':
+        return `${_ref.path} deve ser uma lista.`;
+      case 'boolean':
+        return `${_ref.path} deve ser um booleano.`;
+      case 'date':
+        return `${_ref.path} deve ser uma data no formato YYYY-MM-DD.`;
+      case 'number':
+        return `${_ref.path} deve ser um número.`;
+      case 'string':
+        return `${_ref.path} deve ser uma string.`;
       }
     },
   },

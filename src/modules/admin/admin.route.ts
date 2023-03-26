@@ -8,40 +8,40 @@ import Validator from './admin.validator';
 const router = Router();
 
 router
-  .route('/')
+  .route('/admins')
   .get(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.queryParams,
     Controller.findAll,
   )
   .post(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.upsert,
     Controller.create,
   );
 
 router
-  .route('/:id')
+  .route('/admins/:id')
   .get(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.pathParams,
     Controller.findById,
   )
   .put(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.pathParams, Validator.upsert,
     Controller.update,
   )
   .delete(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.pathParams,
     Controller.delete,
   );
 
 router
-  .route('/:id/update-status')
+  .route('/admins/:id/update-status')
   .patch(
-    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.admins),
+    Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
     Validator.pathParams, Validator.updateStatus,
     Controller.updateStatus,
   );

@@ -1,8 +1,8 @@
-export interface IAdminPermission {
+export interface IAdminPermissionDTO {
   id: number;
   title: string;
 }
 
-export interface IAdminPermissionId {
+export interface IAdminPermissionIdDTO {
   id: number;
 }

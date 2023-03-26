@@ -13,7 +13,6 @@ class SeedPrisma {
       isAdmin: true,
       type: UserType.admin,
       name: 'Admin Master',
-      birthday: new Date('1996-01-03'),
       document: '00000000000',
       phone: '00123456789',
       email: 'admin@getnada.com',

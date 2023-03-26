@@ -9,7 +9,7 @@ components:
           example: 1
         type:
           type: string
-          readOnly: true
+          required: true
           enum: ['admin', 'app', 'web']
         name:
           type: string

@@ -17,7 +17,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }],
     "arrow-body-style": ["error", "always"],
@@ -26,6 +25,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "comma-spacing": ["error", { "before": false, "after": true }],
     "eol-last": ["error", "always"],
+    "indent": ["error", 2],
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "linebreak-style": ["error", "unix"],
     "no-multi-spaces": "error",

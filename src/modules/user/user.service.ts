@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 
 import { Prisma, Status, UserType } from '@prisma/client';
-import { UserDTO, UserWithAddressDTO } from './dtos/user.dto';
+import { UserDTO } from './dtos/user.dto';
 
 class Service {
   private readonly repository;
@@ -29,20 +29,15 @@ class Service {
   public async findById(id: number) {
     return this.repository.findFirst({
       where: { id, isAdmin: false },
-      select: UserWithAddressDTO,
+      select: UserDTO,
     });
   }
 
-  public async create(data: Prisma.UserCreateInput, address: Prisma.AddressCreateInput) {
+  public async create(data: Prisma.UserCreateInput) {
     return DataSource.$transaction([
       this.repository.create({
-        data: {
-          ...data,
-          address: {
-            create: address,
-          },
-        },
-        select: UserWithAddressDTO,
+        data,
+        select: UserDTO,
       }),
       this.securityRepository.delete({
         where: { email: data.email },
@@ -50,16 +45,11 @@ class Service {
     ]);
   }
 
-  public async update(id: number, data: Prisma.UserUpdateInput, address: Prisma.AddressUpdateInput) {
+  public async update(id: number, data: Prisma.UserUpdateInput) {
     return this.repository.update({
       where: { id },
-      data: {
-        ...data,
-        address: {
-          update: address,
-        },
-      },
-      select: UserWithAddressDTO,
+      data,
+      select: UserDTO,
     });
   }
 

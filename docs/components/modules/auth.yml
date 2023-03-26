@@ -6,36 +6,21 @@ components:
         id:
           type: number
           example: 1
-        isAdmin:
-          type: boolean
-          example: true
         type:
           type: string
           enum: ['admin', 'app', 'web']
         name:
           type: string
           example: 'User 01'
-        birthday:
-          type: string
-          example: '2000-12-01'
-        document:
-          type: string
-          example: '123.456.789-00'
-        phone:
-          type: string
-          example: '(00) 12345-6789'
         email:
           type: string
           example: 'user@getnada.com'
-        status:
-          type: string
-          example: 'ativo'
-        imageUrl:
-          type: string
-          example: 'http://127.0.0.1:3000/files/image01.png'
         imageKey:
           type: string
           example: 'image01.png'
+        imageUrl:
+          type: string
+          example: 'http://127.0.0.1:3000/files/image01.png'
 
     ForgotPasswordSchema:
       type: object
@@ -51,7 +36,7 @@ components:
         account:
           allOf:
             - $ref: '#/components/schemas/AccountSchema'
-            - $ref: '#/components/schemas/PermissionArraySchema'
+            # - $ref: '#/components/schemas/PermissionArraySchema'
         token:
           type: string
 

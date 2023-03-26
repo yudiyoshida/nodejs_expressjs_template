@@ -6,7 +6,7 @@ import Validator from './contact.validator';
 const router = Router();
 
 router
-  .route('/')
+  .route('/contact')
   .post(
     Validator.sendEmail,
     Controller.sendEmail,

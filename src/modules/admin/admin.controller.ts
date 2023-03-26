@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import { Prisma, Status, UserType } from '@prisma/client';
+import { Status } from '@prisma/client';
 
-import { IAdminPermissionId } from 'modules/admin-permission/dtos/admin-permission';
-import { IUpsertAdminDTO } from './dtos/admin.dto';
+import { IAdminPermissionIdDTO } from '../admin-permission/dtos/admin-permission';
 
+import AdminFactory from './admin.factory';
 import Service from './admin.service';
 import AuthService from '../auth/auth.service';
 import PermissionService from '../admin-permission/admin-permission.service';
@@ -12,7 +12,6 @@ import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
-import PasswordHelper from '@helpers/password';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
@@ -43,14 +42,14 @@ class Controller {
 
   public create: RequestHandler = async(req, res, next) => {
     try {
-      const { admin, permissions, password } = this.createAdminData(req.body);
+      const { admin, permissions, password } = AdminFactory.createAdmin(req.body);
 
       // Verifica se já existe um registro.
       const account = await AuthService.findByUniqueFields(admin);
       if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
-      await this.checkPermissions(permissions);
+      await this.checkIfPermissionsExists(permissions);
 
       // Cadastra o novo usuário admin.
       const result = await Service.create(admin, permissions);
@@ -67,7 +66,7 @@ class Controller {
 
   public update: RequestHandler = async(req, res, next) => {
     try {
-      const { admin, permissions } = this.updateAdminData(req.body);
+      const { admin, permissions } = AdminFactory.updateAdmin(req.body);
 
       // Verifica se o usuário admin existe.
       const adminExists = await Service.findById(Number(req.params.id));
@@ -78,7 +77,7 @@ class Controller {
       if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
-      await this.checkPermissions(permissions);
+      await this.checkIfPermissionsExists(permissions);
 
       // Atualiza o usuário admin.
       const result = await Service.update(adminExists.id, admin, permissions);
@@ -118,55 +117,13 @@ class Controller {
     }
   };
 
-  private async checkPermissions(permissions: IAdminPermissionId[]) {
+  private async checkIfPermissionsExists(permissions: IAdminPermissionIdDTO[]) {
     await Promise.all(
       permissions.map(async(item) => {
         const permission = await PermissionService.findById(item.id);
         if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
       }),
     );
-  }
-
-  private createAdminData(body: IUpsertAdminDTO) {
-    const password = PasswordHelper.generate();
-    const permissions = this.formatAdminPermissions(body.permissions);
-
-    const admin: Prisma.UserCreateInput = {
-      isAdmin: true,
-      type: UserType.admin,
-      name: body.name,
-      birthday: body.birthday,
-      document: body.document,
-      phone: body.phone,
-      email: body.email,
-      password: PasswordHelper.hash(password),
-      status: Status.ativo,
-      imageKey: body.imageKey,
-      imageUrl: body.imageUrl,
-    };
-
-    return { admin, permissions, password };
-  }
-
-  private updateAdminData(body: IUpsertAdminDTO) {
-    const permissions = this.formatAdminPermissions(body.permissions);
-    const admin: Prisma.UserUpdateInput = {
-      name: body.name,
-      birthday: body.birthday,
-      document: body.document,
-      phone: body.phone,
-      email: body.email,
-      imageKey: body.imageKey,
-      imageUrl: body.imageUrl,
-    };
-
-    return { admin, permissions };
-  }
-
-  private formatAdminPermissions(permissions: number[]): IAdminPermissionId[] {
-    return permissions.map((id) => {
-      return { id };
-    });
   }
 }
 

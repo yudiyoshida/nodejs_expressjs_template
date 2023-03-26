@@ -15,10 +15,6 @@ components:
           type: string
           required: true
           example: 'User 01'
-        birthday:
-          type: string
-          required: true
-          example: '1996-12-31'
         document:
           type: string
           required: true

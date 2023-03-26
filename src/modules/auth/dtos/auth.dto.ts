@@ -1,12 +1,12 @@
 import { Prisma } from '@prisma/client';
-import { IAdminPermission } from 'modules/admin-permission/dtos/admin-permission';
+import { IAdminPermissionDTO } from 'modules/admin-permission/dtos/admin-permission';
 
 // input
 export interface IAuth {
   id: number;
   isAdmin: boolean;
   type: string;
-  permissions: IAdminPermission[];
+  permissions: IAdminPermissionDTO[];
 }
 
 export interface ILoginDTO {
@@ -45,21 +45,20 @@ export interface IValidateCodeDTO {
 // output
 export const AccountDTO = Prisma.validator<Prisma.UserSelect>()({
   id: true,
-  isAdmin: true,
+  isAdmin: false,
   type: true,
   name: true,
-  birthday: true,
-  document: true,
-  phone: true,
+  birthday: false,
+  document: false,
+  phone: false,
   email: true,
   password: false,
-  status: true,
+  status: false,
   imageKey: true,
   imageUrl: true,
   code: false,
   codeExpiresIn: false,
-  createdAt: true,
-  updatedAt: true,
-  address: false,
-  permissions: true,
+  createdAt: false,
+  updatedAt: false,
+  permissions: false,
 });

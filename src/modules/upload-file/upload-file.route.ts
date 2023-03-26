@@ -7,7 +7,7 @@ import Controller from './upload-file.controller';
 const router = Router();
 
 router
-  .route('/')
+  .route('/upload-file')
   .post(
     multer(multerOptions).single('image'),
     Controller.upload,

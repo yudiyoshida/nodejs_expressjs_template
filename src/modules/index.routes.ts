@@ -11,13 +11,13 @@ import UserRoutes from './user/user.route';
 
 const router = Router();
 
-router.use('/admins/permissions', AdminPermissionRoutes); // routes - controllers - services.
-router.use('/admins', AdminRoutes); // routes - validators - controllers - services.
-router.use('/auth', AuthRoutes); // routes - validators - controllers - services.
-router.use('/contact', ContactRoutes); // routes - validators - controllers.
-router.use('/faqs', FAQRoutes); // routes - validators - controllers - services.
-router.use('/texts', TextRoutes); // routes - validators - controllers - services.
-router.use('/upload-file', UploadFileRoutes); // routes - controllers.
-router.use('/users', UserRoutes); // routes - validators - controllers - services.
+router.use(AdminPermissionRoutes);
+router.use(AdminRoutes);
+router.use(AuthRoutes);
+router.use(ContactRoutes);
+router.use(FAQRoutes);
+router.use(TextRoutes);
+router.use(UploadFileRoutes);
+router.use(UserRoutes);
 
 export default router;
