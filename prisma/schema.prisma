@@ -25,17 +25,16 @@ model Security {
 model Permission {
   id     Int             @id @default(autoincrement())
   title  AdminPermission @unique
-  admins User[]
+  admins Admin[]
 }
 
-model User {
+model Admin {
   id            Int          @id @default(autoincrement())
-  isAdmin       Boolean
+  isAdmin       Boolean      @default(true)
   type          UserType
   name          String       @db.VarChar(512)
-  birthday      DateTime?    @db.Date
-  document      String       @unique @db.VarChar(32)
-  phone         String       @unique @db.VarChar(32)
+  // document      String       @unique @db.VarChar(32)
+  // phone         String       @unique @db.VarChar(32)
   email         String       @unique @db.VarChar(512)
   password      String       @db.Text
   status        Status
@@ -45,7 +44,8 @@ model User {
   codeExpiresIn DateTime?    @db.DateTime(0)
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  address       Address?
+  address       Address?     @relation(fields: [addressId], references: [id])
+  addressId     Int?         @unique
   permissions   Permission[]
 }
 
@@ -64,8 +64,7 @@ model Address {
   lng          String?  @db.VarChar(512)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       Int?     @unique
+  user         Admin?
 }
 
 model Faq {

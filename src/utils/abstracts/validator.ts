@@ -1,68 +1,62 @@
-import { RequestHandler } from 'express';
+// import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-
-import yup from '@libs/yup';
-import AppException from '@errors/app-exception';
+import { z } from 'zod';
 
 abstract class BaseValidator {
-  protected readonly status: Status[];
-  protected readonly pathSchema: yup.AnyObjectSchema;
-  protected readonly querySchema: yup.AnyObjectSchema;
+  protected readonly pathSchema;
+  protected readonly querySchema;
 
   constructor() {
-    this.status = Object.values(Status);
-    this.pathSchema = yup.object().shape({
-      id: yup.number().positive().integer(),
+    this.pathSchema = z.object({
+      id: z.number().positive().int(),
     });
-    this.querySchema = yup.object().shape({
-      status: yup.string().oneOf(this.status),
-      limit: yup.number().positive().integer(),
-      page: yup.number().positive().integer(),
+    this.querySchema = z.object({
+      status: z.nativeEnum(Status).optional(),
+      limit: z.number().positive().int().optional(),
+      page: z.number().positive().int().optional(),
     });
   }
 
-  protected validateSchema = async(schema: yup.AnyObjectSchema, dto: any) => {
-    dto = await schema.validate(dto, { abortEarly: true });
-    dto = await schema.cast(dto, { stripUnknown: true });
-    return dto;
+  protected validateSchema = (schema: z.Schema, value: any) => {
+    return schema.parse(value);
   };
 
-  public pathParams: RequestHandler = async(req, res, next) => {
-    try {
-      req.params = await this.validateSchema(this.pathSchema, req.params);
-      next();
+  // public pathParams: RequestHandler = async(req, res, next) => {
+  //   try {
+  //     req.params = await this.validateSchema(this.pathSchema, req.params);
+  //     next();
 
-    } catch (err: any) {
-      next(new AppException(400, err.message));
+  //   } catch (err: any) {
+  //     next(new AppException(400, err.message));
 
-    }
-  };
+  //   }
+  // };
 
-  public queryParams: RequestHandler = async(req, res, next) => {
-    try {
-      req.query = await this.validateSchema(this.querySchema, req.query);
-      next();
+  // public queryParams: RequestHandler = async(req, res, next) => {
+  //   try {
+  //     req.query = await this.validateSchema(this.querySchema, req.query);
+  //     next();
 
-    } catch (err: any) {
-      next(new AppException(400, err.message));
+  //   } catch (err: any) {
+  //     next(new AppException(400, err.message));
 
-    }
-  };
+  //   }
+  // };
 
-  public updateStatus: RequestHandler = async(req, res, next) => {
-    const schema = yup.object().shape({
-      status: yup.string().trim().required().oneOf(this.status),
-    });
+  // public updateStatus: RequestHandler = async(req, res, next) => {
+  //   const schema = yup.object().shape({
+  //     status: yup.string().trim().required().oneOf(this.status),
+  //   });
 
-    try {
-      req.body = await this.validateSchema(schema, req.body);
-      next();
+  //   try {
+  //     req.body = await this.validateSchema(schema, req.body);
+  //     next();
 
-    } catch (err: any) {
-      next(new AppException(400, err.message));
+  //   } catch (err: any) {
+  //     next(new AppException(400, err.message));
 
-    }
-  };
+  //   }
+  // };
 }
 
 export default BaseValidator;

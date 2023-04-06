@@ -1,25 +1,11 @@
 import { Prisma } from '@prisma/client';
 
-// input
-export interface IUpsertAdminDTO {
-  name: string;
-  document: string;
-  phone: string;
-  email: string;
-  imageKey?: string;
-  imageUrl?: string;
-  permissions: number[];
-}
-
 // output
-export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
+export const AdminDto = Prisma.validator<Prisma.AdminSelect>()({
   id: true,
   isAdmin: false,
   type: true,
   name: true,
-  birthday: false,
-  document: true,
-  phone: true,
   email: true,
   password: false,
   status: true,
@@ -27,11 +13,11 @@ export const AdminDTO = Prisma.validator<Prisma.UserSelect>()({
   imageUrl: true,
   code: false,
   codeExpiresIn: false,
-  createdAt: false,
-  updatedAt: false,
+  createdAt: true,
+  updatedAt: true,
 });
 
-export const AdminWithPermissionsDTO = Prisma.validator<Prisma.UserSelect>()({
-  ...AdminDTO,
+export const AdminWithPermissionsDto = Prisma.validator<Prisma.AdminSelect>()({
+  ...AdminDto,
   permissions: true,
 });

@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express';
-import { IUpsertAdminDTO } from './dtos/admin.dto';
+import { CreateAdminAccountDto } from './dtos/create-admin';
 
-import yup from '@libs/yup';
 import AppException from '@errors/app-exception';
 import BaseValidator from '@abstracts/validator';
 
@@ -10,25 +9,13 @@ class Validator extends BaseValidator {
     super();
   }
 
-  public upsert: RequestHandler = async(req, res, next) => {
-    const schema: yup.SchemaOf<IUpsertAdminDTO> = yup.object().shape({
-      name: yup.string().trim().required(),
-      document: yup.string().trim().cpf().required(),
-      phone: yup.string().trim().phone().required(),
-      email: yup.string().trim().email().lowercase().required(),
-      imageKey: yup.string(),
-      imageUrl: yup.string().url(),
-      permissions: yup.array().of(
-        yup.number().positive().integer().required(),
-      ).min(1).required(),
-    });
-
+  public createAdminAccount: RequestHandler = async(req, res, next) => {
     try {
-      req.body = await this.validateSchema(schema, req.body);
+      req.body = this.validateSchema(CreateAdminAccountDto, req.body);
       next();
 
     } catch (err: any) {
-      next(new AppException(400, err.message));
+      next(new AppException(400, err.issues));
 
     }
   };

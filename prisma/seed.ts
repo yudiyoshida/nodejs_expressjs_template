@@ -4,17 +4,14 @@ import PasswordHelper from '../src/shared/helpers/password';
 const prisma = new PrismaClient();
 
 class SeedPrisma {
-  private admin: Prisma.UserCreateInput;
+  private admin: Prisma.AdminCreateInput;
   private permissions: AdminPermission[];
   private texts: TextType[];
 
   constructor() {
     this.admin = {
-      isAdmin: true,
       type: UserType.admin,
       name: 'Admin Master',
-      document: '00000000000',
-      phone: '00123456789',
       email: 'admin@getnada.com',
       password: PasswordHelper.hash('123456789'),
       status: Status.ativo,
@@ -24,7 +21,7 @@ class SeedPrisma {
   }
 
   public async seedAdmin() {
-    const admin = await prisma.user.create({
+    const admin = await prisma.admin.create({
       data: this.admin,
     });
 
@@ -63,10 +60,10 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async() => {
-    await prisma.$disconnect();
-  });
+.catch((e) => {
+  console.error(e);
+  process.exit(1);
+})
+.finally(async() => {
+  await prisma.$disconnect();
+});
