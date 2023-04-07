@@ -11,7 +11,7 @@ import AdminRoutes from './admin/admin.route';
 const router = Router();
 
 // router.use(AdminPermissionRoutes);
-router.use(AdminRoutes);
+router.use('/admins', AdminRoutes);
 // router.use(AuthRoutes);
 // router.use(ContactRoutes);
 // router.use(FAQRoutes);

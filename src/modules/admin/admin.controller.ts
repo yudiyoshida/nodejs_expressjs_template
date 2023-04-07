@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express';
 import { Status } from '@prisma/client';
-import { CreateAdminAccountOutputDto } from './dtos/create-admin';
+import { CreateAdminOutputDto } from './dtos/create-admin.dto';
+import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
 
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
 
-// import Mail from '@libs/nodemailer';
+import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
@@ -16,9 +17,9 @@ class Controller {
     try {
       const { limit = 10, page = 1, status } = req.query;
 
-      const result = await Service.findAll(Number(limit), Number(page), status as Status);
-      const resultPaginated = PaginationHelper.paginate(result, Number(limit), Number(page));
-      res.status(200).json(resultPaginated);
+      const admins = await Service.findAll(+limit, +page, status as Status);
+      const adminsPaginated = PaginationHelper.paginate(admins, +limit, +page);
+      res.status(200).json(adminsPaginated);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -26,17 +27,19 @@ class Controller {
     }
   };
 
-  // public findById: RequestHandler = async(req, res, next) => {
-  //   try {
-  //     const result = await Service.findById(Number(req.params.id));
-  //     if (!result) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
-  //     else res.status(200).json(result);
+  public findOne: RequestHandler = async(req, res, next) => {
+    try {
+      const { id } = req.params;
 
-  //   } catch (err: any) {
-  //     next(new AppException(err.status ?? 500, err.message));
+      const admin = await Service.findById(+id);
+      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+      else res.status(200).json(admin);
 
-  //   }
-  // };
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
 
   /*
     flow:
@@ -47,28 +50,27 @@ class Controller {
     - send new email with password.
     - response.
   */
-  public createAdminAccount: RequestHandler = async(req, res, next) => {
+  public createAdmin: RequestHandler = async(req, res, next) => {
     try {
-      const { permissions, ...data } = req.body as CreateAdminAccountOutputDto;
+      const { permissions, ...data } = req.body as CreateAdminOutputDto;
 
-      // Verifica se já existe um registro.
+      // Verifica se já existe um registro com os dados informados.
       const account = await Service.findByUniqueFields(data);
       if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
-      const ids = permissions.map(permission => permission.id); // { id: number }[] => number[]
-      await AdminPermissionService.checkIfPermissionsExists(ids);
+      await this.checkIfPermissionsExists(permissions);
 
       // Cria senha aleatória.
       const password = PasswordHelper.generate();
       data.password = PasswordHelper.hash(password);
 
       // Cadastra o novo usuário admin.
-      const result = await Service.create(data, permissions);
+      const newAdmin = await Service.create(data, permissions);
 
       // Envio do email com a senha.
-      // await Mail.sendEmail(data.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
-      res.status(201).json(result);
+      await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
+      res.status(201).json(newAdmin);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -76,58 +78,76 @@ class Controller {
     }
   };
 
-  // public update: RequestHandler = async(req, res, next) => {
-  //   try {
-  //     const { admin, permissions } = AdminFactory.updateAdmin(req.body);
+  /*
+    flow:
+    - check for admin existence.
+    - check for unique fields.
+    - check for permissions existence.
+    - update admin user.
+    - response.
+  */
+  public updateOne: RequestHandler = async(req, res, next) => {
+    try {
+      const { permissions, ...data } = req.body as UpdateAdminOutputDto;
+      const { id } = req.params;
 
-  //     // Verifica se o usuário admin existe.
-  //     const adminExists = await Service.findById(Number(req.params.id));
-  //     if (!adminExists) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+      // Verifica se existe um admin com o id informado.
+      const admin = await Service.findById(+id);
+      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
-  //     // Verifica se já existe um registro.
-  //     const account = await AuthService.findByUniqueFieldsExceptMe(Number(req.params.id), admin);
-  //     if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      // Verifica se já existe um registro com os dados informados.
+      const account = await Service.findByUniqueFieldsExceptMe(+id, data);
+      if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
 
-  //     // Checa se as permissões existem.
-  //     await this.checkIfPermissionsExists(permissions);
+      // Checa se as permissões existem.
+      if (permissions) await this.checkIfPermissionsExists(permissions);
 
-  //     // Atualiza o usuário admin.
-  //     const result = await Service.update(adminExists.id, admin, permissions);
-  //     res.status(200).json(result);
+      // Atualiza o admin.
+      const result = await Service.update(admin.id, data, permissions);
+      res.status(200).json(result);
 
-  //   } catch (err: any) {
-  //     next(new AppException(err.status ?? 500, err.message));
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
 
-  //   }
-  // };
+    }
+  };
 
-  // public delete: RequestHandler = async(req, res, next) => {
-  //   try {
-  //     const admin = await Service.findById(Number(req.params.id));
-  //     if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+  public deleteOne: RequestHandler = async(req, res, next) => {
+    try {
+      const { id } = req.params;
 
-  //     await Service.delete(admin.id);
-  //     res.sendStatus(204);
+      const admin = await Service.findById(+id);
+      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
-  //   } catch (err: any) {
-  //     next(new AppException(err.status ?? 500, err.message));
+      await Service.delete(admin.id);
+      res.sendStatus(204);
 
-  //   }
-  // };
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
 
-  // public updateStatus: RequestHandler = async(req, res, next) => {
-  //   try {
-  //     const admin = await Service.findById(Number(req.params.id));
-  //     if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+    }
+  };
 
-  //     const result = await Service.updateStatus(admin.id, req.body.status);
-  //     res.status(200).json(result);
+  public updateStatus: RequestHandler = async(req, res, next) => {
+    try {
+      const { id } = req.params;
 
-  //   } catch (err: any) {
-  //     next(new AppException(err.status ?? 500, err.message));
+      const admin = await Service.findById(+id);
+      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
-  //   }
-  // };
+      const result = await Service.updateStatus(admin.id, req.body.status);
+      res.status(200).json(result);
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
+  private async checkIfPermissionsExists(permissions: Array<{ id: number }>) {
+    const ids = permissions.map(permission => permission.id); // { id: number }[] => number[]
+    await AdminPermissionService.checkIfPermissionsExists(ids);
+  }
 }
 
 export default new Controller();
