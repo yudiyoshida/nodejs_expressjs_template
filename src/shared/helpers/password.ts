@@ -2,8 +2,12 @@ import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 
 class PasswordHelper {
-  public compare(password: string, confirmation: string) {
+  public comparePasswordAndConfirmation(password: string, confirmation: string) {
     return (password === confirmation);
+  }
+
+  public comparePasswordAndHash(password: string, hash: string) {
+    return bcryptjs.compareSync(password, hash);
   }
 
   public generate() {
