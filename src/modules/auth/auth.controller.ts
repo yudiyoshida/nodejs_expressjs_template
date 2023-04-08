@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { LoginOutputDto } from './dtos/login.dto';
 import { Status } from '@prisma/client';
-import { AuthDto } from './dtos/auth.dto';
+import { IAuthDto } from './dtos/auth.dto';
 
 import Service from './auth.service';
 import AppException from '@errors/app-exception';
@@ -24,7 +24,7 @@ class Controller {
         throw new AppException(403, ErrorMessages.FORBIDDEN);
 
       } else {
-        const payload: AuthDto = {
+        const payload: IAuthDto = {
           id: account.id,
           isAdmin: account.isAdmin,
           type: account.type,
