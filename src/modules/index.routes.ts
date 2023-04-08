@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-// import AdminPermissionRoutes from './admin-permission/admin-permission.route';
+import AdminPermissionRoutes from './admin-permission/admin-permission.route';
 import AdminRoutes from './admin/admin.route';
 // import AuthRoutes from './auth/auth.route';
 // import ContactRoutes from './contact/contact.route';
@@ -10,7 +10,7 @@ import AdminRoutes from './admin/admin.route';
 
 const router = Router();
 
-// router.use(AdminPermissionRoutes);
+router.use('/admins/permissions', AdminPermissionRoutes);
 router.use('/admins', AdminRoutes);
 // router.use(AuthRoutes);
 // router.use(ContactRoutes);
