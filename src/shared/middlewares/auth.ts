@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { AdminPermission, UserType } from '@prisma/client';
+import { AdminPermission } from '@prisma/client';
 
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
@@ -21,30 +21,6 @@ class AuthMiddleware {
   public isAdmin: RequestHandler = (req, res, next) => {
     try {
       if (!req.auth.isAdmin) throw new Error();
-      else next();
-
-    } catch (err: any) {
-      next(new AppException(403, ErrorMessages.FORBIDDEN));
-
-    }
-  };
-
-  public isApp: RequestHandler = (req, res, next) => {
-    try {
-      if (req.auth.isAdmin) throw new Error();
-      if (req.auth.type !== UserType.app) throw new Error();
-      else next();
-
-    } catch (err: any) {
-      next(new AppException(403, ErrorMessages.FORBIDDEN));
-
-    }
-  };
-
-  public isWeb: RequestHandler = (req, res, next) => {
-    try {
-      if (req.auth.isAdmin) throw new Error();
-      if (req.auth.type !== UserType.web) throw new Error();
       else next();
 
     } catch (err: any) {
