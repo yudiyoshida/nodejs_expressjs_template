@@ -46,13 +46,6 @@ class Service {
     });
   }
 
-  public async findByIdAllFields(id: number) {
-    return this.repository.findFirst({
-      where: { id, isAdmin: true },
-      include: { permissions: true },
-    });
-  }
-
   public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
     return this.repository.findFirst({
       where: {

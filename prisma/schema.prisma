@@ -16,7 +16,7 @@ datasource db {
 
 model Security {
   id            Int       @id @default(autoincrement())
-  email         String    @unique @db.VarChar(512)
+  username      String    @unique @db.VarChar(512)
   code          String?   @db.VarChar(32)
   codeExpiresIn DateTime? @db.DateTime(0)
   validated     Boolean   @default(false)
@@ -28,25 +28,29 @@ model Permission {
   admins Admin[]
 }
 
+model Profile {
+  id            Int           @id @default(autoincrement())
+  role          ProfileRole
+  email         String?       @unique @db.VarChar(512)
+  phone         String?       @unique @db.VarChar(32)
+  password      String        @db.Text
+  status        ProfileStatus
+  code          String?       @db.VarChar(32)
+  codeExpiresIn DateTime?     @db.DateTime(0)
+  admin         Admin?        @relation(name: "adminProfile")
+}
+
 model Admin {
-  id            Int          @id @default(autoincrement())
-  isAdmin       Boolean      @default(true)
-  type          UserType
-  name          String       @db.VarChar(512)
-  // document      String       @unique @db.VarChar(32)
-  // phone         String       @unique @db.VarChar(32)
-  email         String       @unique @db.VarChar(512)
-  password      String       @db.Text
-  status        Status
-  imageKey      String?      @db.Text
-  imageUrl      String?      @db.Text
-  code          String?      @db.VarChar(32)
-  codeExpiresIn DateTime?    @db.DateTime(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  address       Address?     @relation(fields: [addressId], references: [id])
-  addressId     Int?         @unique
-  permissions   Permission[]
+  profile     Profile      @relation(name: "adminProfile", fields: [profileId], references: [id])
+  profileId   Int
+  name        String       @db.VarChar(512)
+  imageKey    String?      @db.Text
+  imageUrl    String?      @db.Text
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  permissions Permission[]
+
+  @@id([profileId])
 }
 
 model Address {
@@ -64,7 +68,6 @@ model Address {
   lng          String?  @db.VarChar(512)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user         Admin?
 }
 
 model Faq {
@@ -83,25 +86,24 @@ model Text {
   updatedAt DateTime @updatedAt
 }
 
+enum ProfileRole {
+  admin
+  user
+}
+
+enum ProfileStatus {
+  ativo
+  inativo
+  pendente
+}
+
 enum AdminPermission {
   usuarios
   configuracoes
-}
-
-enum UserType {
-  admin
-  app
-  web
 }
 
 enum TextType {
   about
   privacy
   terms
-}
-
-enum Status {
-  ativo
-  inativo
-  pendente
 }

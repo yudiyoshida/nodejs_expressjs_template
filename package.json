@@ -13,8 +13,8 @@
     "start": "env-cmd -f .env node dist/server.js",
     "prisma:migration": "env-cmd -f .env prisma db push",
     "prisma:migration-test": "env-cmd -f .env.test prisma db push",
-    "prisma:seed": "tsx prisma/seed.ts",
-    "prisma:reset": "env-cmd -f .env prisma db push --force-reset && tsx prisma/seed.ts"
+    "prisma:seed": "tsx prisma/seeds/index.ts",
+    "prisma:reset": "env-cmd -f .env prisma db push --force-reset && tsx prisma/seeds/index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.254.0",
