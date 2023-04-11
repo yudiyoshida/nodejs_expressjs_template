@@ -16,7 +16,7 @@ router
 )
 .post(
   Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
-  Validator.createAdmin,
+  Validator.createOne,
   Controller.createAdmin,
 );
 

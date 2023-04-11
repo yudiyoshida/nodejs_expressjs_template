@@ -1,21 +1,22 @@
 import DataSource from '@database/data-source';
-import { AdminDto } from 'modules/admin/dtos/admin.dto';
+import { Profile } from '@prisma/client';
+import { ProfileDto } from './dtos/profile.dto';
 
 class Service {
   private readonly repository;
 
   constructor() {
-    this.repository = DataSource.admin;
+    this.repository = DataSource.profile;
   }
 
   public async findById(id: number) {
     return this.repository.findUnique({
       where: { id },
-      select: AdminDto,
+      select: ProfileDto,
     });
   }
 
-  public async findByUsername(username: string) {
+  public async findByUsername(username: string): Promise<Profile | null> {
     return this.repository.findFirst({
       where: {
         OR: [
@@ -23,7 +24,6 @@ class Service {
           // { phone: username },
         ],
       },
-      include: { permissions: true },
     });
   }
 }

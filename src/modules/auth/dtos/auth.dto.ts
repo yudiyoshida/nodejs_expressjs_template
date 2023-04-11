@@ -1,8 +1,6 @@
-import { IAdminPermissionDto } from 'modules/admin-permission/dtos/admin-permission.dto';
+import { ProfileRole } from '@prisma/client';
 
 export interface IAuthDto {
   id: number;
-  isAdmin: boolean;
-  type: string;
-  permissions: IAdminPermissionDto[]
+  role: ProfileRole;
 }
