@@ -33,7 +33,7 @@ class Service {
         where: { status },
         take: limit,
         skip: ((page - 1) * limit),
-        select: AdminWithPermissionsDto,
+        select: AdminDto,
       }),
       this.repository.count({
         where: { status },
