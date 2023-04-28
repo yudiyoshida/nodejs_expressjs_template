@@ -6,7 +6,6 @@ import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
 
-import StorageHelper from '@helpers/storage';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import PaginationHelper from '@helpers/pagination';
@@ -62,8 +61,6 @@ class Controller {
       // Cria senha aleatória.
       const password = PasswordHelper.generate();
       data.password = PasswordHelper.hash(password);
-
-      // await StorageHelper.deleteFile(data.imageUrl);
 
       // Cadastra o novo usuário admin.
       const newAdmin = await Service.create(data, permissions);
