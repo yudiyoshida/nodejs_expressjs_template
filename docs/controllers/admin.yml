@@ -1,9 +1,9 @@
 paths:
   /admins/permissions:
     get:
-      summary: 'Portal admin - Rota utilizada para listar as permissões'
+      summary: 'Rota utilizada para listar as permissões'
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       responses:
@@ -24,9 +24,9 @@ paths:
 
   /admins:
     get:
-      summary: 'Portal admin - Rota utilizada para listar todos os usuários admins'
+      summary: 'Rota utilizada para listar todos os usuários admins'
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       parameters:
@@ -58,11 +58,11 @@ paths:
           $ref: '#/components/responses/500'
 
     post:
-      summary: 'Portal admin - Rota utilizada para cadastrar um novo usuário admin'
+      summary: 'Rota utilizada para cadastrar um novo usuário admin'
       description: >
         ## permissions é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       requestBody:
@@ -97,9 +97,9 @@ paths:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     get:
-      summary: 'Portal admin - Rota utilizada para exibir um usuário admin'
+      summary: 'Rota utilizada para exibir um usuário admin'
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       responses:
@@ -123,11 +123,11 @@ paths:
           $ref: '#/components/responses/500'
 
     put:
-      summary: 'Portal admin - Rota utilizada para editar um usuário admin'
+      summary: 'Rota utilizada para editar um usuário admin'
       description: >
         ## permissions é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       requestBody:
@@ -161,9 +161,9 @@ paths:
           $ref: "#/components/responses/500"
 
     delete:
-      summary: 'Portal admin - Rota utilizada para deletar um usuário admin'
+      summary: 'Rota utilizada para deletar um usuário admin'
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       responses:
@@ -184,9 +184,9 @@ paths:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     patch:
-      summary: 'Portal admin - Rota utilizada para ativar/inativar um usuário admin'
+      summary: 'Rota utilizada para ativar/inativar um usuário admin'
       tags:
-        - Admin
+        - Gerencial - Admin
       security:
         - BearerAuth: []
       requestBody:

@@ -1,25 +1,25 @@
-paths:
-  /contact:
-    post:
-      summary: "Geral - Rota utilizada para entrar em contato"
-      tags:
-        - Contact
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ContactSchema"
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SuccessSchema"
-              example:
-                message: "Mensagem enviada com sucesso! Em breve entraremos em contato."
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
+# paths:
+#   /contact:
+#     post:
+#       summary: "Geral - Rota utilizada para entrar em contato"
+#       tags:
+#         - Contact
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               $ref: "#/components/schemas/ContactSchema"
+#       responses:
+#         "200":
+#           description: OK
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/SuccessSchema"
+#               example:
+#                 message: "Mensagem enviada com sucesso! Em breve entraremos em contato."
+#         "400":
+#           $ref: "#/components/responses/400"
+#         "500":
+#           $ref: "#/components/responses/500"

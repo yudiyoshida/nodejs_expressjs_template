@@ -1,10 +1,6 @@
 tags:
   # The tag order here controls the default sorting in Swagger UI
-  - name: Auth
-  - name: Admin
-  - name: Contact
-  - name: FAQ
-  - name: Text
-  - name: Upload file
-  - name: User
-  - name: User (myself)
+  - name: Geral - Autenticação
+  - name: Geral - Upload de arquivo
+  - name: --
+  - name: Gerencial - Admin

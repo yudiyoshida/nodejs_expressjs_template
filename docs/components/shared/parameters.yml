@@ -27,12 +27,10 @@ components:
       in: query
       name: status
       schema:
-        type: string
-        enum: ['ativo', 'inativo', 'pendente']
+        $ref: '#/components/schemas/StatusSchema'
 
-    UserTypeParameter:
+    AccountTypeParameter:
       in: query
       name: type
       schema:
-        type: string
-        enum: ['admin', 'app', 'web']
+        $ref: '#/components/schemas/AccountTypeSchema'

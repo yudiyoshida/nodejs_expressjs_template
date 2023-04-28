@@ -6,5 +6,4 @@ components:
         status:
           type: string
           required: true
-          enum: ['ativo', 'inativo']
-          example: ativo
+          example: 'ativou ou inativo'

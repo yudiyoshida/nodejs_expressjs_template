@@ -7,22 +7,10 @@ components:
           type: number
           readOnly: true
           example: 1
-        type:
-          type: string
-          readOnly: true
-          enum: ['admin', 'app', 'web']
         name:
           type: string
           required: true
           example: 'User 01'
-        document:
-          type: string
-          required: true
-          example: '12345678900'
-        phone:
-          type: string
-          required: true
-          example: '12345678900'
         email:
           type: string
           required: true
@@ -31,9 +19,14 @@ components:
           type: string
           readOnly: true
           example: 'ativo'
-        imageKey:
-          type: string
-          example: 'image01.png'
         imageUrl:
           type: string
           example: 'http://127.0.0.1:3000/files/image01.png'
+        createdAt:
+          type: date
+          readOnly: true
+          example: '2023-01-01T00:19:12.088Z'
+        updatedAt:
+          type: date
+          readOnly: true
+          example: '2023-01-01T00:19:12.088Z'

@@ -34,3 +34,11 @@ components:
       items:
         type: number
         example: 1
+
+    StatusSchema:
+      type: string
+      enum: ['ativo', 'inativo', 'pendente']
+
+    AccountTypeSchema:
+      type: string
+      enum: ['admin', 'app']

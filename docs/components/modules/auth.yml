@@ -8,16 +8,10 @@ components:
           example: 1
         type:
           type: string
-          enum: ['admin', 'app', 'web']
+          example: 'app'
         name:
           type: string
           example: 'User 01'
-        email:
-          type: string
-          example: 'user@getnada.com'
-        imageKey:
-          type: string
-          example: 'image01.png'
         imageUrl:
           type: string
           example: 'http://127.0.0.1:3000/files/image01.png'
@@ -51,6 +45,8 @@ components:
           type: string
           required: true
           example: '12345678'
+        type:
+          $ref: '#/components/schemas/AccountTypeSchema'
 
     ResetPasswordSchema:
       type: object
