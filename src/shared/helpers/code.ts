@@ -3,7 +3,7 @@ import crypto from 'crypto';
 class CodeHelper {
   public generate(minutes: number) {
     const now = new Date();
-    const code = crypto.randomBytes(12).toString('hex').slice(0, 4);
+    const code = crypto.randomInt(10000).toString().padStart(4, '0'); // generates random number between 0000 and 9999.
     const codeExpiresIn = new Date(now.setMinutes(now.getMinutes() + minutes));
 
     return { code, codeExpiresIn };

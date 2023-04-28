@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AdminPermission } from '@prisma/client';
+import { Permissions } from '@prisma/client';
 
 import Auth from '@middlewares/auth';
 import Controller from './admin.controller';
@@ -10,12 +10,12 @@ const router = Router();
 router
 .route('/')
 .get(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.queryParams,
   Controller.findAll,
 )
 .post(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.createOne,
   Controller.createAdmin,
 );
@@ -23,17 +23,17 @@ router
 router
 .route('/:id')
 .get(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.pathParams,
   Controller.findOne,
 )
 .put(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.pathParams, Validator.updateOne,
   Controller.updateOne,
 )
 .delete(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.pathParams,
   Controller.deleteOne,
 );
@@ -41,7 +41,7 @@ router
 router
 .route('/:id/update-status')
 .patch(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(AdminPermission.configuracoes),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Validator.pathParams, Validator.updateStatus,
   Controller.updateStatus,
 );

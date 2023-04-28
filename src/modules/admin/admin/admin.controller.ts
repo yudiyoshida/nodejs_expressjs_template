@@ -6,9 +6,9 @@ import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
 
+import StorageHelper from '@helpers/storage';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
-import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
 import PasswordHelper from '@helpers/password';
 
@@ -32,8 +32,7 @@ class Controller {
       const { id } = req.params;
 
       const admin = await Service.findById(+id);
-      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
-      else res.status(200).json(admin);
+      res.status(200).json(admin);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -44,7 +43,7 @@ class Controller {
   /*
     flow:
     - check for unique fields.
-    - check for permissions existence.
+    - check for permissions' existence.
     - generate and hash password.
     - register new admin user.
     - send new email with password.
@@ -55,8 +54,7 @@ class Controller {
       const { permissions, ...data } = req.body as CreateAdminOutputDto;
 
       // Verifica se já existe um registro com os dados informados.
-      const account = await Service.findByUniqueFields(data);
-      if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      await Service.findByUniqueFields(data);
 
       // Checa se as permissões existem.
       await this.checkIfPermissionsExists(permissions);
@@ -65,11 +63,13 @@ class Controller {
       const password = PasswordHelper.generate();
       data.password = PasswordHelper.hash(password);
 
+      // await StorageHelper.deleteFile(data.imageUrl);
+
       // Cadastra o novo usuário admin.
       const newAdmin = await Service.create(data, permissions);
 
       // Envio do email com a senha.
-      await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
+      // await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
       res.status(201).json(newAdmin);
 
     } catch (err: any) {
@@ -80,9 +80,9 @@ class Controller {
 
   /*
     flow:
-    - check for admin existence.
+    - check for admin's existence.
     - check for unique fields.
-    - check for permissions existence.
+    - check for permissions' existence.
     - update admin user.
     - response.
   */
@@ -93,11 +93,9 @@ class Controller {
 
       // Verifica se existe um admin com o id informado.
       const admin = await Service.findById(+id);
-      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
 
       // Verifica se já existe um registro com os dados informados.
-      const account = await Service.findByUniqueFieldsExceptMe(+id, data);
-      if (account) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+      await Service.findByUniqueFieldsExceptMe(+id, data);
 
       // Checa se as permissões existem.
       if (permissions) await this.checkIfPermissionsExists(permissions);
@@ -117,8 +115,6 @@ class Controller {
       const { id } = req.params;
 
       const admin = await Service.findById(+id);
-      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
-
       await Service.delete(admin.id);
       res.sendStatus(204);
 
@@ -133,8 +129,6 @@ class Controller {
       const { id } = req.params;
 
       const admin = await Service.findById(+id);
-      if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
-
       const result = await Service.updateStatus(admin.id, req.body.status);
       res.status(200).json(result);
 

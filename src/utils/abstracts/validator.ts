@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler } from 'express';
-import { ProfileStatus } from '@prisma/client';
 import { RequestProperyType } from '@customTypes/request';
+import { Status } from '@prisma/client';
 import { z } from 'zod';
 
 import AppException from '@errors/app-exception';
@@ -8,19 +8,19 @@ import AppException from '@errors/app-exception';
 abstract class BaseValidator {
   protected readonly pathSchema;
   protected readonly querySchema;
-  protected readonly statusSchema;
+  protected readonly updateStatusSchema;
 
   constructor() {
     this.pathSchema = z.object({
       id: z.coerce.number().positive().int(),
     });
     this.querySchema = z.object({
-      status: z.nativeEnum(ProfileStatus).optional(),
+      status: z.nativeEnum(Status).optional(),
       limit: z.coerce.number().positive().int().optional(),
       page: z.coerce.number().positive().int().optional(),
     });
-    this.statusSchema = z.object({
-      status: z.nativeEnum(ProfileStatus),
+    this.updateStatusSchema = z.object({
+      status: z.nativeEnum(Status),
     });
   }
 
@@ -48,7 +48,7 @@ abstract class BaseValidator {
   };
 
   public updateStatus: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', this.statusSchema, req, next);
+    this.validateSchema('body', this.updateStatusSchema, req, next);
   };
 }
 

@@ -1,4 +1,4 @@
-import { IAuthDto } from 'modules/auth/dtos/auth.dto';
+import { IAuthDto } from 'modules/commom/auth/dtos/auth.dto';
 
 // to make the file a module and avoid the TypeScript error.
 export {};

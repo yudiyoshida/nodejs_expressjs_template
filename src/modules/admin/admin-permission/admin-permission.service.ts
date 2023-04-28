@@ -14,17 +14,17 @@ class Service {
   }
 
   public async findById(id: number) {
-    return this.repository.findUnique({
+    const permission = await this.repository.findUnique({
       where: { id },
     });
+
+    if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
+    else return permission;
   }
 
-  public async checkIfPermissionsExists(permissions: number[]) {
+  public async checkIfPermissionsExists(ids: number[]) {
     await Promise.all(
-      permissions.map(async(item) => {
-        const permission = await this.findById(item);
-        if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
-      }),
+      ids.map(async(id) => await this.findById(id)),
     );
   }
 }

@@ -1,21 +1,17 @@
 import { Router } from 'express';
 
-import AdminPermissionRoutes from './admin-permission/admin-permission.route';
-import AdminRoutes from './admin/admin.route';
-import AuthRoutes from './auth/auth.route';
-// import ContactRoutes from './contact/contact.route';
-// import FAQRoutes from './faq/faq.route';
-// import TextRoutes from './text/text.route';
-// import UploadFileRoutes from './upload-file/upload-file.route';
+import AuthRoutes from './commom/auth/auth.route';
+
+import AdminPermissionRoutes from './admin/admin-permission/admin-permission.route';
+import AdminRoutes from './admin/admin/admin.route';
 
 const router = Router();
 
-router.use('/admins/permissions', AdminPermissionRoutes);
-router.use('/admins', AdminRoutes);
+// rotas comuns.
 router.use('/auth', AuthRoutes);
-// router.use(ContactRoutes);
-// router.use(FAQRoutes);
-// router.use(TextRoutes);
-// router.use(UploadFileRoutes); //TODO: colocar autenticação jwt, gerar token sem data de expiração e frontend deve usar para consumir rota.
+
+// portal gerencial.
+router.use('/adm/admins/permissions', AdminPermissionRoutes);
+router.use('/adm/admins', AdminRoutes);
 
 export default router;

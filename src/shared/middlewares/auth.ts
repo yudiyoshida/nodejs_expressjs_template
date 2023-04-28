@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { AdminPermission } from '@prisma/client';
+import { AccountType, Permissions } from '@prisma/client';
 
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
@@ -20,7 +20,7 @@ class AuthMiddleware {
 
   public isAdmin: RequestHandler = (req, res, next) => {
     try {
-      if (!req.auth.isAdmin) throw new Error();
+      if (req.auth.type !== AccountType.admin) throw new Error();
       else next();
 
     } catch (err: any) {
@@ -29,17 +29,18 @@ class AuthMiddleware {
     }
   };
 
-  public isAuthorized(permission: AdminPermission) {
+  public isAuthorized(permission: Permissions) {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
         // Checa se não é user admin.
-        if (!req.auth.isAdmin) return next();
+        if (req.auth.type !== AccountType.admin) return next();
 
         // Se for admin, então verifica se possui permissão para acessar o recurso.
-        for (const element of req.auth.permissions) {
-          if (element.title === permission) return next();
-        }
-        throw new Error();
+        const hasPermission = req.auth.permissions.some(
+          elem => elem.title === permission,
+        );
+        if (hasPermission) return next();
+        else throw new Error();
 
       } catch (err: any) {
         next(new AppException(403, ErrorMessages.FORBIDDEN));

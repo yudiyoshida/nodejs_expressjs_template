@@ -23,51 +23,24 @@ model Security {
 }
 
 model Permission {
-  id     Int             @id @default(autoincrement())
-  title  AdminPermission @unique
-  admins Admin[]
-}
-
-model Profile {
-  id            Int           @id @default(autoincrement())
-  role          ProfileRole
-  email         String?       @unique @db.VarChar(512)
-  phone         String?       @unique @db.VarChar(32)
-  password      String        @db.Text
-  status        ProfileStatus
-  code          String?       @db.VarChar(32)
-  codeExpiresIn DateTime?     @db.DateTime(0)
-  admin         Admin?        @relation(name: "adminProfile")
+  id      Int         @id @default(autoincrement())
+  title   Permissions @unique
+  account Admin[]
 }
 
 model Admin {
-  profile     Profile      @relation(name: "adminProfile", fields: [profileId], references: [id])
-  profileId   Int
-  name        String       @db.VarChar(512)
-  imageKey    String?      @db.Text
-  imageUrl    String?      @db.Text
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  permissions Permission[]
-
-  @@id([profileId])
-}
-
-model Address {
-  id           Int      @id @default(autoincrement())
-  nickname     String?  @db.VarChar(512)
-  zipcode      String   @db.VarChar(512)
-  street       String   @db.VarChar(512)
-  number       String   @db.VarChar(512)
-  complement   String?  @db.VarChar(512)
-  reference    String?  @db.VarChar(512)
-  neighborhood String   @db.VarChar(512)
-  city         String   @db.VarChar(512)
-  state        String   @db.VarChar(512)
-  lat          String?  @db.VarChar(512)
-  lng          String?  @db.VarChar(512)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            Int          @id @default(autoincrement())
+  type          AccountType  @default(admin)
+  name          String       @db.VarChar(512)
+  email         String       @unique @db.VarChar(512)
+  password      String       @db.Text
+  status        Status
+  imageUrl      String?      @db.Text
+  code          String?      @db.VarChar(32)
+  codeExpiresIn DateTime?    @db.DateTime(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  permissions   Permission[]
 }
 
 model Faq {
@@ -86,20 +59,21 @@ model Text {
   updatedAt DateTime @updatedAt
 }
 
-enum ProfileRole {
+enum Permissions {
   admin
-  user
+  faqs
+  texts
 }
 
-enum ProfileStatus {
+enum Status {
   ativo
   inativo
   pendente
 }
 
-enum AdminPermission {
-  usuarios
-  configuracoes
+enum AccountType {
+  admin
+  app
 }
 
 enum TextType {

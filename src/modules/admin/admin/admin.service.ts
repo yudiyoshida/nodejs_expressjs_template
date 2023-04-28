@@ -2,6 +2,8 @@ import DataSource from '@database/data-source';
 
 import { Prisma, Status } from '@prisma/client';
 import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
+import AppException from '@errors/app-exception';
+import ErrorMessages from '@errors/error-messages';
 
 class Service {
   private readonly repository;
@@ -31,7 +33,7 @@ class Service {
         where: { status },
         take: limit,
         skip: ((page - 1) * limit),
-        select: AdminDto,
+        select: AdminWithPermissionsDto,
       }),
       this.repository.count({
         where: { status },
@@ -40,24 +42,30 @@ class Service {
   }
 
   public async findById(id: number) {
-    return this.repository.findFirst({
-      where: { id, isAdmin: true },
+    const admin = await this.repository.findFirst({
+      where: { id },
       select: AdminWithPermissionsDto,
     });
+
+    if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+    else return admin;
   }
 
   public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
-    return this.repository.findFirst({
+    const admin = await this.repository.findFirst({
       where: {
         OR: [
           { email: data.email },
         ],
       },
     });
+
+    if (admin) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
   }
 
   public async findByUniqueFieldsExceptMe(id: number, data: Prisma.AdminWhereUniqueInput) {
-    return this.repository.findFirst({
+    //TODO: refactor.
+    const admin = await this.repository.findFirst({
       where: {
         NOT: [
           { id },
@@ -67,21 +75,25 @@ class Service {
         ],
       },
     });
+
+    if (admin) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
   }
 
   public async update(
     id: number,
     data: Prisma.AdminUpdateInput,
-    permissions: Prisma.PermissionWhereUniqueInput[],
+    permissions?: Prisma.PermissionWhereUniqueInput[],
   ) {
     return DataSource.$transaction(async(tx) => {
-      // Remove relacionamento entre user admin e permissions.
-      await tx.admin.update({
-        where: { id },
-        data: {
-          permissions: { set: [] },
-        },
-      });
+      if (permissions) {
+        // Remove relacionamento entre user admin e permissions.
+        await tx.admin.update({
+          where: { id },
+          data: {
+            permissions: { set: [] },
+          },
+        });
+      }
 
       // Atualiza user admin, inclusive as permissions.
       return await tx.admin.update({

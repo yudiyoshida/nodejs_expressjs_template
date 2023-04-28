@@ -4,7 +4,13 @@ import path from 'path';
 import { promisify } from 'util';
 
 class StorageHelper {
-  public async deleteFile(key: string) {
+  private extractKeyFromUrl(url: string) {
+    const key = url.split('/');
+    return key[key.length - 1];
+  }
+
+  public async deleteFile(url: string) {
+    const key = this.extractKeyFromUrl(url);
     if (process.env.STORAGE_TYPE === 's3') {
       const s3 = new aws.S3({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
@@ -18,8 +24,9 @@ class StorageHelper {
       }).promise();
 
     } else {
-      return await promisify(fs.unlink)(path.resolve(process.env.STORAGE_LOCAL as string, key));
-
+      return await promisify(fs.unlink)(
+        path.resolve(process.env.STORAGE_LOCAL as string, key),
+      );
     }
   }
 }
