@@ -23,7 +23,7 @@ class Service {
           connect: permissions,
         },
       },
-      select: AdminDto,
+      select: AdminWithPermissionsDto,
     });
   }
 
