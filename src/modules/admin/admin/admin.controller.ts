@@ -48,7 +48,7 @@ class Controller {
     - send new email with password.
     - response.
   */
-  public createAdmin: RequestHandler = async(req, res, next) => {
+  public createOne: RequestHandler = async(req, res, next) => {
     try {
       const { permissions, ...data } = req.body as CreateAdminOutputDto;
 

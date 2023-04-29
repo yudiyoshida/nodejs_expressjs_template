@@ -42,7 +42,7 @@ class Service {
   }
 
   public async findById(id: number) {
-    const admin = await this.repository.findFirst({
+    const admin = await this.repository.findUnique({
       where: { id },
       select: AdminWithPermissionsDto,
     });
