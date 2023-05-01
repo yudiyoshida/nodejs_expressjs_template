@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { CreateFaqDto } from './create-faq.dto';
+import { CreateFaq } from './create-faq.dto';
 
-export type UpdateFaqInputDto = z.input<typeof UpdateFaqDto>
-export type UpdateFaqOutputDto = z.output<typeof UpdateFaqDto>
-export const UpdateFaqDto = CreateFaqDto.partial();
+export type UpdateFaqInputDto = z.input<typeof UpdateFaq>
+export type UpdateFaqOutputDto = z.output<typeof UpdateFaq>
+export const UpdateFaq = CreateFaq.partial();

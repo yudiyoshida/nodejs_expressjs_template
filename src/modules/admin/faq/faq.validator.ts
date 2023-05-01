@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import { CreateFaqDto } from './dtos/create-faq.dto';
-import { UpdateFaqDto } from './dtos/update-faq.dto';
+import { CreateFaq } from './dtos/create-faq.dto';
+import { UpdateFaq } from './dtos/update-faq.dto';
 import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {
@@ -9,11 +9,11 @@ class Validator extends BaseValidator {
   }
 
   public createOne: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', CreateFaqDto, req, next);
+    this.validateSchema('body', CreateFaq, req, next);
   };
 
   public updateOne: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', UpdateFaqDto, req, next);
+    this.validateSchema('body', UpdateFaq, req, next);
   };
 }
 

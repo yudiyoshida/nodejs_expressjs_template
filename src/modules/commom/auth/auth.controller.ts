@@ -21,18 +21,21 @@ class Controller {
       const isPasswordCorrect = PasswordHelper.comparePasswordAndHash(password, account.password);
       if (!isPasswordCorrect) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
 
-      const { id, status, permissions } = account;
-      if (status === Status.inativo) {
+      if (account.status === Status.inativo) {
         throw new AppException(403, ErrorMessages.INACTIVE);
 
-      } else if (status === Status.pendente) {
+      } else if (account.status === Status.pendente) {
         throw new AppException(412, ErrorMessages.PENDING);
 
       } else {
-        const payload: IAuthDto = { id, type, permissions };
+        const payload: IAuthDto = {
+          id: account.id,
+          type: account.type,
+          permissions: account.permissions,
+        };
         res.status(200).json({
           token: JwtHelper.createToken(payload),
-          account: await Service.findById(id),
+          account: await Service.findById(payload.id),
         });
       }
 

@@ -6,4 +6,5 @@ export const AccountDto = Prisma.validator<Prisma.AdminSelect>()({
   type: true,
   name: true,
   imageUrl: true,
+  permissions: true,
 });
