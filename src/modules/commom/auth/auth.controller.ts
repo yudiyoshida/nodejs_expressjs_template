@@ -13,31 +13,28 @@ import PasswordHelper from '@helpers/password';
 class Controller {
   public login: RequestHandler = async(req, res, next) => {
     try {
-      const { username, password, type } = req.body as LoginOutputDto;
+      const { username, password, role } = req.body as LoginOutputDto;
 
-      // TODO: como aplicar strategy.
-      const account = await Service.findByUsername(username);
+      // find account.
+      const account = await Service.findByUsername(username, role);
+      if (!account) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
 
+      // check password.
       const isPasswordCorrect = PasswordHelper.comparePasswordAndHash(password, account.password);
       if (!isPasswordCorrect) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
 
-      if (account.status === Status.inativo) {
-        throw new AppException(403, ErrorMessages.INACTIVE);
+      // check account's status.
+      if (account.status === Status.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
+      if (account.status === Status.pendente) throw new AppException(412, ErrorMessages.PENDING);
 
-      } else if (account.status === Status.pendente) {
-        throw new AppException(412, ErrorMessages.PENDING);
+      // generate token and send response.
+      const { id, type, permissions } = account;
+      const payload: IAuthDto = { id, type, permissions };
 
-      } else {
-        const payload: IAuthDto = {
-          id: account.id,
-          type: account.type,
-          permissions: account.permissions,
-        };
-        res.status(200).json({
-          token: JwtHelper.createToken(payload),
-          account: await Service.findById(payload.id),
-        });
-      }
+      res.status(200).json({
+        token: JwtHelper.createToken(payload),
+        account: await Service.findById(payload.id),
+      });
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));

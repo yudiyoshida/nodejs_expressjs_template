@@ -6,5 +6,5 @@ export type LoginOutputDto = z.output<typeof Login>
 export const Login = z.object({
   username: z.string().trim().min(1),
   password: z.string(),
-  type: z.nativeEnum(AccountType),
+  role: z.nativeEnum(AccountType),
 });
