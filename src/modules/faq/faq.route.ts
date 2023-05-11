@@ -7,7 +7,6 @@ import Validator from './faq.validator';
 
 const router = Router();
 
-// rotas comuns.
 router
 .route('/faqs')
 .get(
@@ -15,7 +14,6 @@ router
   Controller.findAllNoAuth,
 );
 
-// rotas de administrador.
 router
 .route('/adm/faqs')
 .all(
