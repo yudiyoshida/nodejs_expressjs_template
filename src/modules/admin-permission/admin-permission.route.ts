@@ -7,7 +7,7 @@ import Controller from './admin-permission.controller';
 const router = Router();
 
 router
-.route('/admins-permissions')
+.route('/adm/admins/permissions')
 .get(
   Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
   Controller.findAll,

@@ -1,12 +1,12 @@
+import { AccountStatus } from '@prisma/client';
 import { z } from 'zod';
-import { Status } from '@prisma/client';
 
 export type CreateAdminInputDto = z.input<typeof CreateAdmin>
-export type CreateAdminOutputDto = z.output<typeof CreateAdminOutput>
+export type CreateAdminOutputDto = z.output<typeof CreateAdmin>
 export const CreateAdmin = z.object({
   name: z.string().trim().min(1),
   email: z.string().trim().email(),
-  imageUrl: z.string().trim().url(),
+  imageUrl: z.string().trim().url().optional(),
   permissions: z.array(
     z.number().positive().int(),
   )
@@ -16,13 +16,11 @@ export const CreateAdmin = z.object({
       return { id };
     });
   }),
-});
-
-export const CreateAdminOutput = CreateAdmin
+})
 .transform((body) => {
   return {
     ...body,
     password: '',
-    status: Status.ativo,
+    status: AccountStatus.ativo,
   };
 });

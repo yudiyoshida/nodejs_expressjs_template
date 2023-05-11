@@ -23,11 +23,9 @@ class Controller {
 
       // find account.
       const account = await this.strategies[role].findByUsername(username);
-      if (!account) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
 
       // check password.
-      const isPasswordCorrect = PasswordHelper.comparePasswordAndHash(password, account.password);
-      if (!isPasswordCorrect) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+      PasswordHelper.comparePasswordAndHash(password, account.password);
 
       // check if account is active.
       if (account.status === AccountStatus.inativo) throw new AppException(403, ErrorMessages.INACTIVE);

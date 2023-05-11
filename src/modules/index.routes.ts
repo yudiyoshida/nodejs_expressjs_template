@@ -9,11 +9,11 @@ import UploadFileRoutes from './upload-file/upload-file.route';
 
 const router = Router();
 
-// router.use(AdminPermissionRoutes);
-// router.use(AdminRoutes);
+router.use(AdminPermissionRoutes);
+router.use(AdminRoutes);
 router.use(AuthRoutes);
-// router.use(FaqRoutes);
-// router.use(TextRoutes);
-// router.use(UploadFileRoutes);
+router.use(FaqRoutes);
+router.use(TextRoutes);
+router.use(UploadFileRoutes);
 
 export default router;

@@ -5,10 +5,13 @@ export default {
   INVALID_PASSWORD: 'Senha informada incorreta.',
   PASSWORDS_MUST_MATCH: 'Senhas informadas estão diferentes.',
 
+  ACCOUNT_ALREADY_EXISTS: 'Já existe uma conta com os dados informados.',
+
+  ADMIN_NOT_FOUND: 'Usuário não encontrado na base de dados.',
+
   EMAIL_NOT_VALIDATED: 'Para continuar, é necessário validar o email.',
   INVALID_CREDENTIALS: 'Credenciais incorretas.',
   USER_NOT_FOUND: 'Usuário não encontrado na base de dados.',
-  USER_ALREADY_EXISTS: 'Já existe uma conta com os dados informados.',
 
   FAQ_NOT_FOUND: 'FAQ não encontrada na base de dados.',
   PERMISSION_NOT_FOUND: 'Permissão não encontrada na base de dados.',

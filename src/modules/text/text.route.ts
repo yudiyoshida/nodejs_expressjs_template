@@ -8,20 +8,20 @@ import Validator from './text.validator';
 const router = Router();
 
 router
-.route('/')
+.route('/texts')
 .get(
   Validator.queryParams,
-  Controller.findOne,
+  Controller.findOneNoAuth,
 );
 
 router
-.route('/')
+.route('/adm/texts')
 .all(
   Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.texts),
   Validator.queryParams,
 )
 .get(
-  Controller.findOne,
+  Controller.findOneAsAdmin,
 )
 .put(
   Validator.updateOne,

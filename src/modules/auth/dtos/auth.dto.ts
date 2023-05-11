@@ -1,4 +1,6 @@
+import { AccountType } from '@prisma/client';
+
 export interface IAuthDto {
   id: number;
-  type: string;
+  type: AccountType;
 }

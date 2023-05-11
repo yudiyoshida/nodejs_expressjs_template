@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler } from 'express';
 import { RequestProperyType } from '@customTypes/request';
-import { Status } from '@prisma/client';
+import { AccountStatus } from '@prisma/client';
 import { z } from 'zod';
 
 import AppException from '@errors/app-exception';
@@ -15,12 +15,12 @@ abstract class BaseValidator {
       id: z.coerce.number().positive().int(),
     });
     this.querySchema = z.object({
-      status: z.nativeEnum(Status).optional(),
+      status: z.nativeEnum(AccountStatus).optional(),
       limit: z.coerce.number().positive().int().optional(),
       page: z.coerce.number().positive().int().optional(),
     });
     this.updateStatusSchema = z.object({
-      status: z.nativeEnum(Status),
+      status: z.nativeEnum(AccountStatus),
     });
   }
 

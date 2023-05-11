@@ -6,8 +6,9 @@ import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
 
-// import Mail from '@libs/nodemailer';
+import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
+import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
 import PasswordHelper from '@helpers/password';
 
@@ -53,7 +54,8 @@ class Controller {
       const { permissions, ...data } = req.body as CreateAdminOutputDto;
 
       // Verifica se já existe um registro com os dados informados.
-      await Service.findByUniqueFields(data);
+      const admin = await Service.findByUniqueFields(data);
+      if (admin) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
 
       // Checa se as permissões existem.
       await this.checkIfPermissionsExists(permissions);
@@ -66,7 +68,7 @@ class Controller {
       const newAdmin = await Service.create(data, permissions);
 
       // Envio do email com a senha.
-      // await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
+      await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
       res.status(201).json(newAdmin);
 
     } catch (err: any) {

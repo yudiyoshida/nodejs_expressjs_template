@@ -1,11 +1,11 @@
 import DataSource from '@database/data-source';
 
-import { AccountType, Prisma, AccountStatus } from '@prisma/client';
+import { Prisma, AccountStatus } from '@prisma/client';
 import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
 import { IAccountService } from '@interfaces/account';
+import { IAccountDto } from 'modules/auth/dtos/account.dto';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import { IAccountDto } from 'modules/auth/dtos/account.dto';
 
 class Service implements IAccountService {
   private readonly repository;
@@ -14,36 +14,10 @@ class Service implements IAccountService {
     this.repository = DataSource.admin;
   }
 
-  public async create(
-    data: Prisma.AdminCreateInput,
-    permissions: Prisma.PermissionWhereUniqueInput[],
-  ) {
-    return this.repository.create({
-      data: {
-        ...data,
-        type: AccountType.admin,
-        permissions: {
-          connect: permissions,
-        },
-      },
-      select: AdminWithPermissionsDto,
-    });
-  }
-
   public async findAllPermissions(id: number) {
     return this.repository.findUnique({
       where: { id },
     }).permissions();
-  }
-
-  public async findByUsername(username: string): Promise<IAccountDto | null> {
-    return this.repository.findFirst({
-      where: {
-        OR: [
-          { email: username },
-        ],
-      },
-    });
   }
 
   public async findAll(limit: number, page: number, status: AccountStatus) {
@@ -66,36 +40,51 @@ class Service implements IAccountService {
       select: AdminWithPermissionsDto,
     });
 
-    if (!admin) throw new AppException(404, ErrorMessages.USER_NOT_FOUND);
+    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
     else return admin;
   }
 
+  public async findByUsername(username: string): Promise<IAccountDto> {
+    const account = await this.repository.findFirst({
+      where: {
+        OR: [
+          { email: username },
+        ],
+      },
+    });
+
+    if (!account) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    else return account;
+  }
+
   public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
-    const admin = await this.repository.findFirst({
+    return this.repository.findFirst({
       where: {
         OR: [
           { email: data.email },
         ],
       },
     });
-
-    if (admin) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
   }
 
   public async findByUniqueFieldsExceptMe(id: number, data: Prisma.AdminWhereUniqueInput) {
-    //TODO: refactor.
-    const admin = await this.repository.findFirst({
-      where: {
-        NOT: [
-          { id },
-        ],
-        OR: [
-          { email: data.email },
-        ],
-      },
-    });
+    const admin = await this.findByUniqueFields(data);
+    if (admin && admin.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
+  }
 
-    if (admin) throw new AppException(409, ErrorMessages.USER_ALREADY_EXISTS);
+  public async create(
+    data: Prisma.AdminCreateInput,
+    permissions: Prisma.PermissionWhereUniqueInput[],
+  ) {
+    return this.repository.create({
+      data: {
+        ...data,
+        permissions: {
+          connect: permissions,
+        },
+      },
+      select: AdminWithPermissionsDto,
+    });
   }
 
   public async update(
