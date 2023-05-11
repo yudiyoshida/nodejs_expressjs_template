@@ -20,7 +20,7 @@ abstract class BaseValidator {
       page: z.coerce.number().positive().int().optional(),
     });
     this.updateStatusSchema = z.object({
-      status: z.nativeEnum(AccountStatus),
+      status: z.enum([AccountStatus.ativo, AccountStatus.inativo]),
     });
   }
 

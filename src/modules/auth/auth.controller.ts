@@ -29,7 +29,7 @@ class Controller {
 
       // check if account is active.
       if (account.status === AccountStatus.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
-      if (account.status === AccountStatus.pendente) throw new AppException(412, ErrorMessages.PENDING);
+      if (account.status === AccountStatus.pendente) throw new AppException(403, ErrorMessages.PENDING);
 
       // generate token and send response.
       const { id, type, name, imageUrl } = account;
