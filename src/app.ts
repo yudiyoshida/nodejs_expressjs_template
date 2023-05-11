@@ -37,8 +37,8 @@ class App {
 
   // Desabilitar a rota do swagger quando fizer deploy em produção.
   routes() {
-    this.app.use(routes);
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
+    this.app.use(routes);
   }
 
   globalErrorHandlerRoute() {

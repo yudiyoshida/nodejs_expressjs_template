@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, Permissions, Status } from '@prisma/client';
+import { Prisma, PrismaClient, Permissions, AccountStatus } from '@prisma/client';
 import PasswordHelper from '../../src/shared/helpers/password';
 
 const permissions = Object.values(Permissions);
@@ -6,7 +6,7 @@ const admin: Prisma.AdminCreateInput = {
   name: 'Admin Master',
   email: 'admin@getnada.com',
   password: PasswordHelper.hash('123456789'),
-  status: Status.ativo,
+  status: AccountStatus.ativo,
 };
 
 export async function seedAdmin(prisma: PrismaClient): Promise<void> {

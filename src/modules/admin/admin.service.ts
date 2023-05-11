@@ -1,11 +1,13 @@
 import DataSource from '@database/data-source';
 
-import { Prisma, Status } from '@prisma/client';
+import { AccountType, Prisma, AccountStatus } from '@prisma/client';
 import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
+import { IAccountService } from '@interfaces/account';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
+import { IAccountDto } from 'modules/auth/dtos/account.dto';
 
-class Service {
+class Service implements IAccountService {
   private readonly repository;
 
   constructor() {
@@ -19,6 +21,7 @@ class Service {
     return this.repository.create({
       data: {
         ...data,
+        type: AccountType.admin,
         permissions: {
           connect: permissions,
         },
@@ -27,7 +30,23 @@ class Service {
     });
   }
 
-  public async findAll(limit: number, page: number, status: Status) {
+  public async findAllPermissions(id: number) {
+    return this.repository.findUnique({
+      where: { id },
+    }).permissions();
+  }
+
+  public async findByUsername(username: string): Promise<IAccountDto | null> {
+    return this.repository.findFirst({
+      where: {
+        OR: [
+          { email: username },
+        ],
+      },
+    });
+  }
+
+  public async findAll(limit: number, page: number, status: AccountStatus) {
     return DataSource.$transaction([
       this.repository.findMany({
         where: { status },
@@ -109,7 +128,7 @@ class Service {
     });
   }
 
-  public async updateStatus(id: number, status: Status) {
+  public async updateStatus(id: number, status: AccountStatus) {
     return this.repository.update({
       where: { id },
       data: { status },

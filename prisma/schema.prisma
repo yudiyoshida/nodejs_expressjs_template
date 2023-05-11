@@ -29,18 +29,32 @@ model Permission {
 }
 
 model Admin {
-  id            Int          @id @default(autoincrement())
-  type          AccountType  @default(admin)
-  name          String       @db.VarChar(512)
-  email         String       @unique @db.VarChar(512)
-  password      String       @db.Text
-  status        Status
-  imageUrl      String?      @db.Text
-  code          String?      @db.VarChar(32)
-  codeExpiresIn DateTime?    @db.DateTime(0)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  id            Int           @id @default(autoincrement())
+  type          AccountType   @default(admin)
+  name          String        @db.VarChar(512)
+  email         String        @unique @db.VarChar(512)
+  password      String        @db.Text
+  status        AccountStatus
+  imageUrl      String?       @db.Text
+  code          String?       @db.VarChar(32)
+  codeExpiresIn DateTime?     @db.DateTime(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   permissions   Permission[]
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  type          AccountType   @default(user)
+  name          String        @db.VarChar(512)
+  email         String        @unique @db.VarChar(512)
+  password      String        @db.Text
+  status        AccountStatus
+  imageUrl      String?       @db.Text
+  code          String?       @db.VarChar(32)
+  codeExpiresIn DateTime?     @db.DateTime(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Faq {
@@ -65,7 +79,7 @@ enum Permissions {
   texts
 }
 
-enum Status {
+enum AccountStatus {
   ativo
   inativo
   pendente
@@ -73,7 +87,7 @@ enum Status {
 
 enum AccountType {
   admin
-  app
+  user
 }
 
 enum TextType {

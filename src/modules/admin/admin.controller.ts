@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express';
-import { Status } from '@prisma/client';
+import { AccountStatus } from '@prisma/client';
 import { CreateAdminOutputDto } from './dtos/create-admin.dto';
 import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
 
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
 
-import Mail from '@libs/nodemailer';
+// import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import PaginationHelper from '@helpers/pagination';
 import PasswordHelper from '@helpers/password';
@@ -16,7 +16,7 @@ class Controller {
     try {
       const { limit = 10, page = 1, status } = req.query;
 
-      const admins = await Service.findAll(+limit, +page, status as Status);
+      const admins = await Service.findAll(+limit, +page, status as AccountStatus);
       const adminsPaginated = PaginationHelper.paginate(admins, +limit, +page);
       res.status(200).json(adminsPaginated);
 

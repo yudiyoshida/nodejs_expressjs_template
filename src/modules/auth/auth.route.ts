@@ -6,7 +6,7 @@ import Validator from './auth.validator';
 const router = Router();
 
 router
-.route('/login')
+.route('/auth/login')
 .post(
   Validator.login,
   Controller.login,

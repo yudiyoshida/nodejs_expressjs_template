@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { IAuthDto } from 'modules/commom/auth/dtos/auth.dto';
+import { IAuthDto } from 'modules/auth/dtos/auth.dto';
 
 class JwtHelper {
   public createToken(payload: IAuthDto) {

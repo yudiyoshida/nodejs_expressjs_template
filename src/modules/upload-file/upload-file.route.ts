@@ -8,10 +8,10 @@ import Controller from './upload-file.controller';
 const router = Router();
 
 router
-.route('/')
+.route('/upload-file')
 .post(
   Auth.isAuthenticated,
-  multer(multerOptions).single('image'),
+  multer(multerOptions).single('file'),
   Controller.upload,
 );
 

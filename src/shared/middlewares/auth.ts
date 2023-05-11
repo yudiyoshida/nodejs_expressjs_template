@@ -4,6 +4,7 @@ import { AccountType, Permissions } from '@prisma/client';
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
+import adminService from 'modules/admin/admin.service';
 
 class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
@@ -29,6 +30,17 @@ class AuthMiddleware {
     }
   };
 
+  public isUser: RequestHandler = (req, res, next) => {
+    try {
+      if (req.auth.type !== AccountType.user) throw new Error();
+      else next();
+
+    } catch (err: any) {
+      next(new AppException(403, ErrorMessages.FORBIDDEN));
+
+    }
+  };
+
   public isAuthorized(permission: Permissions) {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
@@ -36,7 +48,10 @@ class AuthMiddleware {
         if (req.auth.type !== AccountType.admin) return next();
 
         // Se for admin, então verifica se possui permissão para acessar o recurso.
-        const hasPermission = req.auth.permissions.some(
+        const permissions = await adminService.findAllPermissions(req.auth.id);
+        if (!permissions) throw new Error();
+
+        const hasPermission = permissions.some(
           elem => elem.title === permission,
         );
         if (hasPermission) return next();

@@ -9,6 +9,13 @@ const router = Router();
 
 router
 .route('/')
+.get(
+  Validator.queryParams,
+  Controller.findOne,
+);
+
+router
+.route('/')
 .all(
   Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.texts),
   Validator.queryParams,

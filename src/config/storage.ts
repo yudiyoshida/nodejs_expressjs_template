@@ -6,7 +6,7 @@ import { Request } from 'express';
 import { S3Client } from '@aws-sdk/client-s3';
 import AppException from '@errors/app-exception';
 
-const ALLOWED_MIMES = ['image/jpeg', 'image/png'];
+const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'pdf'];
 const MAX_SIZE_TWO_MEGABYTES = 2 * 1024 * 1024;
 
 const storageTypes = {

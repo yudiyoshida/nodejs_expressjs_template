@@ -45,7 +45,7 @@ components:
           type: string
           required: true
           example: '12345678'
-        type:
+        role:
           $ref: '#/components/schemas/AccountTypeSchema'
 
     ResetPasswordSchema:

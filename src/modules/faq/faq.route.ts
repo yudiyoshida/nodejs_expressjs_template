@@ -2,15 +2,22 @@ import { Router } from 'express';
 import { Permissions } from '@prisma/client';
 
 import Auth from '@middlewares/auth';
-import Controller from './admin.controller';
-import Validator from './admin.validator';
+import Controller from './faq.controller';
+import Validator from './faq.validator';
 
 const router = Router();
 
 router
 .route('/')
+.get(
+  Validator.queryParams,
+  Controller.findAll,
+);
+
+router
+.route('/')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
 )
 .get(
   Validator.queryParams,
@@ -24,7 +31,7 @@ router
 router
 .route('/:id')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
   Validator.pathParams,
 )
 .get(
@@ -36,13 +43,6 @@ router
 )
 .delete(
   Controller.deleteOne,
-);
-
-router
-.route('/:id/update-status')
-.patch(
-  Validator.pathParams, Validator.updateStatus,
-  Controller.updateStatus,
 );
 
 export default router;
