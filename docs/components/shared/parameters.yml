@@ -23,14 +23,24 @@ components:
         type: number
         example: 1
 
-    StatusParameter:
+    AccountStatusParameter:
       in: query
       name: status
       schema:
-        $ref: '#/components/schemas/StatusSchema'
+        type: string
+        enum: ['ativo', 'inativo', 'pendente']
 
     AccountTypeParameter:
       in: query
       name: type
       schema:
-        $ref: '#/components/schemas/AccountTypeSchema'
+        type: string
+        enum: ['admin', 'user']
+
+    TextTypeParameter:
+      in: query
+      name: type
+      required: true
+      schema:
+        type: string
+        enum: ['about', 'terms', 'privacy']

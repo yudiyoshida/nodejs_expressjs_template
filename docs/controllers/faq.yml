@@ -1,107 +1,170 @@
-# paths:
-#   /faqs:
-#     get:
-#       summary: "Geral - Rota utilizada para listar as faqs"
-#       tags:
-#         - FAQ
-#       parameters:
-#         - $ref: '#/components/parameters/PageParameter'
-#         - $ref: '#/components/parameters/LimitParameter'
-#       responses:
-#         "200":
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 allOf:
-#                   - type: object
-#                     properties:
-#                       data:
-#                         type: array
-#                         items:
-#                           allOf:
-#                             - $ref: "#/components/schemas/FaqSchema"
-#                   - $ref: "#/components/schemas/PaginationSchema"
-#         "500":
-#           $ref: "#/components/responses/500"
+paths:
+  /faqs:
+    get:
+      summary: "Rota utilizada para listar as faqs"
+      tags:
+        - Geral - Faqs
+      parameters:
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: "#/components/schemas/FaqAsNoAuthSchema"
+                  - $ref: "#/components/schemas/PaginationSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "500":
+          $ref: "#/components/responses/500"
 
-#     post:
-#       summary: "Portal admin - Rota utilizada para cadastrar uma faq"
-#       tags:
-#         - FAQ
-#       security:
-#         - BearerAuth: []
-#       requestBody:
-#         required: true
-#         content:
-#           application/json:
-#             schema:
-#               $ref: "#/components/schemas/FaqSchema"
-#       responses:
-#         "201":
-#           description: "Created"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/FaqSchema"
-#         "400":
-#           $ref: "#/components/responses/400"
-#         "401":
-#           $ref: "#/components/responses/401"
-#         "403":
-#           $ref: "#/components/responses/403"
-#         "500":
-#           $ref: "#/components/responses/500"
+  /adm/faqs:
+    get:
+      summary: "Rota utilizada para listar as faqs"
+      tags:
+        - Gerencial - Faqs
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParameter'
+        - $ref: '#/components/parameters/LimitParameter'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - $ref: "#/components/schemas/FaqAsAdminSchema"
+                  - $ref: "#/components/schemas/PaginationSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"
 
-#   /faqs/{id}:
-#     parameters:
-#       - $ref: "#/components/parameters/IdParameter"
-#     put:
-#       summary: "Portal admin - Rota utilizada para editar uma faq"
-#       tags:
-#         - FAQ
-#       security:
-#         - BearerAuth: []
-#       requestBody:
-#         required: true
-#         content:
-#           application/json:
-#             schema:
-#               $ref: "#/components/schemas/FaqSchema"
-#       responses:
-#         "200":
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/FaqSchema"
-#         "400":
-#           $ref: "#/components/responses/400"
-#         "401":
-#           $ref: "#/components/responses/401"
-#         "403":
-#           $ref: "#/components/responses/403"
-#         "404":
-#           $ref: "#/components/responses/404"
-#         "500":
-#           $ref: "#/components/responses/500"
+    post:
+      summary: "Rota utilizada para cadastrar uma faq"
+      tags:
+        - Gerencial - Faqs
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqAsAdminSchema"
+      responses:
+        "201":
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqAsAdminSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"
 
-#     delete:
-#       summary: "Portal admin - Rota utilizada para deletar uma faq"
-#       tags:
-#         - FAQ
-#       security:
-#         - BearerAuth: []
-#       responses:
-#         "204":
-#           $ref: "#/components/responses/204"
-#         "400":
-#           $ref: "#/components/responses/400"
-#         "401":
-#           $ref: "#/components/responses/401"
-#         "403":
-#           $ref: "#/components/responses/403"
-#         "404":
-#           $ref: "#/components/responses/404"
-#         "500":
-#           $ref: "#/components/responses/500"
+  /adm/faqs/{id}:
+    parameters:
+      - $ref: "#/components/parameters/IdParameter"
+    get:
+      summary: 'Rota utilizada para exibir uma faq'
+      tags:
+        - Gerencial - Faqs
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FaqAsAdminSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    put:
+      summary: "Rota utilizada para editar uma faq"
+      description: >
+        ## - Não tem necessidade de enviar todos os campos novamente. Só precisa enviar aqueles que deseja editar.
+      tags:
+        - Gerencial - Faqs
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqAsAdminSchema"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqAsAdminSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"
+
+    delete:
+      summary: "Rota utilizada para deletar uma faq"
+      tags:
+        - Gerencial - Faqs
+      security:
+        - BearerAuth: []
+      responses:
+        "204":
+          $ref: "#/components/responses/204"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/500"

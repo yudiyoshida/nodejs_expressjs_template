@@ -1,6 +1,12 @@
 tags:
   # The tag order here controls the default sorting in Swagger UI
   - name: Geral - Autenticação
+  - name: Geral - Contato
+  - name: Geral - Faqs
+  - name: Geral - Textos
   - name: Geral - Upload de arquivo
   - name: --
-  - name: Gerencial - Admin
+  - name: Gerencial - Colaboradores
+  - name: Gerencial - Faqs
+  - name: Gerencial - Textos
+

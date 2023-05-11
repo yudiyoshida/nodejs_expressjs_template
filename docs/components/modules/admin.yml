@@ -21,7 +21,7 @@ components:
           example: 'ativo'
         imageUrl:
           type: string
-          example: 'http://127.0.0.1:3000/files/image01.png'
+          example: 'campo opcional'
         createdAt:
           type: date
           readOnly: true

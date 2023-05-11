@@ -6,7 +6,7 @@ components:
         url:
           type: string
           readOnly: true
-          example: 'http://localhost/files/file01.png'
+          example: 'http://site.com/files/file01.png'
 
     UploadRequestBodySchema:
       type: object

@@ -1,52 +1,72 @@
-# paths:
-#   /texts:
-#     parameters:
-#       - in: query
-#         name: type
-#         required: true
-#         schema:
-#           type: string
-#           enum: ["about", "terms", "privacy"]
-#     get:
-#       summary: "Geral - Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
-#       tags:
-#         - Text
-#       responses:
-#         "200":
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/TextSchema"
-#         "400":
-#           $ref: "#/components/responses/400"
-#         "500":
-#           $ref: "#/components/responses/500"
+paths:
+  /texts:
+    parameters:
+      - $ref: '#/components/parameters/TextTypeParameter'
+    get:
+      summary: "Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
+      tags:
+        - Geral - Textos
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TextAsNoAuthSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "500":
+          $ref: "#/components/responses/500"
 
-#     put:
-#       summary: "Portal admin - Rota utilizada para editar um texto (termos de uso, políticas de privacidade e sobre)"
-#       tags:
-#         - Text
-#       security:
-#         - BearerAuth: []
-#       requestBody:
-#         required: true
-#         content:
-#           application/json:
-#             schema:
-#               $ref: "#/components/schemas/TextSchema"
-#       responses:
-#         "200":
-#           description: "OK"
-#           content:
-#             application/json:
-#               schema:
-#                 $ref: "#/components/schemas/TextSchema"
-#         "400":
-#           $ref: "#/components/responses/400"
-#         "401":
-#           $ref: "#/components/responses/401"
-#         "403":
-#           $ref: "#/components/responses/403"
-#         "500":
-#           $ref: "#/components/responses/500"
+  /adm/texts:
+    parameters:
+      - $ref: '#/components/parameters/TextTypeParameter'
+    get:
+      summary: "Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
+      tags:
+        - Gerencial - Textos
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TextAsAdminSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"
+
+    put:
+      summary: "Rota utilizada para editar um texto (termos de uso, políticas de privacidade e sobre)"
+      tags:
+        - Gerencial - Textos
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TextAsAdminSchema"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TextAsAdminSchema"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "500":
+          $ref: "#/components/responses/500"

@@ -3,11 +3,11 @@ paths:
     post:
       summary: "Rota utilizada para fazer upload de um arquivo"
       description: >
-        ## Algumas rotas solicitam o envio de arquivos (e.g. fotos, pdf, planilhas, etc).
+        ## - Algumas rotas solicitam o envio de arquivos (e.g. fotos, pdf, planilhas, etc).
 
-        ## Essa API utiliza apenas application/json como Content-Type no request body.
+        ## - Essa API utiliza apenas application/json como Content-Type no request body.
 
-        ## Logo, basta enviar a key e url no JSON, que podem ser obtidas nessa rota.
+        ## - Logo, basta enviar a url do arquivo no JSON, que pode ser obtida nessa rota.
       tags:
         - Geral - Upload de arquivo
       security:

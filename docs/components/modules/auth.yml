@@ -8,13 +8,13 @@ components:
           example: 1
         type:
           type: string
-          example: 'app'
+          example: 'user'
         name:
           type: string
           example: 'User 01'
         imageUrl:
           type: string
-          example: 'http://127.0.0.1:3000/files/image01.png'
+          example: 'http://site.com/files/image.png'
 
     ForgotPasswordSchema:
       type: object
@@ -28,9 +28,7 @@ components:
       type: object
       properties:
         account:
-          allOf:
-            - $ref: '#/components/schemas/AccountSchema'
-            # - $ref: '#/components/schemas/PermissionArraySchema'
+          $ref: '#/components/schemas/AccountSchema'
         token:
           type: string
 
@@ -44,9 +42,11 @@ components:
         password:
           type: string
           required: true
-          example: '12345678'
+          example: '123456789'
         role:
-          $ref: '#/components/schemas/AccountTypeSchema'
+          type: string
+          required: true
+          example: 'admin ou user'
 
     ResetPasswordSchema:
       type: object

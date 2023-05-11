@@ -1,6 +1,6 @@
 components:
   schemas:
-    FaqSchema:
+    FaqAsNoAuthSchema:
       type: object
       properties:
         id:
@@ -15,3 +15,27 @@ components:
           type: string
           required: true
           example: 'Resposta 01'
+
+    FaqAsAdminSchema:
+      type: object
+      properties:
+        id:
+          type: number
+          readOnly: true
+          example: 1
+        question:
+          type: string
+          required: true
+          example: 'Pergunta 01'
+        answer:
+          type: string
+          required: true
+          example: 'Resposta 01'
+        createdAt:
+          type: date
+          readOnly: true
+          example: '2023-01-01T00:19:12.088Z'
+        updatedAt:
+          type: date
+          readOnly: true
+          example: '2023-01-01T00:19:12.088Z'

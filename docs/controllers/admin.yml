@@ -1,9 +1,9 @@
 paths:
-  /admins/permissions:
+  /adm/admins/permissions:
     get:
       summary: 'Rota utilizada para listar as permissões'
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       responses:
@@ -22,15 +22,15 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /admins:
+  /adm/admins:
     get:
       summary: 'Rota utilizada para listar todos os usuários admins'
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       parameters:
-        - $ref: '#/components/parameters/StatusParameter'
+        - $ref: '#/components/parameters/AccountStatusParameter'
         - $ref: '#/components/parameters/PageParameter'
         - $ref: '#/components/parameters/LimitParameter'
       responses:
@@ -60,9 +60,11 @@ paths:
     post:
       summary: 'Rota utilizada para cadastrar um novo usuário admin'
       description: >
-        ## permissions é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
+        ## - Ao criar a conta, uma senha aleatória para acessar o portal gerencial chegará por email.
+        
+        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /adm/admins/permissions.
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       requestBody:
@@ -88,18 +90,20 @@ paths:
           $ref: "#/components/responses/401"
         "403":
           $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
         "409":
           $ref: "#/components/responses/409"
         "500":
           $ref: "#/components/responses/500"
 
-  /admins/{id}:
+  /adm/admins/{id}:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     get:
       summary: 'Rota utilizada para exibir um usuário admin'
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       responses:
@@ -125,9 +129,11 @@ paths:
     put:
       summary: 'Rota utilizada para editar um usuário admin'
       description: >
-        ## permissions é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
+        ## - Não tem necessidade de enviar todos os campos novamente. Só precisa enviar aqueles que deseja editar.
+
+        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /adm/admins/permissions.
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       requestBody:
@@ -163,7 +169,7 @@ paths:
     delete:
       summary: 'Rota utilizada para deletar um usuário admin'
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       responses:
@@ -180,13 +186,13 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /admins/{id}/update-status:
+  /adm/admins/{id}/update-status:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     patch:
       summary: 'Rota utilizada para ativar/inativar um usuário admin'
       tags:
-        - Gerencial - Admin
+        - Gerencial - Colaboradores
       security:
         - BearerAuth: []
       requestBody:

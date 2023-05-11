@@ -6,4 +6,4 @@ components:
         status:
           type: string
           required: true
-          example: 'ativou ou inativo'
+          example: 'ativo ou inativo'
