@@ -1,8 +1,8 @@
-import { AccountType, AccountStatus } from '@prisma/client';
+import { AccountRole, AccountStatus } from '@prisma/client';
 
 export interface IAccountDto {
   id: number;
-  type: AccountType;
+  role: AccountRole;
   name: string;
   imageUrl: string | null;
   email: string;

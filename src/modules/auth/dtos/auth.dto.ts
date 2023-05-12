@@ -1,6 +1,6 @@
-import { AccountType } from '@prisma/client';
+import { AccountRole } from '@prisma/client';
 
 export interface IAuthDto {
   id: number;
-  type: AccountType;
+  role: AccountRole;
 }

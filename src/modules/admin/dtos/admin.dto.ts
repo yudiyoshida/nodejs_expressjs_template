@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 // output
 export const AdminDto = Prisma.validator<Prisma.AdminSelect>()({
   id: true,
-  type: false,
+  role: false,
   name: true,
   email: true,
   password: false,

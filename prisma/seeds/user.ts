@@ -1,7 +1,8 @@
-import { Prisma, PrismaClient, AccountStatus } from '@prisma/client';
+import { Prisma, PrismaClient, AccountStatus, AccountRole } from '@prisma/client';
 import PasswordHelper from '../../src/shared/helpers/password';
 
 const user: Prisma.UserCreateInput = {
+  role: AccountRole.user,
   name: 'User 01',
   email: 'user@getnada.com',
   password: PasswordHelper.hash('123456789'),

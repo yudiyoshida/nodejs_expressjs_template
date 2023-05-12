@@ -6,7 +6,7 @@ components:
         id:
           type: number
           example: 1
-        type:
+        role:
           type: string
           example: 'user'
         name:
@@ -43,7 +43,7 @@ components:
           type: string
           required: true
           example: '123456789'
-        role:
+        type:
           type: string
           required: true
           example: 'admin ou user'

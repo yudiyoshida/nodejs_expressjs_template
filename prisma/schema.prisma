@@ -30,7 +30,7 @@ model Permission {
 
 model Admin {
   id            Int           @id @default(autoincrement())
-  type          AccountType   @default(admin)
+  role          AccountRole   @default(admin)
   name          String        @db.VarChar(512)
   email         String        @unique @db.VarChar(512)
   password      String        @db.Text
@@ -45,7 +45,7 @@ model Admin {
 
 model User {
   id            Int           @id @default(autoincrement())
-  type          AccountType   @default(user)
+  role          AccountRole   @default(user)
   name          String        @db.VarChar(512)
   email         String        @unique @db.VarChar(512)
   password      String        @db.Text
@@ -79,15 +79,15 @@ enum Permissions {
   texts
 }
 
+enum AccountRole {
+  admin
+  user
+}
+
 enum AccountStatus {
   ativo
   inativo
   pendente
-}
-
-enum AccountType {
-  admin
-  user
 }
 
 enum TextType {

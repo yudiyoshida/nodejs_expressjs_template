@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { AccountType, Permissions } from '@prisma/client';
+import { AccountRole, Permissions } from '@prisma/client';
 
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
@@ -21,7 +21,7 @@ class AuthMiddleware {
 
   public isAdmin: RequestHandler = (req, res, next) => {
     try {
-      if (req.auth.type !== AccountType.admin) throw new Error();
+      if (req.auth.role !== AccountRole.admin) throw new Error();
       else next();
 
     } catch (err: any) {
@@ -32,7 +32,7 @@ class AuthMiddleware {
 
   public isUser: RequestHandler = (req, res, next) => {
     try {
-      if (req.auth.type !== AccountType.user) throw new Error();
+      if (req.auth.role !== AccountRole.user) throw new Error();
       else next();
 
     } catch (err: any) {
@@ -45,7 +45,7 @@ class AuthMiddleware {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
         // Checa se não é user admin.
-        if (req.auth.type !== AccountType.admin) return next();
+        if (req.auth.role !== AccountRole.admin) return next();
 
         // Se for admin, então verifica se possui permissão para acessar o recurso.
         const permissions = await adminService.findAllPermissions(req.auth.id);

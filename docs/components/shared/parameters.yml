@@ -30,9 +30,9 @@ components:
         type: string
         enum: ['ativo', 'inativo', 'pendente']
 
-    AccountTypeParameter:
+    AccountRoleParameter:
       in: query
-      name: type
+      name: role
       schema:
         type: string
         enum: ['admin', 'user']

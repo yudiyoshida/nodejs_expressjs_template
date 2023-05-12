@@ -100,21 +100,21 @@ class SetupDatabase {
 
   public async loginAdmin(app: any) {
     const admin = await request(app)
-      .post('/auth/login')
-      .send({
-        'username': 'admin@getnada.com',
-        'password': '123456789',
-      });
+    .post('/auth/login')
+    .send({
+      'username': 'admin@getnada.com',
+      'password': '123456789',
+    });
     this.adminToken = admin.body.token;
   }
 
   public async loginUser(app: any) {
     const user = await request(app)
-      .post('/auth/login')
-      .send({
-        'username': 'userapp@getnada.com',
-        'password': '123456789',
-      });
+    .post('/auth/login')
+    .send({
+      'username': 'userapp@getnada.com',
+      'password': '123456789',
+    });
     this.userToken = user.body.token;
   }
 }

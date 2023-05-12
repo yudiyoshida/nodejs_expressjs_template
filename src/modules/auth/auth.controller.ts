@@ -19,10 +19,10 @@ class Controller {
 
   public login: RequestHandler = async(req, res, next) => {
     try {
-      const { username, password, role } = req.body as LoginOutputDto;
+      const { username, password, type } = req.body as LoginOutputDto;
 
       // find account.
-      const account = await this.strategies[role].findByUsername(username);
+      const account = await this.strategies[type].findByUsername(username);
 
       // check password.
       PasswordHelper.comparePasswordAndHash(password, account.password);
@@ -32,12 +32,12 @@ class Controller {
       if (account.status === AccountStatus.pendente) throw new AppException(403, ErrorMessages.PENDING);
 
       // generate token and send response.
-      const { id, type, name, imageUrl } = account;
-      const payload: IAuthDto = { id, type };
+      const { id, role, name, imageUrl } = account;
+      const payload: IAuthDto = { id, role };
 
       res.status(200).json({
         token: JwtHelper.createToken(payload),
-        account: { id, type, name, imageUrl },
+        account: { id, role, name, imageUrl },
       });
 
     } catch (err: any) {

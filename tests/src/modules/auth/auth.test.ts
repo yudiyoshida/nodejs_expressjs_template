@@ -18,8 +18,8 @@ beforeAll(async() => {
 describe('POST /auth/login', () => {
   test('no username (400)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send();
+    .post('/auth/login')
+    .send();
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
@@ -27,8 +27,8 @@ describe('POST /auth/login', () => {
 
   test('empty username (400)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send({ username: '' });
+    .post('/auth/login')
+    .send({ username: '' });
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
@@ -36,8 +36,8 @@ describe('POST /auth/login', () => {
 
   test('blank spaces in username (400)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send({ username: '   ' });
+    .post('/auth/login')
+    .send({ username: '   ' });
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
@@ -45,8 +45,8 @@ describe('POST /auth/login', () => {
 
   test('without password (400)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send({ username: 'admin@getnada.com' });
+    .post('/auth/login')
+    .send({ username: 'admin@getnada.com' });
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
@@ -54,8 +54,8 @@ describe('POST /auth/login', () => {
 
   test('empty password (400)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send({ username: 'admin@getnada.com', password: '' });
+    .post('/auth/login')
+    .send({ username: 'admin@getnada.com', password: '' });
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
@@ -63,8 +63,8 @@ describe('POST /auth/login', () => {
 
   test('invalid credentials (401)', async() => {
     const result = await request(app)
-      .post('/auth/login')
-      .send({ username: 'admin@getnada.com', password: '123' });
+    .post('/auth/login')
+    .send({ username: 'admin@getnada.com', password: '123' });
 
     expect(result.status).toBe(400);
     expect(result.body).toHaveProperty('error');
