@@ -9,20 +9,15 @@ components:
         role:
           type: string
           example: 'user'
+        type:
+          type: string
+          example: 'web'
         name:
           type: string
           example: 'User 01'
         imageUrl:
           type: string
           example: 'http://site.com/files/image.png'
-
-    ForgotPasswordSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          required: true
-          example: 'user@email.com'
 
     LoginSchema:
       type: object
@@ -35,7 +30,7 @@ components:
     LoginRequestBodySchema:
       type: object
       properties:
-        username:
+        credential:
           type: string
           required: true
           example: 'user@email.com'
@@ -43,71 +38,3 @@ components:
           type: string
           required: true
           example: '123456789'
-        type:
-          type: string
-          required: true
-          example: 'admin ou user'
-
-    ResetPasswordSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          required: true
-          example: 'user@email.com'
-        code:
-          type: string
-          required: true
-          example: 'A1B2'
-        password:
-          type: string
-          required: true
-          example: '12345678'
-        passwordConfirmation:
-          type: string
-          required: true
-          example: '12345678'
-
-    ValidateCodeSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          required: true
-          example: 'user@email.com'
-        code:
-          type: string
-          required: true
-          example: 'A1B2'
-
-    ValidateFieldsSchema:
-      type: object
-      properties:
-        document:
-          type: string
-          required: true
-          example: '123.456.789-00'
-        email:
-          type: string
-          required: true
-          example: 'user@email.com'
-        phone:
-          type: string
-          required: true
-          example: '(00) 12345-6789'
-
-    UpdatePasswordSchema:
-      type: object
-      properties:
-        currentPassword:
-          type: string
-          required: true
-          example: '12345678'
-        newPassword:
-          type: string
-          required: true
-          example: '12341234'
-        passwordConfirmation:
-          type: string
-          required: true
-          example: '12341234'

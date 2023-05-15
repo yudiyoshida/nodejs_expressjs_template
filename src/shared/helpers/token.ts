@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { IAuthDto } from 'modules/auth/dtos/auth.dto';
+import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 
 class JwtHelper {
-  public createToken(payload: IAuthDto) {
+  public createToken(payload: IPayloadDto) {
     return jwt.sign(
       payload,
       process.env.JWT_SECRET as string,

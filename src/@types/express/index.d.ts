@@ -1,4 +1,4 @@
-import { IAuthDto } from 'modules/auth/dtos/auth.dto';
+import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 
 // to make the file a module and avoid the TypeScript error.
 export {};
@@ -6,7 +6,7 @@ export {};
 declare global {
   namespace Express {
     export interface Request {
-      auth: IAuthDto;
+      auth: IPayloadDto;
       multer: Express.Multer.File & Express.MulterS3.File;
     }
   }

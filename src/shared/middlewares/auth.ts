@@ -1,16 +1,17 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
 import { AccountRole, Permissions } from '@prisma/client';
+import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 
 import passport from '@libs/passport';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import adminService from 'modules/admin/admin.service';
+import AdminService from 'modules/admin/admin.service';
 
 class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
     passport.authenticate('jwt', { session: false, failWithError: true },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (err: any, payload: any, info: any) => {
+      (err: any, payload: IPayloadDto, info: any) => {
         if (err) return next(err);
         if (!payload) return next(new AppException(401, ErrorMessages.UNATHORIZED));
         else req.auth = payload;
@@ -48,7 +49,7 @@ class AuthMiddleware {
         if (req.auth.role !== AccountRole.admin) return next();
 
         // Se for admin, então verifica se possui permissão para acessar o recurso.
-        const permissions = await adminService.findAllPermissions(req.auth.id);
+        const permissions = await AdminService.findAllPermissions(req.auth.id);
         if (!permissions) throw new Error();
 
         const hasPermission = permissions.some(

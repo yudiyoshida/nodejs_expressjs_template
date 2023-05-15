@@ -2,12 +2,10 @@ import DataSource from '@database/data-source';
 
 import { Prisma, AccountStatus } from '@prisma/client';
 import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
-import { IAccountService } from '@interfaces/account';
-import { IAccountDto } from 'modules/auth/dtos/account.dto';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
-class Service implements IAccountService {
+class Service {
   private readonly repository;
 
   constructor() {
@@ -44,17 +42,17 @@ class Service implements IAccountService {
     else return admin;
   }
 
-  public async findByUsername(username: string): Promise<IAccountDto> {
-    const account = await this.repository.findFirst({
+  public async findByCredential(credential: string) {
+    const admin = await this.repository.findFirst({
       where: {
         OR: [
-          { email: username },
+          { email: credential },
         ],
       },
     });
 
-    if (!account) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
-    else return account;
+    if (!admin) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    else return admin;
   }
 
   public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
@@ -94,7 +92,7 @@ class Service implements IAccountService {
   ) {
     return DataSource.$transaction(async(tx) => {
       if (permissions) {
-        // Remove relacionamento entre user admin e permissions.
+        // Remove relacionamento entre admin e permissions.
         await tx.admin.update({
           where: { id },
           data: {
@@ -103,7 +101,7 @@ class Service implements IAccountService {
         });
       }
 
-      // Atualiza user admin, inclusive as permissions.
+      // Atualiza admin, inclusive as permissions.
       return await tx.admin.update({
         where: { id },
         data: {

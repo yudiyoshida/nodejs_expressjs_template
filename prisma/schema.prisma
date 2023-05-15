@@ -46,6 +46,7 @@ model Admin {
 model User {
   id            Int           @id @default(autoincrement())
   role          AccountRole   @default(user)
+  type          UserType
   name          String        @db.VarChar(512)
   email         String        @unique @db.VarChar(512)
   password      String        @db.Text
@@ -94,4 +95,9 @@ enum TextType {
   about
   privacy
   terms
+}
+
+enum UserType {
+  app
+  web
 }

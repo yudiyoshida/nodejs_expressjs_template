@@ -1,11 +1,38 @@
 paths:
-  /auth/login:
+  /adm/auth/login:
     post:
       summary: 'Rota utilizada para login'
       # description: >
-        ## username pode ser um email ou phone.
+        ## credential pode ser um email ou phone.
       tags:
-        - Geral - Autenticação
+        - Gerencial - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestBodySchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /user/auth/login:
+    post:
+      summary: 'Rota utilizada para login'
+      # description: >
+        ## credential pode ser um email ou phone.
+      tags:
+        - User - Autenticação
       requestBody:
         required: true
         content:
