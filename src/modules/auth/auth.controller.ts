@@ -1,13 +1,16 @@
 import { RequestHandler } from 'express';
 import { AccountStatus } from '@prisma/client';
-import { LoginOutputDto } from './dtos/login.dto';
 import { IPayloadDto } from './dtos/payload.dto';
+import { LoginOutputDto } from './dtos/login.dto';
+import { ForgotPasswordOutputDto, ResetPasswordOutputDto } from './dtos/password';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
+import CodeHelper from '@helpers/code';
 import JwtHelper from '@helpers/token';
 import PasswordHelper from '@helpers/password';
+import Mail from '@libs/nodemailer';
 
 import AdminService from 'modules/admin/admin.service';
 import UserService from 'modules/user/user.service';
@@ -64,6 +67,47 @@ class Controller {
         token: JwtHelper.createToken(payload),
         account: { id, role, type, name, imageUrl },
       });
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
+  public forgotPasswordAdm: RequestHandler = async(req, res, next) => {
+    try {
+      const { credential } = req.body as ForgotPasswordOutputDto;
+
+      // find admin.
+      const admin = await AdminService.findByCredential(credential);
+
+      // generate and store code.
+      const { code, codeExpiresIn } = CodeHelper.generate(15);
+      await AdminService.storeCode(admin.id, code, codeExpiresIn);
+
+      // send email with code.
+      await Mail.sendEmail(admin.email, '[name] - Esqueceu sua senha?', 'forgot-password', { code });
+      res.status(200).json({ message: 'Código de recuperação de senha enviado no seu email!' });
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
+  public resetPasswordAdm: RequestHandler = async(req, res, next) => {
+    try {
+      const { credential, code, password } = req.body as ResetPasswordOutputDto;
+
+      // find admin.
+      const admin = await AdminService.findByCredentialAndCode(credential, code);
+
+      // check if code is still valid.
+      if (CodeHelper.isExpired(admin.codeExpiresIn as Date)) throw new AppException(400, ErrorMessages.CODE_EXPIRED);
+
+      // change password.
+      await AdminService.changePassword(admin.id, PasswordHelper.hash(password));
+      res.status(200).json({ message: 'Senha atualizada com sucesso!' });
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));

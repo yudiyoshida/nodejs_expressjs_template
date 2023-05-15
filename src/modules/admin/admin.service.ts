@@ -55,6 +55,20 @@ class Service {
     else return admin;
   }
 
+  public async findByCredentialAndCode(credential: string, code: string) {
+    const admin = await this.repository.findFirst({
+      where: {
+        code,
+        OR: [
+          { email: credential },
+        ],
+      },
+    });
+
+    if (!admin) throw new AppException(400, ErrorMessages.INCORRECT_CODE_PASS);
+    else return admin;
+  }
+
   public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
     return this.repository.findFirst({
       where: {
@@ -126,6 +140,27 @@ class Service {
   public async delete(id: number) {
     return this.repository.delete({
       where: { id },
+    });
+  }
+
+  public async storeCode(id: number, code: string, codeExpiresIn: Date) {
+    return this.repository.update({
+      where: { id },
+      data: {
+        code,
+        codeExpiresIn,
+      },
+    });
+  }
+
+  public async changePassword(id: number, password: string) {
+    return this.repository.update({
+      where: { id },
+      data: {
+        code: null,
+        codeExpiresIn: null,
+        password,
+      },
     });
   }
 }

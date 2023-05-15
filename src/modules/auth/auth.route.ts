@@ -13,6 +13,20 @@ router
   Controller.loginAdm,
 );
 
+router
+.route('/adm/auth/forgot-password')
+.post(
+  Validator.forgotPassword,
+  Controller.forgotPasswordAdm,
+);
+
+router
+.route('/adm/auth/reset-password')
+.post(
+  Validator.resetPassword,
+  Controller.resetPasswordAdm,
+);
+
 // rotas users.
 router
 .route('/user/auth/login')
