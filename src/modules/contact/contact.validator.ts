@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { SendEmail } from '../contact/dtos/send-email.dto';
+import { SendEmail } from './dtos/send-email.dto';
 import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {

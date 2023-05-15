@@ -10,11 +10,11 @@ components:
         name:
           type: string
           required: true
-          example: 'User 01'
+          example: 'Admin 01'
         email:
           type: string
           required: true
-          example: 'user@getnada.com'
+          example: 'admin@getnada.com'
         status:
           type: string
           readOnly: true

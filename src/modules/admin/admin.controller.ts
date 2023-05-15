@@ -109,20 +109,6 @@ class Controller {
     }
   };
 
-  public deleteOne: RequestHandler = async(req, res, next) => {
-    try {
-      const { id } = req.params;
-
-      const admin = await Service.findById(+id);
-      await Service.delete(admin.id);
-      res.sendStatus(204);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
   public updateStatus: RequestHandler = async(req, res, next) => {
     try {
       const { id } = req.params;
@@ -130,6 +116,20 @@ class Controller {
       const admin = await Service.findById(+id);
       const result = await Service.updateStatus(admin.id, req.body.status);
       res.status(200).json(result);
+
+    } catch (err: any) {
+      next(new AppException(err.status ?? 500, err.message));
+
+    }
+  };
+
+  public deleteOne: RequestHandler = async(req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const admin = await Service.findById(+id);
+      await Service.delete(admin.id);
+      res.sendStatus(204);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
