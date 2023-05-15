@@ -38,3 +38,31 @@ components:
           type: string
           required: true
           example: '123456789'
+
+    ForgotPasswordSchema:
+      type: object
+      properties:
+        credential:
+          type: string
+          required: true
+          example: 'user@email.com'
+
+    ResetPasswordSchema:
+      type: object
+      properties:
+        credential:
+          type: string
+          required: true
+          example: 'user@email.com'
+        code:
+          type: string
+          required: true
+          example: '1234'
+        password:
+          type: string
+          required: true
+          example: '12345789'
+        confirmPassword:
+          type: string
+          required: true
+          example: '12345789'
