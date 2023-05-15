@@ -7,6 +7,7 @@ import Validator from './admin.validator';
 
 const router = Router();
 
+// rotas admins.
 router
 .route('/adm/admins')
 .all(

@@ -7,13 +7,15 @@ import Validator from './faq.validator';
 
 const router = Router();
 
+// rotas gerais.
 router
 .route('/faqs')
 .get(
   Validator.queryParams,
-  Controller.findAllNoAuth,
+  Controller.findAll,
 );
 
+// rotas admins.
 router
 .route('/adm/faqs')
 .all(
@@ -21,7 +23,7 @@ router
 )
 .get(
   Validator.queryParams,
-  Controller.findAllAsAdmin,
+  Controller.findAll,
 )
 .post(
   Validator.createOne,

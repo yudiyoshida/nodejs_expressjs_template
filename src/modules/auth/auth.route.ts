@@ -5,6 +5,7 @@ import Validator from './auth.validator';
 
 const router = Router();
 
+// rotas admins.
 router
 .route('/adm/auth/login')
 .post(
@@ -12,6 +13,7 @@ router
   Controller.loginAdm,
 );
 
+// rotas users.
 router
 .route('/user/auth/login')
 .post(

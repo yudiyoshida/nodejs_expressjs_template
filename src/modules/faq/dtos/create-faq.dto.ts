@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-export type CreateFaqInputDto = z.input<typeof CreateFaq>
 export type CreateFaqOutputDto = z.output<typeof CreateFaq>
 export const CreateFaq = z.object({
   question: z.string().trim().min(1),

@@ -5,6 +5,7 @@ import Validator from './contact.validator';
 
 const router = Router();
 
+// rotas gerais.
 router
 .route('/contact')
 .post(

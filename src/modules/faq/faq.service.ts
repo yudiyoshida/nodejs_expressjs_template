@@ -13,13 +13,6 @@ class Service {
     this.repository = DataSource.faq;
   }
 
-  public async create(data: Prisma.FaqCreateInput) {
-    return this.repository.create({
-      data,
-      select: FaqDtoAsAdmin,
-    });
-  }
-
   public async findAll<T extends Prisma.FaqSelect>(limit: number, page: number, dto: T) {
     return DataSource.$transaction([
       this.repository.findMany({
@@ -40,6 +33,13 @@ class Service {
 
     if (!faq) throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
     else return faq;
+  }
+
+  public async create(data: Prisma.FaqCreateInput) {
+    return this.repository.create({
+      data,
+      select: FaqDtoAsAdmin,
+    });
   }
 
   public async update(id: number, data: Prisma.FaqUpdateInput) {

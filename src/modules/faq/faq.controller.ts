@@ -8,25 +8,15 @@ import AppException from '@errors/app-exception';
 import PaginationHelper from '@helpers/pagination';
 
 class Controller {
-  public findAllNoAuth: RequestHandler = async(req, res, next) => {
+  public findAll: RequestHandler = async(req, res, next) => {
     try {
       const { limit = 10, page = 1 } = req.query;
 
-      const faqs = await Service.findAll(+limit, +page, FaqDtoAsNoAuth);
-      const faqsPaginated = PaginationHelper.paginate(faqs, +limit, +page);
-      res.status(200).json(faqsPaginated);
+      // check if user is admin or not authenticated.
+      const faqs = (req.auth?.role === 'admin')
+        ? await Service.findAll(+limit, +page, FaqDtoAsAdmin)
+        : await Service.findAll(+limit, +page, FaqDtoAsNoAuth);
 
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
-  public findAllAsAdmin: RequestHandler = async(req, res, next) => {
-    try {
-      const { limit = 10, page = 1 } = req.query;
-
-      const faqs = await Service.findAll(+limit, +page, FaqDtoAsAdmin);
       const faqsPaginated = PaginationHelper.paginate(faqs, +limit, +page);
       res.status(200).json(faqsPaginated);
 

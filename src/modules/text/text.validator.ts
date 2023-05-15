@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import { UpdateText } from './dtos/update-text.dto';
 import { z } from 'zod';
+import { UpdateText } from './dtos/update-text.dto';
 import { TextType } from '@prisma/client';
 import BaseValidator from '@abstracts/validator';
 

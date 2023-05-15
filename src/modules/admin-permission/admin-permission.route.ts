@@ -6,6 +6,7 @@ import Controller from './admin-permission.controller';
 
 const router = Router();
 
+// rotas admins.
 router
 .route('/adm/admins/permissions')
 .get(

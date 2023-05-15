@@ -1,30 +1,19 @@
 import { RequestHandler } from 'express';
 import { UpdateTextOutputDto } from './dtos/update-text.dto';
+import { TextDtoAsAdmin, TextDtoAsNoAuth } from './dtos/text.dto';
+import { TextType } from '@prisma/client';
 
 import Service from './text.service';
 import AppException from '@errors/app-exception';
-import { TextType } from '@prisma/client';
-import { TextDtoAsAdmin, TextDtoAsNoAuth } from './dtos/text.dto';
 
 class Controller {
-  public findOneNoAuth: RequestHandler = async(req, res, next) => {
+  public findOne: RequestHandler = async(req, res, next) => {
     try {
       const { type } = req.query;
 
-      const text = await Service.findByType(type as TextType, TextDtoAsNoAuth);
-      res.status(200).json(text);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
-  public findOneAsAdmin: RequestHandler = async(req, res, next) => {
-    try {
-      const { type } = req.query;
-
-      const text = await Service.findByType(type as TextType, TextDtoAsAdmin);
+      const text = (req.auth?.role === 'admin')
+        ? await Service.findByType(type as TextType, TextDtoAsAdmin)
+        : await Service.findByType(type as TextType, TextDtoAsNoAuth);
       res.status(200).json(text);
 
     } catch (err: any) {

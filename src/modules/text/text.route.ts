@@ -7,13 +7,15 @@ import Validator from './text.validator';
 
 const router = Router();
 
+// rotas gerais.
 router
 .route('/texts')
 .get(
   Validator.queryParams,
-  Controller.findOneNoAuth,
+  Controller.findOne,
 );
 
+// rotas admins.
 router
 .route('/adm/texts')
 .all(
@@ -21,7 +23,7 @@ router
   Validator.queryParams,
 )
 .get(
-  Controller.findOneAsAdmin,
+  Controller.findOne,
 )
 .put(
   Validator.updateOne,

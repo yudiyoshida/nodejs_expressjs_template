@@ -15,6 +15,7 @@ export const CreateAdminInput = z.object({
   }),
 });
 
+export type CreateAdminOutputDto = z.output<typeof CreateAdmin>
 export const CreateAdmin = CreateAdminInput.transform((body) => {
   return {
     ...body,
@@ -23,4 +24,3 @@ export const CreateAdmin = CreateAdminInput.transform((body) => {
   };
 });
 
-export type CreateAdminOutputDto = z.output<typeof CreateAdmin>
