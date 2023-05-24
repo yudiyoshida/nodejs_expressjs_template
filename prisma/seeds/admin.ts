@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, Permissions, AccountStatus, AccountRole } from '@prisma/client';
+import { Prisma, PrismaClient, AccountRole, AccountStatus, Permissions } from '@prisma/client';
 import PasswordHelper from '../../src/shared/helpers/password';
 
 const permissions = Object.values(Permissions);
@@ -10,7 +10,7 @@ const admin: Prisma.AdminCreateInput = {
   status: AccountStatus.ativo,
 };
 
-export async function seedAdmin(prisma: PrismaClient): Promise<void> {
+export async function seedAdmin(prisma: PrismaClient) {
   const newAdmin = await prisma.admin.create({
     data: admin,
   });
@@ -19,7 +19,7 @@ export async function seedAdmin(prisma: PrismaClient): Promise<void> {
     await prisma.permission.create({
       data: {
         title: permission,
-        account: {
+        admins: {
           connect: { id: newAdmin.id },
         },
       },

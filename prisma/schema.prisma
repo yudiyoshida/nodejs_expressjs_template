@@ -16,7 +16,7 @@ datasource db {
 
 model Security {
   id            Int       @id @default(autoincrement())
-  username      String    @unique @db.VarChar(512)
+  credential    String    @unique @db.VarChar(512)
   code          String?   @db.VarChar(32)
   codeExpiresIn DateTime? @db.DateTime(0)
   validated     Boolean   @default(false)
@@ -25,7 +25,7 @@ model Security {
 model Permission {
   id      Int         @id @default(autoincrement())
   title   Permissions @unique
-  account Admin[]
+  admins  Admin[]
 }
 
 model Admin {
@@ -75,7 +75,7 @@ model Text {
 }
 
 enum Permissions {
-  admin
+  configuracoes
   faqs
   texts
 }

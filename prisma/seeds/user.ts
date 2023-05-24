@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, AccountStatus, AccountRole, UserType } from '@prisma/client';
+import { Prisma, PrismaClient, AccountRole, AccountStatus, UserType } from '@prisma/client';
 import PasswordHelper from '../../src/shared/helpers/password';
 
 const user: Prisma.UserCreateInput = {
