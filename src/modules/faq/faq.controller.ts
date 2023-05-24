@@ -11,7 +11,6 @@ class Controller {
     try {
       const { limit = 10, page = 1 } = req.query;
 
-      // check if user is admin or not authenticated.
       const faqs = await Service.findAll(+limit, +page);
       const faqsPaginated = PaginationHelper.paginate(faqs, +limit, +page);
       res.status(200).json(faqsPaginated);

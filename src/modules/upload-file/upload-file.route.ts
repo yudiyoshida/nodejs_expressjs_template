@@ -7,7 +7,6 @@ import Controller from './upload-file.controller';
 
 const router = Router();
 
-// rotas gerais.
 router
 .route('/')
 .post(

@@ -4,16 +4,15 @@ import { IPayloadDto } from './dtos/payload.dto';
 import { LoginOutputDto } from './dtos/login.dto';
 import { ForgotPasswordOutputDto, ResetPasswordOutputDto } from './dtos/password';
 
+import AdminService from 'modules/admin/admin.service';
+import UserService from 'modules/user/user.service';
+
+import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-
 import CodeHelper from '@helpers/code';
 import JwtHelper from '@helpers/token';
 import PasswordHelper from '@helpers/password';
-import Mail from '@libs/nodemailer';
-
-import AdminService from 'modules/admin/admin.service';
-import UserService from 'modules/user/user.service';
 
 class Controller {
   public loginAdm: RequestHandler = async(req, res, next) => {

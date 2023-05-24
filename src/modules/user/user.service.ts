@@ -1,8 +1,8 @@
 import DataSource from '@database/data-source';
-import { Prisma } from '@prisma/client';
-
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
+
+import { Prisma } from '@prisma/client';
 
 class Service {
   private readonly repository;

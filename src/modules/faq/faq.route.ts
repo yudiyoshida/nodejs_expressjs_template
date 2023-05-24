@@ -7,7 +7,6 @@ import Validator from './faq.validator';
 
 const router = Router();
 
-// rotas gerais.
 router
 .route('/')
 .get(
