@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express';
 import { CreateFaqOutputDto } from './dtos/create-faq.dto';
 import { UpdateFaqOutputDto } from './dtos/update-faq.dto';
-import { FaqDtoAsAdmin, FaqDtoAsNoAuth } from './dtos/faq.dto';
 
 import Service from './faq.service';
 import AppException from '@errors/app-exception';
@@ -13,10 +12,7 @@ class Controller {
       const { limit = 10, page = 1 } = req.query;
 
       // check if user is admin or not authenticated.
-      const faqs = (req.auth?.role === 'admin')
-        ? await Service.findAll(+limit, +page, FaqDtoAsAdmin)
-        : await Service.findAll(+limit, +page, FaqDtoAsNoAuth);
-
+      const faqs = await Service.findAll(+limit, +page);
       const faqsPaginated = PaginationHelper.paginate(faqs, +limit, +page);
       res.status(200).json(faqsPaginated);
 

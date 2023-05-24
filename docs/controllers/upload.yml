@@ -9,7 +9,8 @@ paths:
 
         ## - Logo, basta enviar a url do arquivo no JSON, que pode ser obtida nessa rota.
       tags:
-        - Geral - Upload de arquivo
+        - Gerencial - Upload de arquivo
+        - User - Upload de arquivo
       security:
         - BearerAuth: []
       requestBody:

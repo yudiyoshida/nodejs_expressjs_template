@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express';
 import { UpdateTextOutputDto } from './dtos/update-text.dto';
-import { TextDtoAsAdmin, TextDtoAsNoAuth } from './dtos/text.dto';
 import { TextType } from '@prisma/client';
 
 import Service from './text.service';
@@ -11,9 +10,7 @@ class Controller {
     try {
       const { type } = req.query;
 
-      const text = (req.auth?.role === 'admin')
-        ? await Service.findByType(type as TextType, TextDtoAsAdmin)
-        : await Service.findByType(type as TextType, TextDtoAsNoAuth);
+      const text = await Service.findByType(type as TextType);
       res.status(200).json(text);
 
     } catch (err: any) {
@@ -27,7 +24,7 @@ class Controller {
       const data = req.body as UpdateTextOutputDto;
       const { type } = req.query;
 
-      const text = await Service.findByType(type as TextType, TextDtoAsAdmin);
+      const text = await Service.findByType(type as TextType);
       const result = await Service.update(text.id, data);
       res.status(200).json(result);
 

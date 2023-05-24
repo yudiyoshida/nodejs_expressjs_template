@@ -7,25 +7,14 @@ import Validator from './text.validator';
 
 const router = Router();
 
-// rotas gerais.
 router
-.route('/texts')
+.route('/')
 .get(
   Validator.queryParams,
-  Controller.findOne,
-);
-
-// rotas admins.
-router
-.route('/adm/texts')
-.all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.texts),
-  Validator.queryParams,
-)
-.get(
   Controller.findOne,
 )
 .put(
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.texts),
   Validator.updateOne,
   Controller.updateOne,
 );

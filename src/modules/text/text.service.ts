@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 
 import { Prisma, TextType } from '@prisma/client';
-import { TextDtoAsAdmin } from './dtos/text.dto';
+import { TextDto } from './dtos/text.dto';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
@@ -13,10 +13,10 @@ class Service {
     this.repository = DataSource.text;
   }
 
-  public async findByType<T extends Prisma.TextSelect>(type: TextType, dto: T) {
+  public async findByType(type: TextType) {
     const text = await this.repository.findUnique({
       where: { type },
-      select: dto,
+      select: TextDto,
     });
 
     if (!text) throw new AppException(404, ErrorMessages.TEXT_NOT_FOUND);
@@ -27,7 +27,7 @@ class Service {
     return this.repository.update({
       where: { id },
       data,
-      select: TextDtoAsAdmin,
+      select: TextDto,
     });
   }
 }

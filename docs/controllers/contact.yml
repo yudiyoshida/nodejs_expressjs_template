@@ -3,7 +3,8 @@ paths:
     post:
       summary: "Rota utilizada para entrar em contato (fale conosco)"
       tags:
-        - Geral - Contato
+        - Gerencial - Contato
+        - User - Contato
       requestBody:
         required: true
         content:

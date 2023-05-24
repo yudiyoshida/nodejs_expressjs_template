@@ -6,11 +6,10 @@ import Controller from './admin-permission.controller';
 
 const router = Router();
 
-// rotas admins.
 router
-.route('/adm/admins/permissions')
+.route('/')
 .get(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
   Controller.findAll,
 );
 

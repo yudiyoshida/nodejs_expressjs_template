@@ -7,21 +7,21 @@ const router = Router();
 
 // rotas admins.
 router
-.route('/adm/auth/login')
+.route('/login/adm')
 .post(
   Validator.login,
   Controller.loginAdm,
 );
 
 router
-.route('/adm/auth/forgot-password')
+.route('/forgot-password/adm')
 .post(
   Validator.forgotPassword,
   Controller.forgotPasswordAdm,
 );
 
 router
-.route('/adm/auth/reset-password')
+.route('/reset-password/adm')
 .post(
   Validator.resetPassword,
   Controller.resetPasswordAdm,
@@ -29,7 +29,7 @@ router
 
 // rotas users.
 router
-.route('/user/auth/login')
+.route('/login/user')
 .post(
   Validator.login,
   Controller.loginUser,

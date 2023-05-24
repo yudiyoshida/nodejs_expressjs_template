@@ -1,5 +1,5 @@
 paths:
-  /adm/auth/login:
+  /auth/login/adm:
     post:
       summary: 'Rota utilizada para login'
       # description: >
@@ -26,7 +26,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /adm/auth/forgot-password:
+  /auth/forgot-password/adm:
     post:
       summary: "Rota 01/02 para o fluxo de 'Esqueci a senha'"
       tags:
@@ -51,7 +51,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
 
-  /adm/auth/reset-password:
+  /auth/reset-password/adm:
     post:
       summary: "Rota 02/02 para o fluxo de 'Esqueci a senha'"
       tags:
@@ -76,7 +76,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
 
-  /user/auth/login:
+  /auth/login/user:
     post:
       summary: 'Rota utilizada para login'
       # description: >

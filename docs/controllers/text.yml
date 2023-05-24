@@ -5,41 +5,17 @@ paths:
     get:
       summary: "Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
       tags:
-        - Geral - Textos
-      responses:
-        "200":
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TextAsNoAuthSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
-
-  /adm/texts:
-    parameters:
-      - $ref: '#/components/parameters/TextTypeParameter'
-    get:
-      summary: "Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
-      tags:
         - Gerencial - Textos
-      security:
-        - BearerAuth: []
+        - User - Textos
       responses:
         "200":
           description: "OK"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TextAsAdminSchema"
+                $ref: "#/components/schemas/TextSchema"
         "400":
           $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
         "500":
           $ref: "#/components/responses/500"
 
@@ -54,14 +30,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TextAsAdminSchema"
+              $ref: "#/components/schemas/TextSchema"
       responses:
         "200":
           description: "OK"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TextAsAdminSchema"
+                $ref: "#/components/schemas/TextSchema"
         "400":
           $ref: "#/components/responses/400"
         "401":

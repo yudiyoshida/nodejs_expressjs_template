@@ -3,37 +3,8 @@ paths:
     get:
       summary: "Rota utilizada para listar as faqs"
       tags:
-        - Geral - Faqs
-      parameters:
-        - $ref: '#/components/parameters/PageParameter'
-        - $ref: '#/components/parameters/LimitParameter'
-      responses:
-        "200":
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          allOf:
-                            - $ref: "#/components/schemas/FaqAsNoAuthSchema"
-                  - $ref: "#/components/schemas/PaginationSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
-
-  /adm/faqs:
-    get:
-      summary: "Rota utilizada para listar as faqs"
-      tags:
         - Gerencial - Faqs
-      security:
-        - BearerAuth: []
+        - User - Faqs
       parameters:
         - $ref: '#/components/parameters/PageParameter'
         - $ref: '#/components/parameters/LimitParameter'
@@ -50,14 +21,10 @@ paths:
                         type: array
                         items:
                           allOf:
-                            - $ref: "#/components/schemas/FaqAsAdminSchema"
+                            - $ref: "#/components/schemas/FaqSchema"
                   - $ref: "#/components/schemas/PaginationSchema"
         "400":
           $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
         "500":
           $ref: "#/components/responses/500"
 
@@ -72,14 +39,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FaqAsAdminSchema"
+              $ref: "#/components/schemas/FaqSchema"
       responses:
         "201":
           description: "Created"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FaqAsAdminSchema"
+                $ref: "#/components/schemas/FaqSchema"
         "400":
           $ref: "#/components/responses/400"
         "401":
@@ -89,7 +56,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
 
-  /adm/faqs/{id}:
+  /faqs/{id}:
     parameters:
       - $ref: "#/components/parameters/IdParameter"
     get:
@@ -105,7 +72,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/FaqAsAdminSchema'
+                  - $ref: '#/components/schemas/FaqSchema'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -130,14 +97,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FaqAsAdminSchema"
+              $ref: "#/components/schemas/FaqSchema"
       responses:
         "200":
           description: "OK"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FaqAsAdminSchema"
+                $ref: "#/components/schemas/FaqSchema"
         "400":
           $ref: "#/components/responses/400"
         "401":

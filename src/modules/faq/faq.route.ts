@@ -9,29 +9,19 @@ const router = Router();
 
 // rotas gerais.
 router
-.route('/faqs')
-.get(
-  Validator.queryParams,
-  Controller.findAll,
-);
-
-// rotas admins.
-router
-.route('/adm/faqs')
-.all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
-)
+.route('/')
 .get(
   Validator.queryParams,
   Controller.findAll,
 )
 .post(
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
   Validator.createOne,
   Controller.createOne,
 );
 
 router
-.route('/adm/faqs/:id')
+.route('/:id')
 .all(
   Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
   Validator.pathParams,

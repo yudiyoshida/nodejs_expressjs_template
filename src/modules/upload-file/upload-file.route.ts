@@ -9,7 +9,7 @@ const router = Router();
 
 // rotas gerais.
 router
-.route('/upload-file')
+.route('/')
 .post(
   Auth.isAuthenticated,
   multer(multerOptions).single('file'),

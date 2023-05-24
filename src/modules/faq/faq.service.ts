@@ -1,7 +1,7 @@
 import DataSource from '@database/data-source';
 
 import { Prisma } from '@prisma/client';
-import { FaqDtoAsAdmin } from './dtos/faq.dto';
+import { FaqDto } from './dtos/faq.dto';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
@@ -13,12 +13,12 @@ class Service {
     this.repository = DataSource.faq;
   }
 
-  public async findAll<T extends Prisma.FaqSelect>(limit: number, page: number, dto: T) {
+  public async findAll(limit: number, page: number) {
     return DataSource.$transaction([
       this.repository.findMany({
         take: limit,
         skip: ((page - 1) * limit),
-        select: dto,
+        select: FaqDto,
         orderBy: { createdAt: 'desc' },
       }),
       this.repository.count(),
@@ -28,7 +28,7 @@ class Service {
   public async findById(id: number) {
     const faq = await this.repository.findUnique({
       where: { id },
-      select: FaqDtoAsAdmin,
+      select: FaqDto,
     });
 
     if (!faq) throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
@@ -38,7 +38,7 @@ class Service {
   public async create(data: Prisma.FaqCreateInput) {
     return this.repository.create({
       data,
-      select: FaqDtoAsAdmin,
+      select: FaqDto,
     });
   }
 
@@ -46,7 +46,7 @@ class Service {
     return this.repository.update({
       where: { id },
       data,
-      select: FaqDtoAsAdmin,
+      select: FaqDto,
     });
   }
 

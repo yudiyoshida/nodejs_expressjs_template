@@ -1,5 +1,5 @@
 paths:
-  /adm/admins/permissions:
+  /admins/permissions:
     get:
       summary: 'Rota utilizada para listar as permissões'
       tags:
@@ -22,7 +22,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /adm/admins:
+  /admins:
     get:
       summary: 'Rota utilizada para listar todos os usuários admins'
       tags:
@@ -62,7 +62,7 @@ paths:
       description: >
         ## - Ao criar a conta, uma senha aleatória para acessar o portal gerencial chegará por email.
         
-        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /adm/admins/permissions.
+        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
       tags:
         - Gerencial - Colaboradores
       security:
@@ -97,7 +97,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
 
-  /adm/admins/{id}:
+  /admins/{id}:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     get:
@@ -131,7 +131,7 @@ paths:
       description: >
         ## - Não tem necessidade de enviar todos os campos novamente. Só precisa enviar aqueles que deseja editar.
 
-        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /adm/admins/permissions.
+        ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
       tags:
         - Gerencial - Colaboradores
       security:
@@ -186,7 +186,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /adm/admins/{id}/update-status:
+  /admins/{id}/update-status:
     parameters:
       - $ref: '#/components/parameters/IdParameter'
     patch:

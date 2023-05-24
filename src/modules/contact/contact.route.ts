@@ -5,9 +5,8 @@ import Validator from './contact.validator';
 
 const router = Router();
 
-// rotas gerais.
 router
-.route('/contact')
+.route('/')
 .post(
   Validator.sendEmail,
   Controller.sendEmail,

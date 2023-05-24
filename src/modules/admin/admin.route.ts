@@ -7,11 +7,10 @@ import Validator from './admin.validator';
 
 const router = Router();
 
-// rotas admins.
 router
-.route('/adm/admins')
+.route('/')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
 )
 .get(
   Validator.queryParams,
@@ -23,9 +22,9 @@ router
 );
 
 router
-.route('/adm/admins/:id')
+.route('/:id')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
   Validator.pathParams,
 )
 .get(
@@ -40,9 +39,9 @@ router
 );
 
 router
-.route('/adm/admins/:id/update-status')
+.route('/:id/update-status')
 .patch(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.admin),
+  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
   Validator.pathParams, Validator.updateStatus,
   Controller.updateStatus,
 );
