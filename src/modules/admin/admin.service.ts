@@ -18,7 +18,7 @@ class Service {
     }).permissions();
   }
 
-  public async findAll(limit: number, page: number, status: AccountStatus) {
+  public async findAll(limit: number, page: number, status?: AccountStatus) {
     return DataSource.$transaction([
       this.repository.findMany({
         where: { status },
