@@ -10,8 +10,8 @@
 
 ## Pré-Requisitos
 
-  * NodeJS (v18.13.0) e npm (v8.19.3).
-  * MySQL (v8.0.31).
+  * NodeJS (v18.16.0) e npm (v8.19.3).
+  * MySQL (v8.0).
 
 ## Executando o projeto
 
