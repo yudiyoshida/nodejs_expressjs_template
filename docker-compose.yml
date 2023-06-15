@@ -1,35 +1,38 @@
-version: "3"
+version: "3.8"
 services:
-  api:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: api
+    command: bash -c "npm run prisma:migration && npm start"
+    container_name: app_[projectName]
     depends_on:
-      api_mysql:
+      app_mysql:
         condition:
           service_healthy
     env_file:
       - .env
     ports:
-      - "8080:8080"
+      - "${PORT}:${PORT}"
     restart: always
 
-  api_mysql:
-    image: mysql:8.0.31-debian
-    container_name: api_mysql
+  app_mysql:
+    image: mysql:8.0
+    container_name: mysql_[projectName]
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_TCP_PORT: ${DB_PORT}
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 10s
-      retries: 12
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=template_db
+      timeout: 5s
+      retries: 15
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:${DB_PORT}"
+    restart: always
     volumes:
-      - api_volume:/var/lib/mysql
+      - app_volume:/var/lib/mysql
 
 volumes:
-  api_volume:
+  app_volume:
     driver: local

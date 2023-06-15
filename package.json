@@ -8,13 +8,12 @@
     "eslint": "eslint ./ --fix",
     "prebuild": "rimraf dist/",
     "build": "tsc && tsc-alias",
-    "dev": "env-cmd -f .env tsx watch src/server.ts",
-    "test": "env-cmd -f .env.test jest -i",
-    "start": "env-cmd -f .env node dist/server.js",
-    "prisma:migration": "env-cmd -f .env prisma db push",
-    "prisma:migration-test": "env-cmd -f .env.test prisma db push",
+    "start-dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "prisma:migration": "prisma db push",
     "prisma:seed": "tsx prisma/seeds/index.ts",
-    "prisma:reset": "env-cmd -f .env prisma db push --force-reset && tsx prisma/seeds/index.ts"
+    "prisma:reset": "prisma db push --force-reset && tsx prisma/seeds/index.ts",
+    "test": "jest -i"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.338.0",
@@ -25,7 +24,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
-    "env-cmd": "^10.1.0",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
