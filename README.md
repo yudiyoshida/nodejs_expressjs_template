@@ -10,7 +10,7 @@
 
 ## Pré-Requisitos
 
-  * NodeJS (v18.16.0) e npm (v8.19.3).
+  * NodeJS (v18.16.0) e npm (v9.5.1).
   * MySQL (v8.0).
 
 ## Executando o projeto
@@ -20,12 +20,11 @@
 $ npm install
 ```
 
-02 - Configure as variáveis de ambiente (homologação e produção):
-  - Crie duas copias do arquivo .env.example.
+02 - Configure as variáveis de ambiente:
+  - Crie uma copia do arquivo .env.example.
   - Modifique o nome de uma copia para `.env` e preencha com as informações necessárias do ambiente de **PRODUÇÃO**.
-  - Modifique o nome da outra copia para `.env.test` e preencha com as informações necessárias do ambiente de **HOMOLOGAÇÃO**.
 
-03 - Rode as migrations e seeds no ambiente de produção:
+03 - Rode as migrations e seeds:
 ```bash
 $ npm run prisma:migration
 $ npm run prisma:seed
@@ -39,6 +38,22 @@ $ npm run build
 05 - Inicie o projeto:
 ```bash
 $ npm start
+```
+
+## Executando o projeto com docker (opcional)
+
+01 - Configure as variáveis de ambiente:
+  - Importante se atentar com o valor do `DB_HOST`.
+
+02 - Suba o projeto:
+```bash
+$ docker compose up
+```
+
+03 - Rode os seeds dentro do container da api:
+```bash
+$ docker exec -it [nome_do_container] bash
+$ npm run prisma:seed
 ```
 
 ## Documentação
