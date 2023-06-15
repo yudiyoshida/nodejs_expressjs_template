@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: bash -c "npm run prisma:migration && npm start"
-    container_name: app_[projectName]
+    container_name: app_projectNameHere
     depends_on:
       app_mysql:
         condition:
@@ -18,7 +18,7 @@ services:
 
   app_mysql:
     image: mysql:8.0
-    container_name: mysql_[projectName]
+    container_name: mysql_projectNameHere
     environment:
       MYSQL_DATABASE: ${DB_DATABASE_NAME}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
