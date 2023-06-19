@@ -4,7 +4,7 @@ import AppException from '@errors/app-exception';
 class Controller {
   public upload: RequestHandler = async(req, res, next) => {
     try {
-      const { location:url } = req.file as any ?? { location: null };
+      const { location:url } = req.file ?? { location: null };
       res.status(201).json({ url });
 
     } catch (err: any) {

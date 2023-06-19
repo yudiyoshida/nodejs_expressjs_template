@@ -7,7 +7,14 @@ declare global {
   namespace Express {
     export interface Request {
       auth: IPayloadDto;
-      multer: Express.Multer.File & Express.MulterS3.File;
+    }
+  }
+
+  namespace Express {
+    namespace Multer {
+      export interface File {
+        location: string;
+      }
     }
   }
 }

@@ -11,7 +11,7 @@ export default {
         description: 'Development environment',
       },
       {
-        url: process.env.APP_URL,
+        url: `${process.env.URL}:${process.env.PORT}`,
         description: 'Testing environment',
       },
     ],

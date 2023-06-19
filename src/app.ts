@@ -13,7 +13,6 @@ import routes from './modules/index.routes';
 
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import StorageHelper from '@helpers/storage';
 
 class App {
   public app: express.Application;
@@ -44,11 +43,6 @@ class App {
   globalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-      // Função para deletar o arquivo caso ocorra algum erro.
-      if (req.multer) {
-        StorageHelper.deleteFile(req.multer?.key);
-      }
-
       if (err instanceof AppException) {
         return res.status(err.status).json({ error: err.message });
 
