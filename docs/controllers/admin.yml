@@ -73,29 +73,29 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: "#/components/schemas/AdminSchema"
-                - $ref: "#/components/schemas/PermissionIdArraySchema"
+                - $ref: '#/components/schemas/AdminSchema'
+                - $ref: '#/components/schemas/PermissionIdArraySchema'
       responses:
-        "201":
-          description: "Created"
+        '201':
+          description: 'Created'
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/AdminSchema"
-                  - $ref: "#/components/schemas/PermissionArraySchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "409":
-          $ref: "#/components/responses/409"
-        "500":
-          $ref: "#/components/responses/500"
+                  - $ref: '#/components/schemas/AdminSchema'
+                  - $ref: '#/components/schemas/PermissionArraySchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
 
   /admins/{id}:
     parameters:
@@ -142,29 +142,29 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: "#/components/schemas/AdminSchema"
-                - $ref: "#/components/schemas/PermissionIdArraySchema"
+                - $ref: '#/components/schemas/AdminSchema'
+                - $ref: '#/components/schemas/PermissionIdArraySchema'
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: "#/components/schemas/AdminSchema"
-                  - $ref: "#/components/schemas/PermissionArraySchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "409":
-          $ref: "#/components/responses/409"
-        "500":
-          $ref: "#/components/responses/500"
+                  - $ref: '#/components/schemas/AdminSchema'
+                  - $ref: '#/components/schemas/PermissionArraySchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
 
     delete:
       summary: 'Rota utilizada para deletar um usuário admin'

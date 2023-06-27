@@ -1,7 +1,7 @@
 paths:
   /upload-file:
     post:
-      summary: "Rota utilizada para fazer upload de um arquivo"
+      summary: 'Rota utilizada para fazer upload de um arquivo'
       description: >
         ## - Algumas rotas solicitam o envio de arquivos (e.g. fotos, pdf, planilhas, etc).
 
@@ -18,17 +18,17 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: "#/components/schemas/UploadRequestBodySchema"
+              $ref: '#/components/schemas/UploadRequestBodySchema'
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UploadSchema"
-        "401":
-          $ref: "#/components/responses/401"
-        "415":
-          $ref: "#/components/responses/415"
-        "500":
-          $ref: "#/components/responses/500"
+                $ref: '#/components/schemas/UploadSchema'
+        '401':
+          $ref: '#/components/responses/401'
+        '415':
+          $ref: '#/components/responses/415'
+        '500':
+          $ref: '#/components/responses/500'

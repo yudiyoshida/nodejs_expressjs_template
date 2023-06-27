@@ -1,7 +1,7 @@
 paths:
   /faqs:
     get:
-      summary: "Rota utilizada para listar as faqs"
+      summary: 'Rota utilizada para listar as faqs'
       tags:
         - Gerencial - Faqs
         - User - Faqs
@@ -9,8 +9,8 @@ paths:
         - $ref: '#/components/parameters/PageParameter'
         - $ref: '#/components/parameters/LimitParameter'
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
@@ -21,15 +21,15 @@ paths:
                         type: array
                         items:
                           allOf:
-                            - $ref: "#/components/schemas/FaqSchema"
-                  - $ref: "#/components/schemas/PaginationSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
+                            - $ref: '#/components/schemas/FaqSchema'
+                  - $ref: '#/components/schemas/PaginationSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
 
     post:
-      summary: "Rota utilizada para cadastrar uma faq"
+      summary: 'Rota utilizada para cadastrar uma faq'
       tags:
         - Gerencial - Faqs
       security:
@@ -39,26 +39,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FaqSchema"
+              $ref: '#/components/schemas/FaqSchema'
       responses:
-        "201":
-          description: "Created"
+        '201':
+          description: 'Created'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FaqSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "500":
-          $ref: "#/components/responses/500"
+                $ref: '#/components/schemas/FaqSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /faqs/{id}:
     parameters:
-      - $ref: "#/components/parameters/IdParameter"
+      - $ref: '#/components/parameters/IdParameter'
     get:
       summary: 'Rota utilizada para exibir uma faq'
       tags:
@@ -85,7 +85,7 @@ paths:
           $ref: '#/components/responses/500'
 
     put:
-      summary: "Rota utilizada para editar uma faq"
+      summary: 'Rota utilizada para editar uma faq'
       description: >
         ## - Não tem necessidade de enviar todos os campos novamente. Só precisa enviar aqueles que deseja editar.
       tags:
@@ -97,41 +97,41 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FaqSchema"
+              $ref: '#/components/schemas/FaqSchema'
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FaqSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "500":
-          $ref: "#/components/responses/500"
+                $ref: '#/components/schemas/FaqSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
 
     delete:
-      summary: "Rota utilizada para deletar uma faq"
+      summary: 'Rota utilizada para deletar uma faq'
       tags:
         - Gerencial - Faqs
       security:
         - BearerAuth: []
       responses:
-        "204":
-          $ref: "#/components/responses/204"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "500":
-          $ref: "#/components/responses/500"
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'

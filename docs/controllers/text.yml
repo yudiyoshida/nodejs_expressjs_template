@@ -3,24 +3,24 @@ paths:
     parameters:
       - $ref: '#/components/parameters/TextTypeParameter'
     get:
-      summary: "Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)"
+      summary: 'Rota utilizada para exibir um texto (termos de uso, políticas de privacidade e sobre)'
       tags:
         - Gerencial - Textos
         - User - Textos
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TextSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
+                $ref: '#/components/schemas/TextSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
 
     put:
-      summary: "Rota utilizada para editar um texto (termos de uso, políticas de privacidade e sobre)"
+      summary: 'Rota utilizada para editar um texto (termos de uso, políticas de privacidade e sobre)'
       tags:
         - Gerencial - Textos
       security:
@@ -30,19 +30,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TextSchema"
+              $ref: '#/components/schemas/TextSchema'
       responses:
-        "200":
-          description: "OK"
+        '200':
+          description: 'OK'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TextSchema"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "500":
-          $ref: "#/components/responses/500"
+                $ref: '#/components/schemas/TextSchema'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'

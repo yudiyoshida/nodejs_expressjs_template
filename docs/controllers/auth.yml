@@ -28,7 +28,7 @@ paths:
 
   /auth/forgot-password/adm:
     post:
-      summary: "Rota 01/02 para o fluxo de 'Esqueci a senha'"
+      summary: 'Rota 01/02 para o fluxo de 'Esqueci a senha''
       tags:
         - Gerencial - Autenticação
       requestBody:
@@ -36,24 +36,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ForgotPasswordSchema"
+              $ref: '#/components/schemas/ForgotPasswordSchema'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessSchema"
+                $ref: '#/components/schemas/SuccessSchema'
               example:
-                message: "Código de recuperação de senha enviado no seu email!"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
+                message: 'Código de recuperação de senha enviado no seu email!'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
 
   /auth/reset-password/adm:
     post:
-      summary: "Rota 02/02 para o fluxo de 'Esqueci a senha'"
+      summary: 'Rota 02/02 para o fluxo de 'Esqueci a senha''
       tags:
         - Gerencial - Autenticação
       requestBody:
@@ -61,20 +61,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ResetPasswordSchema"
+              $ref: '#/components/schemas/ResetPasswordSchema'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessSchema"
+                $ref: '#/components/schemas/SuccessSchema'
               example:
-                message: "Senha atualizada com sucesso!"
-        "400":
-          $ref: "#/components/responses/400"
-        "500":
-          $ref: "#/components/responses/500"
+                message: 'Senha atualizada com sucesso!'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
 
   /auth/login/user:
     post:
@@ -105,7 +105,7 @@ paths:
 
   # /auth/update-password:
   #   post:
-  #     summary: "Geral - Rota 01/01 para o fluxo de 'Alterar senha'"
+  #     summary: 'Geral - Rota 01/01 para o fluxo de 'Alterar senha''
   #     tags:
   #       - Geral - Autenticação
   #     security:
@@ -115,26 +115,26 @@ paths:
   #       content:
   #         application/json:
   #           schema:
-  #             $ref: "#/components/schemas/UpdatePasswordSchema"
+  #             $ref: '#/components/schemas/UpdatePasswordSchema'
   #     responses:
-  #       "200":
+  #       '200':
   #         description: OK
   #         content:
   #           application/json:
   #             schema:
-  #               $ref: "#/components/schemas/SuccessSchema"
+  #               $ref: '#/components/schemas/SuccessSchema'
   #             example:
-  #               message: "Senha atualizada com sucesso!"
-  #       "400":
-  #         $ref: "#/components/responses/400"
-  #       "401":
-  #         $ref: "#/components/responses/401"
-  #       "500":
-  #         $ref: "#/components/responses/500"
+  #               message: 'Senha atualizada com sucesso!'
+  #       '400':
+  #         $ref: '#/components/responses/400'
+  #       '401':
+  #         $ref: '#/components/responses/401'
+  #       '500':
+  #         $ref: '#/components/responses/500'
 
   # /auth/validate-fields:
   #   post:
-  #     summary: "Geral - Rota 01/03 para o fluxo de 'Criar conta'"
+  #     summary: 'Geral - Rota 01/03 para o fluxo de 'Criar conta''
   #     tags:
   #       - Geral - Autenticação
   #     requestBody:
@@ -161,7 +161,7 @@ paths:
 
   # /auth/validate-code:
   #   post:
-  #     summary: "Geral - Rota 02/03 para o fluxo de 'Criar conta'"
+  #     summary: 'Geral - Rota 02/03 para o fluxo de 'Criar conta''
   #     description: >
   #       ## A rota 03/03 do fluxo de 'Criar conta' está na categoria User.
   #     tags:
