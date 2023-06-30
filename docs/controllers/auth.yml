@@ -28,7 +28,7 @@ paths:
 
   /auth/forgot-password/adm:
     post:
-      summary: 'Rota 01/02 para o fluxo de 'Esqueci a senha''
+      summary: 'Rota 01/02 para o fluxo de Esqueci a senha'
       tags:
         - Gerencial - Autenticação
       requestBody:
@@ -53,7 +53,7 @@ paths:
 
   /auth/reset-password/adm:
     post:
-      summary: 'Rota 02/02 para o fluxo de 'Esqueci a senha''
+      summary: 'Rota 02/02 para o fluxo de Esqueci a senha'
       tags:
         - Gerencial - Autenticação
       requestBody:
