@@ -45,10 +45,10 @@ class AuthMiddleware {
   public isAuthorized(permission: Permissions) {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
-        // Checa se não é user admin.
+        // checks if is an admin user.
         if (req.auth.role !== AccountRole.admin) return next();
 
-        // Se for admin, então verifica se possui permissão para acessar o recurso.
+        // if check passes, then verify if admin has permission to access this module.
         const permissions = await AdminService.findAllPermissions(req.auth.id);
         if (!permissions) throw new Error();
 

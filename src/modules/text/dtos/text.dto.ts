@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-// output
+// output.
 export const TextDto = Prisma.validator<Prisma.TextSelect>()({
   id: true,
   type: true,

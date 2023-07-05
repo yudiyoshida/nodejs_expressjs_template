@@ -5,7 +5,7 @@ import Validator from './auth.validator';
 
 const router = Router();
 
-// rotas admins.
+// admin routes.
 router
 .route('/login/adm')
 .post(
@@ -27,12 +27,26 @@ router
   Controller.resetPasswordAdm,
 );
 
-// rotas users.
+// user routes.
 router
-.route('/login/user')
+.route('/login')
 .post(
   Validator.login,
   Controller.loginUser,
+);
+
+router
+.route('/forgot-password')
+.post(
+  Validator.forgotPassword,
+  Controller.forgotPassword,
+);
+
+router
+.route('/reset-password')
+.post(
+  Validator.resetPassword,
+  Controller.resetPassword,
 );
 
 export default router;

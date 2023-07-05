@@ -106,7 +106,7 @@ class Service {
   ) {
     return DataSource.$transaction(async(tx) => {
       if (permissions) {
-        // Remove relacionamento entre admin e permissions.
+        // remove relation between admin and permissions.
         await tx.admin.update({
           where: { id },
           data: {
@@ -115,7 +115,7 @@ class Service {
         });
       }
 
-      // Atualiza admin, inclusive as permissions.
+      // update admin user, including permissions.
       return await tx.admin.update({
         where: { id },
         data: {

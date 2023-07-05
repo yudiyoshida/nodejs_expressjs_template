@@ -53,21 +53,21 @@ class Controller {
     try {
       const { permissions, ...data } = req.body as CreateAdminOutputDto;
 
-      // Verifica se já existe um registro com os dados informados.
+      // checks if there is an account with the data entered.
       const admin = await Service.findByUniqueFields(data);
       if (admin) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
 
-      // Checa se as permissões existem.
+      // checks if permissions exists.
       await this.checkIfPermissionsExists(permissions);
 
-      // Cria senha aleatória.
+      // generate random password.
       const password = PasswordHelper.generate();
       data.password = PasswordHelper.hash(password);
 
-      // Cadastra o novo usuário admin.
+      // register the new admin user.
       const newAdmin = await Service.create(data, permissions);
 
-      // Envio do email com a senha.
+      // send an email containing the random password.
       await Mail.sendEmail(newAdmin.email, '[name] - Aqui está sua senha de acesso!', 'new-admin-user', { password });
       res.status(201).json(newAdmin);
 
@@ -90,16 +90,16 @@ class Controller {
       const { permissions, ...data } = req.body as UpdateAdminOutputDto;
       const { id } = req.params;
 
-      // Verifica se existe um admin com o id informado.
+      // checks if admin exists.
       const admin = await Service.findById(+id);
 
-      // Verifica se já existe um registro com os dados informados.
+      // checks if there is an account with the data entered.
       await Service.findByUniqueFieldsExceptMe(+id, data);
 
-      // Checa se as permissões existem.
+      // checks if permissions exists.
       if (permissions) await this.checkIfPermissionsExists(permissions);
 
-      // Atualiza o admin.
+      // update admin user.
       const result = await Service.update(admin.id, data, permissions);
       res.status(200).json(result);
 
