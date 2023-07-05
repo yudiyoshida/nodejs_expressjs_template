@@ -52,9 +52,9 @@ class AuthMiddleware {
         const permissions = await AdminService.findAllPermissions(req.auth.id);
         if (!permissions) throw new Error();
 
-        const hasPermission = permissions.some(
-          elem => elem.title === permission,
-        );
+        const hasPermission = permissions.some((elem) => {
+          elem.title === permission;
+        });
         if (hasPermission) return next();
         else throw new Error();
 

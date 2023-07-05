@@ -11,7 +11,7 @@ class Mail {
     this.setEmailTemplate();
   }
 
-  setEmailTemplate() {
+  private setEmailTemplate() {
     const viewPath = path.resolve(__dirname, '..', '..', 'resources', 'templates', 'email');
     const options = {
       viewEngine: {
@@ -28,7 +28,7 @@ class Mail {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async sendEmail(to: string, subject: string, template: string, context: any) {
+  public async sendEmail(to: string, subject: string, template: string, context: any) {
     try {
       const options = {
         from: process.env.SMTP_FROM,
