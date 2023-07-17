@@ -13,15 +13,12 @@ class Service {
   }
 
   public async findAll(limit: number, page: number) {
-    return DataSource.$transaction([
-      this.repository.findMany({
-        take: limit,
-        skip: ((page - 1) * limit),
-        select: FaqDto,
-        orderBy: { createdAt: 'desc' },
-      }),
-      this.repository.count(),
-    ]);
+    return this.repository.findMany({
+      take: limit,
+      skip: ((page - 1) * limit),
+      select: FaqDto,
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   public async findById(id: number) {

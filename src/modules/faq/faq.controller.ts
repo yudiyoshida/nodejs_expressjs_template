@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
-import { CreateFaqOutputDto } from './dtos/create-faq.dto';
-import { UpdateFaqOutputDto } from './dtos/update-faq.dto';
+import { CreateFaqDto } from './dtos/create-faq.dto';
+import { UpdateFaqDto } from './dtos/update-faq.dto';
 
 import Service from './faq.service';
 import AppException from '@errors/app-exception';
@@ -36,7 +36,7 @@ class Controller {
 
   public createOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as CreateFaqOutputDto;
+      const data = req.body as CreateFaqDto;
 
       const newFaq = await Service.create(data);
       res.status(201).json(newFaq);
@@ -49,7 +49,7 @@ class Controller {
 
   public updateOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as UpdateFaqOutputDto;
+      const data = req.body as UpdateFaqDto;
       const { id } = req.params;
 
       const faq = await Service.findById(+id);

@@ -2,14 +2,14 @@ import { RequestHandler, Request, Response, NextFunction } from 'express';
 import { AccountRole, Permissions } from '@prisma/client';
 import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 
-import passport from '@libs/passport';
+import Passport from '@libs/passport';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import AdminService from 'modules/admin/admin.service';
 
 class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
-    passport.authenticate('jwt', { session: false, failWithError: true },
+    Passport.authenticate('jwt', { session: false, failWithError: true },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (err: any, payload: IPayloadDto, info: any) => {
         if (err) return next(err);
@@ -52,9 +52,7 @@ class AuthMiddleware {
         const permissions = await AdminService.findAllPermissions(req.auth.id);
         if (!permissions) throw new Error();
 
-        const hasPermission = permissions.some((elem) => {
-          elem.title === permission;
-        });
+        const hasPermission = permissions.some(elem => elem.title === permission);
         if (hasPermission) return next();
         else throw new Error();
 

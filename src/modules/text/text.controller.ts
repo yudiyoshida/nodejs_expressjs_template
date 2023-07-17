@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { TextType } from '@prisma/client';
-import { UpdateTextOutputDto } from './dtos/update-text.dto';
+import { UpdateTextDto } from './dtos/update-text.dto';
 
 import Service from './text.service';
 import AppException from '@errors/app-exception';
@@ -19,7 +19,7 @@ class Controller {
 
   public updateOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as UpdateTextOutputDto;
+      const data = req.body as UpdateTextDto;
 
       const text = await Service.findByType(req.query.type as TextType);
       const result = await Service.update(text.id, data);

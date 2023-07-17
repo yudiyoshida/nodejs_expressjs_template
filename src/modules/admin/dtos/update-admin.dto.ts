@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { CreateAdminInput } from './create-admin.dto';
+import { CreateAdmin } from './create-admin.dto';
 
-export type UpdateAdminOutputDto = z.output<typeof UpdateAdmin>
-export const UpdateAdmin = CreateAdminInput.partial();
+export type UpdateAdminDto = z.output<typeof UpdateAdmin>
+export const UpdateAdmin = CreateAdmin.partial();

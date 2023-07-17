@@ -19,17 +19,12 @@ class Service {
   }
 
   public async findAll(limit: number, page: number, status?: AccountStatus) {
-    return DataSource.$transaction([
-      this.repository.findMany({
-        where: { status },
-        take: limit,
-        skip: ((page - 1) * limit),
-        select: AdminDto,
-      }),
-      this.repository.count({
-        where: { status },
-      }),
-    ]);
+    return this.repository.findMany({
+      where: { status },
+      take: limit,
+      skip: ((page - 1) * limit),
+      select: AdminDto,
+    });
   }
 
   public async findById(id: number) {
@@ -69,7 +64,7 @@ class Service {
     else return admin;
   }
 
-  public async findByUniqueFields(data: Prisma.AdminWhereUniqueInput) {
+  public async findByUniqueFields(data: Prisma.AdminWhereInput) {
     return this.repository.findFirst({
       where: {
         OR: [
@@ -79,7 +74,7 @@ class Service {
     });
   }
 
-  public async findByUniqueFieldsExceptMe(id: number, data: Prisma.AdminWhereUniqueInput) {
+  public async findByUniqueFieldsExceptMe(id: number, data: Prisma.AdminWhereInput) {
     const admin = await this.findByUniqueFields(data);
     if (admin && admin.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
   }
@@ -106,7 +101,7 @@ class Service {
   ) {
     return DataSource.$transaction(async(tx) => {
       if (permissions) {
-        // remove relation between admin and permissions.
+        // removes relation between admin and permissions.
         await tx.admin.update({
           where: { id },
           data: {
@@ -115,7 +110,7 @@ class Service {
         });
       }
 
-      // update admin user, including permissions.
+      // updates admin user, including permissions.
       return await tx.admin.update({
         where: { id },
         data: {

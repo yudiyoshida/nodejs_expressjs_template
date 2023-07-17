@@ -27,6 +27,7 @@ class StorageHelper {
       return await promisify(fs.unlink)(
         path.resolve(process.env.STORAGE_LOCAL as string, key),
       );
+
     }
   }
 }

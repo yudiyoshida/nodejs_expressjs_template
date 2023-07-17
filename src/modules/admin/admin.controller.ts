@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { AccountStatus } from '@prisma/client';
-import { CreateAdminOutputDto } from './dtos/create-admin.dto';
-import { UpdateAdminOutputDto } from './dtos/update-admin.dto';
+import { CreateAdminDto } from './dtos/create-admin.dto';
+import { UpdateAdminDto } from './dtos/update-admin.dto';
 
 import Service from './admin.service';
 import AdminPermissionService from '../admin-permission/admin-permission.service';
@@ -51,20 +51,26 @@ class Controller {
   */
   public createOne: RequestHandler = async(req, res, next) => {
     try {
-      const { permissions, ...data } = req.body as CreateAdminOutputDto;
+      const { permissions, ...body } = req.body as CreateAdminDto;
 
-      // checks if there is an account with the data entered.
-      const admin = await Service.findByUniqueFields(data);
+      // check if there is an account with the data entered.
+      const admin = await Service.findByUniqueFields(body);
       if (admin) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
 
-      // checks if permissions exists.
+      // check if permissions exists.
       await this.checkIfPermissionsExists(permissions);
 
       // generate random password.
       const password = PasswordHelper.generate();
-      data.password = PasswordHelper.hash(password);
 
-      // register the new admin user.
+      // define default values.
+      const data = {
+        ...body,
+        password: PasswordHelper.hash(password),
+        status: AccountStatus.ativo,
+      };
+
+      // register new admin user.
       const newAdmin = await Service.create(data, permissions);
 
       // send an email containing the random password.
@@ -87,16 +93,16 @@ class Controller {
   */
   public updateOne: RequestHandler = async(req, res, next) => {
     try {
-      const { permissions, ...data } = req.body as UpdateAdminOutputDto;
+      const { permissions, ...data } = req.body as UpdateAdminDto;
       const { id } = req.params;
 
-      // checks if admin exists.
+      // check if admin exists.
       const admin = await Service.findById(+id);
 
-      // checks if there is an account with the data entered.
+      // check if there is an account with the data entered.
       await Service.findByUniqueFieldsExceptMe(+id, data);
 
-      // checks if permissions exists.
+      // check if permissions exists.
       if (permissions) await this.checkIfPermissionsExists(permissions);
 
       // update admin user.

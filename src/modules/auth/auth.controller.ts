@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express';
 import { AccountStatus } from '@prisma/client';
 import { IPayloadDto } from './dtos/payload.dto';
-import { LoginOutputDto } from './dtos/login.dto';
-import { ForgotPasswordOutputDto, ResetPasswordOutputDto } from './dtos/password';
+import { LoginDto } from './dtos/login.dto';
+import { ForgotPasswordDto, ResetPasswordDto } from './dtos/password';
 
 import AdminService from '../admin/admin.service';
 import UserService from '../user/user.service';
@@ -10,6 +10,7 @@ import UserService from '../user/user.service';
 import Mail from '@libs/nodemailer';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
+
 import CodeHelper from '@helpers/code';
 import JwtHelper from '@helpers/token';
 import PasswordHelper from '@helpers/password';
@@ -17,21 +18,21 @@ import PasswordHelper from '@helpers/password';
 class Controller {
   public loginAdm: RequestHandler = async(req, res, next) => {
     try {
-      const { credential, password } = req.body as LoginOutputDto;
+      const { credential, password } = req.body as LoginDto;
 
       // find account.
       const admin = await AdminService.findByCredential(credential);
 
-      // checks password (will throw an error if password is incorrect).
+      // check password (will throw an error if password is incorrect).
       PasswordHelper.comparePasswordAndHash(password, admin.password);
 
-      // checks if admin is active.
+      // check if admin is active.
       if (admin.status === AccountStatus.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
       if (admin.status === AccountStatus.pendente) throw new AppException(403, ErrorMessages.PENDING);
 
       // generate token and send response.
       const { id, role, name, imageUrl } = admin;
-      const payload: IPayloadDto = { id, role };
+      const payload: IPayloadDto = { id, role, name };
 
       res.status(200).json({
         token: JwtHelper.createToken(payload),
@@ -46,7 +47,7 @@ class Controller {
 
   public forgotPasswordAdm: RequestHandler = async(req, res, next) => {
     try {
-      const { credential } = req.body as ForgotPasswordOutputDto;
+      const { credential } = req.body as ForgotPasswordDto;
 
       // find admin.
       const admin = await AdminService.findByCredential(credential);
@@ -56,7 +57,7 @@ class Controller {
       const { code, codeExpiresIn } = CodeHelper.generate(minutes);
       await AdminService.storeCode(admin.id, code, codeExpiresIn);
 
-      // send email with code.
+      // send an email with code.
       await Mail.sendEmail(admin.email, '[name] - Esqueceu sua senha?', 'forgot-password', { code, minutes });
       res.status(200).json({ message: 'Código de recuperação de senha enviado no seu email!' });
 
@@ -68,12 +69,12 @@ class Controller {
 
   public resetPasswordAdm: RequestHandler = async(req, res, next) => {
     try {
-      const { credential, code, password } = req.body as ResetPasswordOutputDto;
+      const { credential, code, password } = req.body as ResetPasswordDto;
 
       // find admin.
       const admin = await AdminService.findByCredentialAndCode(credential, code);
 
-      // checks if code is still valid.
+      // check if code is still valid.
       if (CodeHelper.isExpired(admin.codeExpiresIn as Date)) throw new AppException(400, ErrorMessages.CODE_EXPIRED);
 
       // change password.
@@ -89,21 +90,21 @@ class Controller {
 
   public loginUser: RequestHandler = async(req, res, next) => {
     try {
-      const { credential, password } = req.body as LoginOutputDto;
+      const { credential, password } = req.body as LoginDto;
 
       // find account.
       const user = await UserService.findByCredential(credential);
 
-      // checks password.
+      // check password (will throw an error if password is incorrect).
       PasswordHelper.comparePasswordAndHash(password, user.password);
 
-      // checks if user is active.
+      // check if user is active.
       if (user.status === AccountStatus.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
       if (user.status === AccountStatus.pendente) throw new AppException(403, ErrorMessages.PENDING);
 
       // generate token and send response.
       const { id, role, type, name, imageUrl } = user;
-      const payload: IPayloadDto = { id, role, type };
+      const payload: IPayloadDto = { id, role, type, name };
 
       res.status(200).json({
         token: JwtHelper.createToken(payload),
@@ -118,7 +119,7 @@ class Controller {
 
   public forgotPassword: RequestHandler = async(req, res, next) => {
     try {
-      const { credential } = req.body as ForgotPasswordOutputDto;
+      const { credential } = req.body as ForgotPasswordDto;
 
       // find user.
       const user = await UserService.findByCredential(credential);
@@ -128,7 +129,7 @@ class Controller {
       const { code, codeExpiresIn } = CodeHelper.generate(minutes);
       await UserService.storeCode(user.id, code, codeExpiresIn);
 
-      // send email with code.
+      // send an email with code.
       await Mail.sendEmail(user.email, '[name] - Esqueceu sua senha?', 'forgot-password', { code, minutes });
       res.status(200).json({ message: 'Código de recuperação de senha enviado no seu email!' });
 
@@ -140,12 +141,12 @@ class Controller {
 
   public resetPassword: RequestHandler = async(req, res, next) => {
     try {
-      const { credential, code, password } = req.body as ResetPasswordOutputDto;
+      const { credential, code, password } = req.body as ResetPasswordDto;
 
       // find user.
       const user = await UserService.findByCredentialAndCode(credential, code);
 
-      // checks if code is still valid.
+      // check if code is still valid.
       if (CodeHelper.isExpired(user.codeExpiresIn as Date)) throw new AppException(400, ErrorMessages.CODE_EXPIRED);
 
       // change password.

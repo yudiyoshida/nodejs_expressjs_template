@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
-import { z } from 'zod';
 import { UpdateText } from './dtos/update-text.dto';
 import { TextType } from '@prisma/client';
+import { z } from 'zod';
 import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {

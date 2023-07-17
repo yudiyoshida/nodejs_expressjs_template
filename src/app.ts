@@ -24,7 +24,7 @@ class App {
     this.globalErrorHandlerRoute();
   }
 
-  middlewares() {
+  public middlewares() {
     this.app.use('/files', express.static(process.env.STORAGE_LOCAL as string));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
@@ -34,22 +34,22 @@ class App {
     this.app.use(helmet());
   }
 
-  routes() {
+  public routes() {
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
     this.app.use(routes);
   }
 
-  globalErrorHandlerRoute() {
+  public globalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
       if (err instanceof AppException) {
-        return res.status(err.status).json({ error: err.message });
+        res.status(err.status).json({ error: err.message });
 
       } else if (err instanceof multer.MulterError) {
-        return res.status(400).json({ error: err.message });
+        res.status(400).json({ error: err.message });
 
       } else {
-        return res.status(500).json({ error: ErrorMessages.INTERNAL_SERVER_ERROR });
+        res.status(500).json({ error: ErrorMessages.INTERNAL_SERVER_ERROR });
 
       }
     });

@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient, AccountRole, AccountStatus, Permissions } from '@prisma/client';
 import PasswordHelper from '../../src/shared/helpers/password';
 
-const permissions = Object.values(Permissions);
 const admin: Prisma.AdminCreateInput = {
   role: AccountRole.admin,
   name: 'Admin Master',
@@ -15,7 +14,7 @@ export async function seedAdmin(prisma: PrismaClient) {
     data: admin,
   });
 
-  for (const permission of permissions) {
+  for (const permission of Object.values(Permissions)) {
     await prisma.permission.create({
       data: {
         title: permission,

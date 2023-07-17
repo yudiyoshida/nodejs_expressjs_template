@@ -38,7 +38,7 @@ class Service {
     else return user;
   }
 
-  public async findByUniqueFields(data: Prisma.UserWhereUniqueInput) {
+  public async findByUniqueFields(data: Prisma.UserWhereInput) {
     return this.repository.findFirst({
       where: {
         OR: [

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export type SendEmailOutputDto = z.output<typeof SendEmail>
+export type SendEmailDto = z.output<typeof SendEmail>
 export const SendEmail = z.object({
   name: z.string().trim().min(1),
   email: z.string().trim().email(),
