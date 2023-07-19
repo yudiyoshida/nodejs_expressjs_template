@@ -1,13 +1,16 @@
 import { RequestHandler } from 'express';
+import { SendEmailDto } from './dtos/send-email.dto';
 
+import Service from './contact.service';
 import AppException from '@errors/app-exception';
-import Mail from '@libs/nodemailer';
 
 class Controller {
-  public sendEmail: RequestHandler = async(req, res, next) => {
+  public sendContactMail: RequestHandler = async(req, res, next) => {
     try {
-      await Mail.sendEmail(process.env.SMTP_TO as string, 'Alguém entrou em contato!', 'contact', req.body);
-      res.status(200).json({ message: 'Mensagem enviada com sucesso! Em breve entraremos em contato.' });
+      const data = req.body as SendEmailDto;
+
+      const response = await Service.sendContactMail(data);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));

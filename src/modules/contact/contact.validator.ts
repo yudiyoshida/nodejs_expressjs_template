@@ -7,7 +7,7 @@ class Validator extends BaseValidator {
     super();
   }
 
-  public sendEmail: RequestHandler = async(req, res, next) => {
+  public sendContactMail: RequestHandler = async(req, res, next) => {
     this.validateSchema('body', SendEmail, req, next);
   };
 }

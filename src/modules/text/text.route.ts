@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Permissions } from '@prisma/client';
 
 import Auth from '@middlewares/auth';
 import Controller from './text.controller';
@@ -9,12 +8,14 @@ const router = Router();
 
 router
 .route('/')
-.get(
+.all(
   Validator.queryParams,
+)
+.get(
   Controller.findOne,
 )
 .put(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.texts),
+  Auth.isAuthenticated, Auth.isAdmin,
   Validator.updateOne,
   Controller.updateOne,
 );

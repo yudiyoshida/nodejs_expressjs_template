@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Permissions } from '@prisma/client';
 
 import Auth from '@middlewares/auth';
 import Controller from './faq.controller';
@@ -14,7 +13,7 @@ router
   Controller.findAll,
 )
 .post(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
+  Auth.isAuthenticated, Auth.isAdmin,
   Validator.createOne,
   Controller.createOne,
 );
@@ -22,7 +21,7 @@ router
 router
 .route('/:id')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.faqs),
+  Auth.isAuthenticated, Auth.isAdmin,
   Validator.pathParams,
 )
 .get(

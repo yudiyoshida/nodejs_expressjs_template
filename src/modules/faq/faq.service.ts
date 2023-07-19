@@ -1,55 +1,39 @@
-import DataSource from '@database/data-source';
+import Repository from './faq.repository';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
+import PaginationHelper from '@helpers/pagination';
 
-import { Prisma } from '@prisma/client';
-import { FaqDto } from './dtos/faq.dto';
+import { CreateFaqDto } from './dtos/create-faq.dto';
+import { UpdateFaqDto } from './dtos/update-faq.dto';
 
 class Service {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.faq;
-  }
-
   public async findAll(limit: number, page: number) {
-    return this.repository.findMany({
-      take: limit,
-      skip: ((page - 1) * limit),
-      select: FaqDto,
-      orderBy: { createdAt: 'desc' },
-    });
+    const faqs = await Repository.findAll(limit, page);
+
+    return PaginationHelper.paginate(faqs, limit, page);
   }
 
   public async findById(id: number) {
-    const faq = await this.repository.findUnique({
-      where: { id },
-      select: FaqDto,
-    });
+    const faq = await Repository.findById(id);
 
     if (!faq) throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
     else return faq;
   }
 
-  public async create(data: Prisma.FaqCreateInput) {
-    return this.repository.create({
-      data,
-      select: FaqDto,
-    });
+  public async createOne(data: CreateFaqDto) {
+    return await Repository.create(data);
   }
 
-  public async update(id: number, data: Prisma.FaqUpdateInput) {
-    return this.repository.update({
-      where: { id },
-      data,
-      select: FaqDto,
-    });
+  public async updateOne(id: number, data: UpdateFaqDto) {
+    const faq = await this.findById(id);
+
+    return await Repository.update(faq.id, data);
   }
 
-  public async delete(id: number) {
-    return this.repository.delete({
-      where: { id },
-    });
+  public async deleteOne(id: number) {
+    const faq = await this.findById(id);
+
+    return await Repository.delete(faq.id);
   }
 }
 

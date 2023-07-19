@@ -1,7 +1,5 @@
 import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
-import AppException from '@errors/app-exception';
-import ErrorMessages from '@errors/error-messages';
 
 class PasswordHelper {
   public comparePasswordAndConfirmation(password: string, confirmation: string) {
@@ -9,8 +7,7 @@ class PasswordHelper {
   }
 
   public comparePasswordAndHash(password: string, hash: string) {
-    const isPasswordCorrect = bcryptjs.compareSync(password, hash);
-    if (!isPasswordCorrect) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    return bcryptjs.compareSync(password, hash);
   }
 
   public generate() {

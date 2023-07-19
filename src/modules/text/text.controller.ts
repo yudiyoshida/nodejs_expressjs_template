@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express';
 import { TextType } from '@prisma/client';
-import { UpdateTextDto } from './dtos/update-text.dto';
 
 import Service from './text.service';
 import AppException from '@errors/app-exception';
@@ -8,8 +7,10 @@ import AppException from '@errors/app-exception';
 class Controller {
   public findOne: RequestHandler = async(req, res, next) => {
     try {
-      const text = await Service.findByType(req.query.type as TextType);
-      res.status(200).json(text);
+      const { type } = req.query;
+
+      const response = await Service.findByType(type as TextType);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -19,11 +20,10 @@ class Controller {
 
   public updateOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as UpdateTextDto;
+      const { type } = req.query;
 
-      const text = await Service.findByType(req.query.type as TextType);
-      const result = await Service.update(text.id, data);
-      res.status(200).json(result);
+      const response = await Service.update(type as TextType, req.body);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));

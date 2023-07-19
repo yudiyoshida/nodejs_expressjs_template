@@ -1,22 +1,14 @@
-import DataSource from '@database/data-source';
+import Repository from './admin-permission.repository';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
 class Service {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.permission;
-  }
-
   public async findAll() {
-    return this.repository.findMany();
+    return await Repository.findAll();
   }
 
   public async findById(id: number) {
-    const permission = await this.repository.findUnique({
-      where: { id },
-    });
+    const permission = await Repository.findById(id);
 
     if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
     else return permission;

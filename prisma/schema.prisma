@@ -23,9 +23,9 @@ model Security {
 }
 
 model Permission {
-  id      Int         @id @default(autoincrement())
-  title   Permissions @unique
-  admins  Admin[]
+  id     Int         @id @default(autoincrement())
+  title  Permissions @unique
+  admins Admin[]
 }
 
 model Admin {

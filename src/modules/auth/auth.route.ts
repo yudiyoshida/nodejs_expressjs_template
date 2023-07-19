@@ -39,14 +39,14 @@ router
 .route('/forgot-password')
 .post(
   Validator.forgotPassword,
-  Controller.forgotPassword,
+  Controller.forgotPasswordUser,
 );
 
 router
 .route('/reset-password')
 .post(
   Validator.resetPassword,
-  Controller.resetPassword,
+  Controller.resetPasswordUser,
 );
 
 export default router;

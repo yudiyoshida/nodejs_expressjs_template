@@ -1,19 +1,15 @@
 import { RequestHandler } from 'express';
-import { CreateFaqDto } from './dtos/create-faq.dto';
-import { UpdateFaqDto } from './dtos/update-faq.dto';
 
 import Service from './faq.service';
 import AppException from '@errors/app-exception';
-import PaginationHelper from '@helpers/pagination';
 
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
     try {
       const { limit = 10, page = 1 } = req.query;
 
-      const faqs = await Service.findAll(+limit, +page);
-      const faqsPaginated = PaginationHelper.paginate(faqs, +limit, +page);
-      res.status(200).json(faqsPaginated);
+      const response = await Service.findAll(+limit, +page);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -25,8 +21,8 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const faq = await Service.findById(+id);
-      res.status(200).json(faq);
+      const response = await Service.findById(+id);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -36,10 +32,8 @@ class Controller {
 
   public createOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as CreateFaqDto;
-
-      const newFaq = await Service.create(data);
-      res.status(201).json(newFaq);
+      const response = await Service.createOne(req.body);
+      res.status(201).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -49,12 +43,10 @@ class Controller {
 
   public updateOne: RequestHandler = async(req, res, next) => {
     try {
-      const data = req.body as UpdateFaqDto;
       const { id } = req.params;
 
-      const faq = await Service.findById(+id);
-      const result = await Service.update(faq.id, data);
-      res.status(200).json(result);
+      const response = await Service.updateOne(+id, req.body);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
@@ -66,9 +58,8 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const faq = await Service.findById(+id);
-      await Service.delete(faq.id);
-      res.sendStatus(204);
+      const response = await Service.deleteOne(+id);
+      res.status(200).json(response);
 
     } catch (err: any) {
       next(new AppException(err.status ?? 500, err.message));
