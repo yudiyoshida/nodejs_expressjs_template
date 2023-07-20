@@ -1,5 +1,5 @@
-import { IContactEmail } from '../mail/dtos/contact-email.dto';
 import Mail from '@libs/nodemailer';
+import { IContactEmail } from '../mail/dtos/contact-email.dto';
 
 class Service {
   public async sendContactMail(content: IContactEmail) {

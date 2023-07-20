@@ -4,10 +4,12 @@ import { LoginDto } from './dtos/login.dto';
 import { ForgotPasswordDto, ResetPasswordDto } from './dtos/password';
 
 import AdminService from '../admin/admin.service';
+import AdminRepository from '../admin/admin.repository';
+
 import UserService from '../user/user.service';
+import UserRepository from '../user/user.repository';
 
 import MailService from '../mail/mail.service';
-
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
@@ -16,7 +18,7 @@ import JwtHelper from '@helpers/token';
 import PasswordHelper from '@helpers/password';
 
 class Service {
-  public loginAdm = async(data: LoginDto) => {
+  public async loginAdm(data: LoginDto) {
     // find account.
     const admin = await AdminService.findByCredential(data.credential);
 
@@ -37,9 +39,9 @@ class Service {
       token: JwtHelper.createToken(payload),
       account: payload,
     };
-  };
+  }
 
-  public loginUser = async(data: LoginDto) => {
+  public async loginUser(data: LoginDto) {
     // find account.
     const user = await UserService.findByCredential(data.credential);
 
@@ -61,39 +63,39 @@ class Service {
       token: JwtHelper.createToken(payload),
       account: payload,
     };
-  };
+  }
 
 
-  public forgotPasswordAdm = async(data: ForgotPasswordDto) => {
+  public async forgotPasswordAdm(data: ForgotPasswordDto) {
     // find admin.
     const admin = await AdminService.findByCredential(data.credential);
 
     // generate and store code.
     const minutes = 15;
     const { code, codeExpiresIn } = CodeHelper.generate(minutes);
-    await AdminService.storeCode(admin.id, code, codeExpiresIn);
+    await AdminRepository.storeCode(admin.id, code, codeExpiresIn);
 
     // send an email with code.
     await MailService.sendForgotPasswordEmail(admin.email, { code, minutes });
     return { message: 'Código de recuperação de senha enviado no seu email!' };
-  };
+  }
 
-  public forgotPasswordUser = async(data: ForgotPasswordDto) => {
+  public async forgotPasswordUser(data: ForgotPasswordDto) {
     // find user.
     const user = await UserService.findByCredential(data.credential);
 
     // generate and store code.
     const minutes = 15;
     const { code, codeExpiresIn } = CodeHelper.generate(minutes);
-    await UserService.storeCode(user.id, code, codeExpiresIn);
+    await UserRepository.storeCode(user.id, code, codeExpiresIn);
 
     // send an email with code.
     await MailService.sendForgotPasswordEmail(user.email, { code, minutes });
     return { message: 'Código de recuperação de senha enviado no seu email!' };
-  };
+  }
 
 
-  public resetPasswordAdm = async(data: ResetPasswordDto) => {
+  public async resetPasswordAdm(data: ResetPasswordDto) {
     // find admin.
     const admin = await AdminService.findByCredentialAndCode(data.credential, data.code);
 
@@ -101,11 +103,11 @@ class Service {
     this.checkIfCodeIsNotExpired(admin.codeExpiresIn as Date);
 
     // change password.
-    await AdminService.changePassword(admin.id, PasswordHelper.hash(data.password));
+    await AdminRepository.changePassword(admin.id, PasswordHelper.hash(data.password));
     return { message: 'Senha atualizada com sucesso!' };
-  };
+  }
 
-  public resetPasswordUser = async(data: ResetPasswordDto) => {
+  public async resetPasswordUser(data: ResetPasswordDto) {
     // find user.
     const user = await UserService.findByCredentialAndCode(data.credential, data.code);
 
@@ -113,9 +115,9 @@ class Service {
     this.checkIfCodeIsNotExpired(user.codeExpiresIn as Date);
 
     // change password.
-    await UserService.changePassword(user.id, PasswordHelper.hash(data.password));
+    await UserRepository.changePassword(user.id, PasswordHelper.hash(data.password));
     return { message: 'Senha atualizada com sucesso!' };
-  };
+  }
 
 
   private checkIfPasswordAndHashMatch(password: string, hashedPassword: string) {

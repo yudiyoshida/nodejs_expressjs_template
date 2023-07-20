@@ -1,162 +1,114 @@
-import DataSource from '@database/data-source';
+import Repository from './admin.repository';
 import AppException from '@errors/app-exception';
-import ErrorMessages from '@errors/error-messages';
 
-import { Prisma, AccountStatus } from '@prisma/client';
-import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
+import { AccountStatus } from '@prisma/client';
+import { CreateAdminDto } from './dtos/create-admin.dto';
+import { UpdateAdminDto } from './dtos/update-admin.dto';
+
+import ErrorMessages from '@errors/error-messages';
+import PaginationHelper from '@helpers/pagination';
+import PasswordHelper from '@helpers/password';
+
+import AdminPermissionService from '../admin-permission/admin-permission.service';
+import MailService from '../mail/mail.service';
 
 class Service {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.admin;
-  }
-
-  public async findAllPermissions(id: number) {
-    return this.repository.findUnique({
-      where: { id },
-    }).permissions();
-  }
-
   public async findAll(limit: number, page: number, status?: AccountStatus) {
-    return this.repository.findMany({
-      where: { status },
-      take: limit,
-      skip: ((page - 1) * limit),
-      select: AdminDto,
-    });
+    const admins = await Repository.findAll(limit, page, status);
+
+    return PaginationHelper.paginate(admins, limit, page);
   }
 
   public async findById(id: number) {
-    const admin = await this.repository.findUnique({
-      where: { id },
-      select: AdminWithPermissionsDto,
-    });
+    const admin = await Repository.findById(id);
 
     if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
     else return admin;
   }
 
   public async findByCredential(credential: string) {
-    const admin = await this.repository.findFirst({
-      where: {
-        OR: [
-          { email: credential },
-        ],
-      },
-    });
+    const admin = await Repository.findByCredential(credential);
 
-    if (!admin) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
     else return admin;
   }
 
   public async findByCredentialAndCode(credential: string, code: string) {
-    const admin = await this.repository.findFirst({
-      where: {
-        code,
-        OR: [
-          { email: credential },
-        ],
-      },
-    });
+    const admin = await Repository.findByCredentialAndCode(credential, code);
 
-    if (!admin) throw new AppException(400, ErrorMessages.INCORRECT_CODE_PASS);
+    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
     else return admin;
   }
 
-  public async findByUniqueFields(data: Prisma.AdminWhereInput) {
-    return this.repository.findFirst({
-      where: {
-        OR: [
-          { email: data.email },
-        ],
-      },
-    });
+  public async createOne(data: CreateAdminDto) {
+    const { permissions, ...body } = data;
+
+    // check if there's an admin account with data provided.
+    await this.checkUniqueFields(data.email);
+
+    // check if permissions exists.
+    await AdminPermissionService.checkIfPermissionsExists(data.permissions);
+
+    // generate random password.
+    const password = PasswordHelper.generate();
+
+    // define default values.
+    const adminBody = {
+      ...body,
+      password: PasswordHelper.hash(password),
+      status: AccountStatus.ativo,
+    };
+
+    // register new admin user and send an email containing the random password.
+    const newAdmin = await Repository.createOne(adminBody, permissions);
+    await MailService.sendNewAdminAccountEmail(newAdmin.email, { password });
+
+    return newAdmin;
   }
 
-  public async findByUniqueFieldsExceptMe(id: number, data: Prisma.AdminWhereInput) {
-    const admin = await this.findByUniqueFields(data);
-    if (admin && admin.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
-  }
+  public async updateOne(id: number, data: UpdateAdminDto) {
+    const { permissions, ...body } = data;
 
-  public async create(
-    data: Prisma.AdminCreateInput,
-    permissions: Prisma.PermissionWhereUniqueInput[],
-  ) {
-    return this.repository.create({
-      data: {
-        ...data,
-        permissions: {
-          connect: permissions,
-        },
-      },
-      select: AdminWithPermissionsDto,
-    });
-  }
+    // check if admin exists.
+    const admin = await this.checkIfAdminExists(id);
 
-  public async update(
-    id: number,
-    data: Prisma.AdminUpdateInput,
-    permissions?: Prisma.PermissionWhereUniqueInput[],
-  ) {
-    return DataSource.$transaction(async(tx) => {
-      if (permissions) {
-        // removes relation between admin and permissions.
-        await tx.admin.update({
-          where: { id },
-          data: {
-            permissions: { set: [] },
-          },
-        });
-      }
+    // check if there's an admin account with data provided (excluding the data from the admin that will be updated).
+    await this.checkUniqueFieldsExcludingMyself(id, body.email);
 
-      // updates admin user, including permissions.
-      return await tx.admin.update({
-        where: { id },
-        data: {
-          ...data,
-          permissions: {
-            connect: permissions,
-          },
-        },
-        select: AdminWithPermissionsDto,
-      });
-    });
+    // check if permissions exists.
+    if (permissions) await AdminPermissionService.checkIfPermissionsExists(permissions);
+
+    // update admin user.
+    return await Repository.updateOne(admin.id, body, permissions);
   }
 
   public async updateStatus(id: number, status: AccountStatus) {
-    return this.repository.update({
-      where: { id },
-      data: { status },
-      select: AdminDto,
-    });
+    const admin = await this.findById(id);
+
+    return await Repository.updateStatus(admin.id, status);
   }
 
-  public async delete(id: number) {
-    return this.repository.delete({
-      where: { id },
-    });
+  public async deleteOne(id: number) {
+    const admin = await this.findById(id);
+
+    return await Repository.deleteOne(admin.id);
   }
 
-  public async storeCode(id: number, code: string, codeExpiresIn: Date) {
-    return this.repository.update({
-      where: { id },
-      data: {
-        code,
-        codeExpiresIn,
-      },
-    });
+  public async checkUniqueFields(email: string) {
+    const account = await Repository.findByUniqueFields(email);
+    if (!account) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
+    else return account;
   }
 
-  public async changePassword(id: number, password: string) {
-    return this.repository.update({
-      where: { id },
-      data: {
-        code: null,
-        codeExpiresIn: null,
-        password,
-      },
-    });
+  public async checkUniqueFieldsExcludingMyself(id: number, email: string) {
+    const account = await this.checkUniqueFields(email);
+    if (account && account.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
+  }
+
+  public async checkIfAdminExists(id: number) {
+    const admin = await Repository.findById(id);
+    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
+    else return admin;
   }
 }
 

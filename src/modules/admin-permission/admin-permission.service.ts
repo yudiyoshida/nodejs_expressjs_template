@@ -14,7 +14,9 @@ class Service {
     else return permission;
   }
 
-  public async checkIfPermissionsExists(ids: number[]) {
+  public async checkIfPermissionsExists(objectIds: Array<{ id: number }>) {
+    const ids = objectIds.map(obj => obj.id); // { id: number }[] => number[]
+
     await Promise.all(
       ids.map(async(id) => await this.findById(id)),
     );
