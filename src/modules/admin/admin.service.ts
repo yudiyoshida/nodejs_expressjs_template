@@ -82,13 +82,12 @@ class Service {
 
   public async checkUniqueFields(email: string) {
     const account = await Repository.findByUniqueFields(email);
-    if (!account) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
-    else return account;
+    if (account) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
   }
 
   public async checkUniqueFieldsExcludingMyself(id: number, email: string) {
-    const account = await this.checkUniqueFields(email);
-    if (account && account.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
+    const account = await Repository.findByUniqueFields(email, id);
+    if (account) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
   }
 }
 

@@ -2,8 +2,6 @@ paths:
   /auth/login/adm:
     post:
       summary: 'Rota utilizada para login'
-      # description: >
-        ## credential pode ser um email ou phone.
       tags:
         - Gerencial - Autenticação
       requestBody:
@@ -11,14 +9,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequestBodySchema'
+              $ref: '#/components/schemas/LoginInputAdminSchema'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginSchema'
+                $ref: '#/components/schemas/LoginAdminSchema'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -36,7 +34,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ForgotPasswordSchema'
+              $ref: '#/components/schemas/ForgotPasswordAdminSchema'
       responses:
         '200':
           description: OK
@@ -61,7 +59,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResetPasswordSchema'
+              $ref: '#/components/schemas/ResetPasswordAdminSchema'
       responses:
         '200':
           description: OK
@@ -73,14 +71,14 @@ paths:
                 message: 'Senha atualizada com sucesso!'
         '400':
           $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
 
-  /auth/login/user:
+  /auth/login:
     post:
       summary: 'Rota utilizada para login'
-      # description: >
-        ## credential pode ser um email ou phone.
       tags:
         - User - Autenticação
       requestBody:
@@ -88,14 +86,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequestBodySchema'
+              $ref: '#/components/schemas/LoginInputUserSchema'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginSchema'
+                $ref: '#/components/schemas/LoginUserSchema'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -103,87 +101,54 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  # /auth/update-password:
-  #   post:
-  #     summary: 'Geral - Rota 01/01 para o fluxo de 'Alterar senha''
-  #     tags:
-  #       - Geral - Autenticação
-  #     security:
-  #       - BearerAuth: []
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/UpdatePasswordSchema'
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/SuccessSchema'
-  #             example:
-  #               message: 'Senha atualizada com sucesso!'
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '500':
-  #         $ref: '#/components/responses/500'
+  /auth/forgot-password:
+    post:
+      summary: 'Rota 01/02 para o fluxo de Esqueci a senha'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordUserSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSchema'
+              example:
+                message: 'Código de recuperação de senha enviado no seu email!'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
 
-  # /auth/validate-fields:
-  #   post:
-  #     summary: 'Geral - Rota 01/03 para o fluxo de 'Criar conta''
-  #     tags:
-  #       - Geral - Autenticação
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/ValidateFieldsSchema'
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/SuccessSchema'
-  #             example:
-  #               message: 'Código enviado no seu email!'
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '409':
-  #         $ref: '#/components/responses/409'
-  #       '500':
-  #         $ref: '#/components/responses/500'
-
-  # /auth/validate-code:
-  #   post:
-  #     summary: 'Geral - Rota 02/03 para o fluxo de 'Criar conta''
-  #     description: >
-  #       ## A rota 03/03 do fluxo de 'Criar conta' está na categoria User.
-  #     tags:
-  #       - Geral - Autenticação
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/ValidateCodeSchema'
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/SuccessSchema'
-  #             example:
-  #               message: 'E-mail validado com sucesso!'
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '404':
-  #         $ref: '#/components/responses/404'
-  #       '500':
-  #         $ref: '#/components/responses/500'
+  /auth/reset-password:
+    post:
+      summary: 'Rota 02/02 para o fluxo de Esqueci a senha'
+      tags:
+        - User - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordUserSchema'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessSchema'
+              example:
+                message: 'Senha atualizada com sucesso!'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'

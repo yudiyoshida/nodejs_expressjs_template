@@ -27,6 +27,7 @@ class Service {
     const payload: IPayloadDto = {
       id: user.id,
       role: user.role,
+      type: user.type,
       name: user.name,
     };
 

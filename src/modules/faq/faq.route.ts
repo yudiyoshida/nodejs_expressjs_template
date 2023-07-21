@@ -13,7 +13,7 @@ router
   Controller.findAll,
 )
 .post(
-  Auth.isAuthenticated, Auth.isAdmin,
+  Auth.authentication, Auth.roles('admin'),
   Validator.createOne,
   Controller.createOne,
 );
@@ -21,7 +21,7 @@ router
 router
 .route('/:id')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin,
+  Auth.authentication, Auth.roles('admin'),
   Validator.pathParams,
 )
 .get(

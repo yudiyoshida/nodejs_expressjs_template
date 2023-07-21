@@ -15,7 +15,7 @@ router
   Controller.findByType,
 )
 .put(
-  Auth.isAuthenticated, Auth.isAdmin,
+  Auth.authentication, Auth.roles('admin'),
   Validator.updateOne,
   Controller.updateOne,
 );

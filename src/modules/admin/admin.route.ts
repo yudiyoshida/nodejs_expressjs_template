@@ -10,7 +10,7 @@ const router = Router();
 router
 .route('/')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
+  Auth.authentication, Auth.roles('admin'), Auth.authorization(Permissions.configuracoes),
 )
 .get(
   Validator.queryParams,
@@ -24,7 +24,7 @@ router
 router
 .route('/:id')
 .all(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
+  Auth.authentication, Auth.roles('admin'), Auth.authorization(Permissions.configuracoes),
   Validator.pathParams,
 )
 .get(
@@ -41,7 +41,7 @@ router
 router
 .route('/:id/update-status')
 .patch(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
+  Auth.authentication, Auth.roles('admin'), Auth.authorization(Permissions.configuracoes),
   Validator.pathParams, Validator.updateStatus,
   Controller.updateStatus,
 );

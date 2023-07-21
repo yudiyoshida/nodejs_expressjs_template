@@ -9,7 +9,7 @@ const router = Router();
 router
 .route('/')
 .get(
-  Auth.isAuthenticated, Auth.isAdmin, Auth.isAuthorized(Permissions.configuracoes),
+  Auth.authentication, Auth.roles('admin'), Auth.authorization(Permissions.configuracoes),
   Controller.findAll,
 );
 

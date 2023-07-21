@@ -11,12 +11,21 @@ class Repository {
   }
 
   public async findAll(limit: number, page: number, status?: AccountStatus) {
-    return this.repository.findMany({
-      where: { status },
-      take: limit,
-      skip: ((page - 1) * limit),
-      select: AdminDto,
-    });
+    const query: Prisma.AdminWhereInput = {
+      status,
+    };
+
+    return DataSource.$transaction([
+      this.repository.findMany({
+        where: query,
+        take: limit,
+        skip: ((page - 1) * limit),
+        select: AdminDto,
+      }),
+      this.repository.count({
+        where: query,
+      }),
+    ]);
   }
 
   public async findById(id: number) {
@@ -26,11 +35,14 @@ class Repository {
     });
   }
 
-  public async findByUniqueFields(email: string) {
+  public async findByUniqueFields(email: string, id?: number) {
     return this.repository.findFirst({
       where: {
         OR: [
           { email },
+        ],
+        NOT: [
+          { id },
         ],
       },
     });
@@ -92,6 +104,7 @@ class Repository {
   public async deleteOne(id: number) {
     return this.repository.delete({
       where: { id },
+      select: AdminDto,
     });
   }
 }

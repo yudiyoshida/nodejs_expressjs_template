@@ -8,7 +8,7 @@ import ErrorMessages from '@errors/error-messages';
 import AdminService from 'modules/auth/services/admin/admin.service';
 
 class AuthMiddleware {
-  public isAuthenticated: RequestHandler = (req, res, next) => {
+  public authentication: RequestHandler = (req, res, next) => {
     Passport.authenticate('jwt', { session: false, failWithError: true },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (err: any, payload: IPayloadDto, info: any) => {
@@ -20,39 +20,23 @@ class AuthMiddleware {
     next();
   };
 
-  // public roles(...roles: AccountRole[]) {
-  //   return async(req: Request, res: Response, next: NextFunction) => {
-  //     if (!roles.includes(req.auth.role)) throw new Error();
-  //     else next();
-  //   };
-  // }
-
-  public isAdmin: RequestHandler = (req, res, next) => {
-    try {
-      if (req.auth.role !== AccountRole.admin) throw new Error();
-      else next();
-
-    } catch (err: any) {
-      next(new AppException(403, ErrorMessages.FORBIDDEN));
-
-    }
-  };
-
-  public isUser: RequestHandler = (req, res, next) => {
-    try {
-      if (req.auth.role !== AccountRole.user) throw new Error();
-      else next();
-
-    } catch (err: any) {
-      next(new AppException(403, ErrorMessages.FORBIDDEN));
-
-    }
-  };
-
-  public isAuthorized(permission: Permissions) {
+  public roles(...roles: AccountRole[]) {
     return async(req: Request, res: Response, next: NextFunction) => {
       try {
-        // checks if is an admin user.
+        if (!roles.includes(req.auth.role)) throw new Error();
+        else next();
+
+      } catch (err: any) {
+        next(new AppException(403, ErrorMessages.FORBIDDEN));
+
+      }
+    };
+  }
+
+  public authorization(permission: Permissions) {
+    return async(req: Request, res: Response, next: NextFunction) => {
+      try {
+        // check if is an admin user.
         if (req.auth.role !== AccountRole.admin) return next();
 
         // if check passes, then verify if admin has permission to access this module.

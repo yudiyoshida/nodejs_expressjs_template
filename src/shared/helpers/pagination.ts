@@ -1,9 +1,10 @@
 class PaginationHelper {
-  public paginate(data: any[], limit: number, page: number) {
+  public paginate(data: [any[], number], limit: number, page: number) {
+    const [rows, count] = data;
     return {
-      data: data,
-      totalItems: data.length,
-      totalPages: Math.ceil(data.length/limit),
+      data: rows,
+      totalItems: count,
+      totalPages: Math.ceil(count/limit),
       itemsPerPage: limit,
       page: page,
     };

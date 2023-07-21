@@ -72,7 +72,7 @@ class Controller {
     try {
       const { id } = req.params;
 
-      const response = await Service.updateStatus(+id, req.body);
+      const response = await Service.updateStatus(+id, req.body.status);
       res.status(200).json(response);
 
     } catch (err: any) {

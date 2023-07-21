@@ -10,7 +10,7 @@ const router = Router();
 router
 .route('/')
 .post(
-  Auth.isAuthenticated,
+  Auth.authentication,
   multer(multerOptions).single('file'),
   Controller.upload,
 );
