@@ -18,7 +18,7 @@ class Controller {
     }
   };
 
-  public findOne: RequestHandler = async(req, res, next) => {
+  public findById: RequestHandler = async(req, res, next) => {
     try {
       const { id } = req.params;
 

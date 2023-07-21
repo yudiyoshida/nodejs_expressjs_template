@@ -25,7 +25,7 @@ router
   Validator.pathParams,
 )
 .get(
-  Controller.findOne,
+  Controller.findById,
 )
 .put(
   Validator.updateOne,

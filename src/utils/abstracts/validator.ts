@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler } from 'express';
-import { RequestProperyType } from '@customTypes/request';
+import { RequestProperyType } from '@customTypes/request.type';
 import { AccountStatus } from '@prisma/client';
 import { z } from 'zod';
 

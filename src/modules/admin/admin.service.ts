@@ -1,11 +1,11 @@
 import Repository from './admin.repository';
 import AppException from '@errors/app-exception';
+import ErrorMessages from '@errors/error-messages';
 
 import { AccountStatus } from '@prisma/client';
 import { CreateAdminDto } from './dtos/create-admin.dto';
 import { UpdateAdminDto } from './dtos/update-admin.dto';
 
-import ErrorMessages from '@errors/error-messages';
 import PaginationHelper from '@helpers/pagination';
 import PasswordHelper from '@helpers/password';
 
@@ -21,20 +21,6 @@ class Service {
 
   public async findById(id: number) {
     const admin = await Repository.findById(id);
-
-    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
-    else return admin;
-  }
-
-  public async findByCredential(credential: string) {
-    const admin = await Repository.findByCredential(credential);
-
-    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
-    else return admin;
-  }
-
-  public async findByCredentialAndCode(credential: string, code: string) {
-    const admin = await Repository.findByCredentialAndCode(credential, code);
 
     if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
     else return admin;
@@ -70,7 +56,7 @@ class Service {
     const { permissions, ...body } = data;
 
     // check if admin exists.
-    const admin = await this.checkIfAdminExists(id);
+    const admin = await this.findById(id);
 
     // check if there's an admin account with data provided (excluding the data from the admin that will be updated).
     await this.checkUniqueFieldsExcludingMyself(id, body.email);
@@ -103,12 +89,6 @@ class Service {
   public async checkUniqueFieldsExcludingMyself(id: number, email: string) {
     const account = await this.checkUniqueFields(email);
     if (account && account.id !== id) throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
-  }
-
-  public async checkIfAdminExists(id: number) {
-    const admin = await Repository.findById(id);
-    if (!admin) throw new AppException(404, ErrorMessages.ADMIN_NOT_FOUND);
-    else return admin;
   }
 }
 

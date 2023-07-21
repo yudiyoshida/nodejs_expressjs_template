@@ -6,7 +6,7 @@ import { INewAdminAccountEmail } from './dtos/new-admin-email.dto';
 
 class Service {
   public sendContactEmail(content: IContactEmail) {
-    return Mail.sendEmail(process.env.SMTP_TO as string, 'Alguém entrou em contato!', 'contact', content);
+    return Mail.sendEmail(process.env.SMTP_TO as string, '[name] - Alguém entrou em contato!', 'contact', content);
   }
 
   public sendForgotPasswordEmail(email: string, content: IForgotPasswordEmail) {

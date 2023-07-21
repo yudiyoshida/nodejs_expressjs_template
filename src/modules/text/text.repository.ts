@@ -17,7 +17,7 @@ class Repository {
     });
   }
 
-  public async update(id: number, data: Prisma.TextUpdateInput) {
+  public async updateOne(id: number, data: Prisma.TextUpdateInput) {
     return this.repository.update({
       where: { id },
       data,

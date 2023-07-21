@@ -5,7 +5,7 @@ import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 import Passport from '@libs/passport';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import AdminRepository from 'modules/admin/admin.repository';
+import AdminService from 'modules/auth/services/admin/admin.service';
 
 class AuthMiddleware {
   public isAuthenticated: RequestHandler = (req, res, next) => {
@@ -56,12 +56,12 @@ class AuthMiddleware {
         if (req.auth.role !== AccountRole.admin) return next();
 
         // if check passes, then verify if admin has permission to access this module.
-        const permissions = await AdminRepository.findAllPermissions(req.auth.id);
+        const permissions = await AdminService.findAllPermissions(req.auth.id);
         if (!permissions) throw new Error();
 
         const hasPermission = permissions.some(elem => elem.title === permission);
-        if (hasPermission) return next();
-        else throw new Error();
+        if (!hasPermission) throw new Error();
+        next();
 
       } catch (err: any) {
         next(new AppException(403, ErrorMessages.FORBIDDEN));

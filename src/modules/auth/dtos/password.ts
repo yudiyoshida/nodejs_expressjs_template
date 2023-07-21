@@ -12,10 +12,11 @@ export const ResetPassword = z.object({
   password: z.string().trim().min(8),
   confirmPassword: z.string().trim(),
 })
-.refine((body) => {
-  if (body.password !== body.confirmPassword) return false;
-  else return true;
-},
-{
-  message: 'Senhas informadas estão diferentes.',
-});
+.refine(
+  (body) => {
+    return (body.password === body.confirmPassword);
+  },
+  {
+    message: 'Senhas informadas estão diferentes.',
+  },
+);

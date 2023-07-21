@@ -13,10 +13,10 @@ class Service {
     else return text;
   }
 
-  public async update(type: TextType, data: UpdateTextDto) {
+  public async updateOne(type: TextType, data: UpdateTextDto) {
     const text = await this.findByType(type);
 
-    return await Repository.update(text.id, data);
+    return await Repository.updateOne(text.id, data);
   }
 }
 

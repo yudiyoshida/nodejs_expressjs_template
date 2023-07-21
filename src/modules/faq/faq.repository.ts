@@ -26,14 +26,14 @@ class Repository {
     });
   }
 
-  public async create(data: Prisma.FaqCreateInput) {
+  public async createOne(data: Prisma.FaqCreateInput) {
     return this.repository.create({
       data,
       select: FaqDto,
     });
   }
 
-  public async update(id: number, data: Prisma.FaqUpdateInput) {
+  public async updateOne(id: number, data: Prisma.FaqUpdateInput) {
     return this.repository.update({
       where: { id },
       data,
@@ -41,7 +41,7 @@ class Repository {
     });
   }
 
-  public async delete(id: number) {
+  public async deleteOne(id: number) {
     return this.repository.delete({
       where: { id },
       select: FaqDto,

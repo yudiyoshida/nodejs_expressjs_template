@@ -1,9 +1,9 @@
-import Mail from '@libs/nodemailer';
+import MailService from 'modules/mail/mail.service';
 import { IContactEmail } from '../mail/dtos/contact-email.dto';
 
 class Service {
   public async sendContactMail(content: IContactEmail) {
-    await Mail.sendEmail(process.env.SMTP_TO as string, 'Alguém entrou em contato!', 'contact', content);
+    await MailService.sendContactEmail(content);
 
     return { message: 'Mensagem enviada com sucesso! Em breve entraremos em contato.' };
   }

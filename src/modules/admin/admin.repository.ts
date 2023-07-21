@@ -10,12 +10,6 @@ class Repository {
     this.repository = DataSource.admin;
   }
 
-  public async findAllPermissions(id: number) {
-    return this.repository.findUnique({
-      where: { id },
-    }).permissions();
-  }
-
   public async findAll(limit: number, page: number, status?: AccountStatus) {
     return this.repository.findMany({
       where: { status },
@@ -29,27 +23,6 @@ class Repository {
     return this.repository.findUnique({
       where: { id },
       select: AdminWithPermissionsDto,
-    });
-  }
-
-  public async findByCredential(credential: string) {
-    return this.repository.findFirst({
-      where: {
-        OR: [
-          { email: credential },
-        ],
-      },
-    });
-  }
-
-  public async findByCredentialAndCode(credential: string, code: string) {
-    return this.repository.findFirst({
-      where: {
-        OR: [
-          { email: credential },
-        ],
-        code,
-      },
     });
   }
 
@@ -119,27 +92,6 @@ class Repository {
   public async deleteOne(id: number) {
     return this.repository.delete({
       where: { id },
-    });
-  }
-
-  public async storeCode(id: number, code: string, codeExpiresIn: Date) {
-    return this.repository.update({
-      where: { id },
-      data: {
-        code,
-        codeExpiresIn,
-      },
-    });
-  }
-
-  public async changePassword(id: number, password: string) {
-    return this.repository.update({
-      where: { id },
-      data: {
-        code: null,
-        codeExpiresIn: null,
-        password,
-      },
     });
   }
 }

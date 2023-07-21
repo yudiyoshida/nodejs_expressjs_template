@@ -1,6 +1,5 @@
 import { Prisma } from '@prisma/client';
 
-// output.
 export const AdminDto = Prisma.validator<Prisma.AdminSelect>()({
   id: true,
   role: false,

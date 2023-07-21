@@ -21,19 +21,19 @@ class Service {
   }
 
   public async createOne(data: CreateFaqDto) {
-    return await Repository.create(data);
+    return await Repository.createOne(data);
   }
 
   public async updateOne(id: number, data: UpdateFaqDto) {
     const faq = await this.findById(id);
 
-    return await Repository.update(faq.id, data);
+    return await Repository.updateOne(faq.id, data);
   }
 
   public async deleteOne(id: number) {
     const faq = await this.findById(id);
 
-    return await Repository.delete(faq.id);
+    return await Repository.deleteOne(faq.id);
   }
 }
 
