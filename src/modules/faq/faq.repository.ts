@@ -15,8 +15,12 @@ class Repository {
       AND: [
         { OR:
           [
-            { question: { contains: search } },
-            { answer: { contains: search } },
+            {
+              question: { contains: search },
+            },
+            {
+              answer: { contains: search },
+            },
           ],
         },
       ],
