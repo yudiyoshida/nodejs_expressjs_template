@@ -7,8 +7,8 @@ import { CreateFaqDto } from './dtos/create-faq.dto';
 import { UpdateFaqDto } from './dtos/update-faq.dto';
 
 class Service {
-  public async findAll(limit: number, page: number) {
-    const faqs = await Repository.findAll(limit, page);
+  public async findAll(limit: number, page: number, search?: string) {
+    const faqs = await Repository.findAll(limit, page, search);
 
     return PaginationHelper.paginate(faqs, limit, page);
   }

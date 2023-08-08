@@ -6,9 +6,9 @@ import AppException from '@errors/app-exception';
 class Controller {
   public findAll: RequestHandler = async(req, res, next) => {
     try {
-      const { limit = 10, page = 1 } = req.query;
+      const { limit = 10, page = 1, search } = req.query;
 
-      const response = await Service.findAll(+limit, +page);
+      const response = await Service.findAll(+limit, +page, search as string);
       res.status(200).json(response);
 
     } catch (err: any) {
