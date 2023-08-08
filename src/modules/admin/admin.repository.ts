@@ -10,9 +10,21 @@ class Repository {
     this.repository = DataSource.admin;
   }
 
-  public async findAll(limit: number, page: number, status?: AccountStatus) {
+  public async findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
     const where: Prisma.AdminWhereInput = {
-      status,
+      AND: [
+        { status },
+        { OR:
+          [
+            {
+              name: { contains: search },
+            },
+            {
+              email: { contains: search },
+            },
+          ],
+        },
+      ],
     };
 
     return DataSource.$transaction([

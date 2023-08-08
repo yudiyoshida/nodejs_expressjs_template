@@ -13,8 +13,8 @@ import AdminPermissionService from '../admin-permission/admin-permission.service
 import MailService from '../mail/mail.service';
 
 class Service {
-  public async findAll(limit: number, page: number, status?: AccountStatus) {
-    const admins = await Repository.findAll(limit, page, status);
+  public async findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
+    const admins = await Repository.findAll(limit, page, status, search);
 
     return PaginationHelper.paginate(admins, limit, page);
   }

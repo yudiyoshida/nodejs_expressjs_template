@@ -15,6 +15,7 @@ abstract class BaseValidator {
       id: z.coerce.number().positive().int(),
     });
     this.querySchema = z.object({
+      search: z.string().optional(),
       status: z.nativeEnum(AccountStatus).optional(),
       limit: z.coerce.number().positive().int().optional(),
       page: z.coerce.number().positive().int().optional(),
