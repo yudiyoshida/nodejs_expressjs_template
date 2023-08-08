@@ -11,20 +11,18 @@ class Repository {
   }
 
   public async findAll(limit: number, page: number, status?: AccountStatus) {
-    const query: Prisma.AdminWhereInput = {
+    const where: Prisma.AdminWhereInput = {
       status,
     };
 
     return DataSource.$transaction([
       this.repository.findMany({
-        where: query,
+        where,
         take: limit,
         skip: ((page - 1) * limit),
         select: AdminDto,
       }),
-      this.repository.count({
-        where: query,
-      }),
+      this.repository.count({ where }),
     ]);
   }
 
