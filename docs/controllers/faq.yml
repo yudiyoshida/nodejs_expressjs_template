@@ -6,6 +6,7 @@ paths:
         - Gerencial - Faqs
         - User - Faqs
       parameters:
+        - $ref: '#/components/parameters/SearchParameter'
         - $ref: '#/components/parameters/PageParameter'
         - $ref: '#/components/parameters/LimitParameter'
       responses:

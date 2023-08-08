@@ -31,6 +31,7 @@ paths:
         - BearerAuth: []
       parameters:
         - $ref: '#/components/parameters/AccountStatusParameter'
+        - $ref: '#/components/parameters/SearchParameter'
         - $ref: '#/components/parameters/PageParameter'
         - $ref: '#/components/parameters/LimitParameter'
       responses:

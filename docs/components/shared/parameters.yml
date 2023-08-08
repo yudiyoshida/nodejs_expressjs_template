@@ -37,6 +37,13 @@ components:
         type: string
         enum: ['admin', 'user']
 
+    SearchParameter:
+      in: query
+      name: search
+      schema:
+        type: string
+        example: string
+
     TextTypeParameter:
       in: query
       name: type
