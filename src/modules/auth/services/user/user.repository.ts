@@ -7,13 +7,12 @@ class Repository {
     this.repository = DataSource.user;
   }
 
-  public findByCredential(credential: string, code?: string) {
+  public findByCredential(credential: string) {
     return this.repository.findFirst({
       where: {
         OR: [
           { email: credential },
         ],
-        code,
       },
     });
   }

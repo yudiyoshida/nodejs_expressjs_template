@@ -68,31 +68,43 @@ class Service {
 
   private checkCodeValidation(codeExpiresIn: Date) {
     const isExpired = CodeHelper.isExpired(codeExpiresIn);
-    if (isExpired) throw new AppException(400, ErrorMessages.CODE_EXPIRED);
+    if (isExpired) {
+      throw new AppException(400, ErrorMessages.CODE_EXPIRED);
+    }
   }
 
   private checkIfAdminIsActive(admin: Admin) {
-    if (admin.status === AccountStatus.inativo) throw new AppException(403, ErrorMessages.INACTIVE);
-    if (admin.status === AccountStatus.pendente) throw new AppException(403, ErrorMessages.PENDING);
+    if (admin.status === AccountStatus.inativo) {
+      throw new AppException(403, ErrorMessages.INACTIVE);
+    }
+    if (admin.status === AccountStatus.pendente) {
+      throw new AppException(403, ErrorMessages.PENDING);
+    }
   }
 
   private comparePasswords(password: string, hash: string) {
     const isMatch = PasswordHelper.comparePasswordAndHash(password, hash);
-    if (!isMatch) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    if (!isMatch) {
+      throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    }
   }
 
   private async findByCredential(credential: string) {
     const admin = await Repository.findByCredential(credential);
 
-    if (!admin) throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
-    else return admin;
+    if (!admin) {
+      throw new AppException(400, ErrorMessages.INVALID_CREDENTIALS);
+    }
+    return admin;
   }
 
   private async findByCredentialAndCode(credential: string, code: string) {
-    const admin = await Repository.findByCredential(credential, code);
+    const admin = await this.findByCredential(credential);
 
-    if (!admin) throw new AppException(404, ErrorMessages.INCORRECT_CODE_PASS);
-    else return admin;
+    if (admin.code !== code) {
+      throw new AppException(404, ErrorMessages.INCORRECT_CODE_PASS);
+    }
+    return admin;
   }
 
   private async storeCode(id: number) {

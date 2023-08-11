@@ -64,7 +64,7 @@ class Service {
     await this.checkUniqueFieldsExcludingMyself(id, body.email);
 
     // check if permissions exists.
-    if (permissions) await AdminPermissionService.checkIfPermissionsExists(permissions);
+    await AdminPermissionService.checkIfPermissionsExists(permissions);
 
     // update admin user.
     return await Repository.updateOne(admin.id, body, permissions);

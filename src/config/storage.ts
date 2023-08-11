@@ -45,7 +45,9 @@ export default {
     fileSize: MAX_SIZE_TWO_MEGABYTES,
   },
   fileFilter: (req: Request, file: any, callback: any) => {
-    if (ALLOWED_MIMES.includes(file.mimetype)) return callback(null, true);
-    else return callback(new AppException(415, 'Tipo de arquivo não suportado.'));
+    if (ALLOWED_MIMES.includes(file.mimetype)) {
+      return callback(null, true);
+    }
+    return callback(new AppException(415, 'Tipo de arquivo não suportado.'));
   },
 };

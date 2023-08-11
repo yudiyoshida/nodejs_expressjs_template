@@ -13,13 +13,12 @@ class Repository {
     }).permissions();
   }
 
-  public findByCredential(credential: string, code?: string) {
+  public findByCredential(credential: string) {
     return this.repository.findFirst({
       where: {
         OR: [
           { email: credential },
         ],
-        code,
       },
     });
   }

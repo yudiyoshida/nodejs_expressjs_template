@@ -20,7 +20,7 @@ class Service {
     if (!faq) {
       throw new AppException(404, ErrorMessages.FAQ_NOT_FOUND);
     }
-    else return faq;
+    return faq;
   }
 
   public async createOne(data: CreateFaqDto) {

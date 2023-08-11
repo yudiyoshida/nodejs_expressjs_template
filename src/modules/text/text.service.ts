@@ -13,7 +13,7 @@ class Service {
     if (!text) {
       throw new AppException(404, ErrorMessages.TEXT_NOT_FOUND);
     }
-    else return text;
+    return text;
   }
 
   public async updateOne(type: TextType, data: UpdateTextDto) {
