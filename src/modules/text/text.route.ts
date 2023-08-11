@@ -12,7 +12,7 @@ router
   Validator.queryParams,
 )
 .get(
-  Controller.findByType,
+  Controller.findOne,
 )
 .put(
   Auth.authentication, Auth.roles('admin'),

@@ -1,10 +1,6 @@
-// import { RequestHandler } from 'express';
 // import BaseValidator from '@abstracts/validator';
+// import { RequestHandler } from 'express';
 
-// class Validator extends BaseValidator {
-//   constructor() {
-//     super();
-//   }
-// }
+// class Validator extends BaseValidator {}
 
 // export default new Validator();

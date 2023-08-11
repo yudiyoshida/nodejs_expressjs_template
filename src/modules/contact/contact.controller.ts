@@ -1,22 +1,10 @@
-import { RequestHandler } from 'express';
-import { SendEmailDto } from './dtos/send-email.dto';
-
+import BaseController from '@abstracts/controller';
 import Service from './contact.service';
-import AppException from '@errors/app-exception';
 
-class Controller {
-  public sendContactMail: RequestHandler = async(req, res, next) => {
-    try {
-      const data = req.body as SendEmailDto;
-
-      const response = await Service.sendContactMail(data);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+class Controller extends BaseController {
+  public sendContactEmail = this.handleRequest((req) => {
+    return Service.sendContactEmail(req.body);
+  });
 }
 
 export default new Controller();

@@ -10,7 +10,7 @@ class Repository {
     this.repository = DataSource.admin;
   }
 
-  public async findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
+  public findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
     const where: Prisma.AdminWhereInput = {
       AND: [
         { status },
@@ -38,27 +38,24 @@ class Repository {
     ]);
   }
 
-  public async findById(id: number) {
+  public findOne(id: number) {
     return this.repository.findUnique({
       where: { id },
       select: AdminWithPermissionsDto,
     });
   }
 
-  public async findByUniqueFields(email: string, id?: number) {
+  public findByUniqueFields(email: string) {
     return this.repository.findFirst({
       where: {
         OR: [
           { email },
         ],
-        NOT: [
-          { id },
-        ],
       },
     });
   }
 
-  public async createOne(
+  public createOne(
     data: Prisma.AdminCreateInput,
     permissions: Prisma.PermissionWhereUniqueInput[],
   ) {
@@ -73,7 +70,7 @@ class Repository {
     });
   }
 
-  public async updateOne(
+  public updateOne(
     id: number,
     data: Prisma.AdminUpdateInput,
     permissions?: Prisma.PermissionWhereUniqueInput[],
@@ -103,7 +100,7 @@ class Repository {
     });
   }
 
-  public async updateStatus(id: number, status: AccountStatus) {
+  public updateStatus(id: number, status: AccountStatus) {
     return this.repository.update({
       where: { id },
       data: { status },
@@ -111,7 +108,7 @@ class Repository {
     });
   }
 
-  public async deleteOne(id: number) {
+  public deleteOne(id: number) {
     return this.repository.delete({
       where: { id },
       select: AdminDto,

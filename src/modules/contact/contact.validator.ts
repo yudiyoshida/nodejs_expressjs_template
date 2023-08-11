@@ -1,14 +1,10 @@
-import { RequestHandler } from 'express';
-import { SendEmail } from './dtos/send-email.dto';
 import BaseValidator from '@abstracts/validator';
+import { RequestHandler } from 'express';
+import { SendContactEmail } from './dtos/send-contact-email.dto';
 
 class Validator extends BaseValidator {
-  constructor() {
-    super();
-  }
-
-  public sendContactMail: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', SendEmail, req, next);
+  public sendContactEmail: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', SendContactEmail);
   };
 }
 

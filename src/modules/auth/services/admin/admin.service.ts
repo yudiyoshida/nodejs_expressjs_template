@@ -1,15 +1,16 @@
 import Repository from './admin.repository';
+
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
 import { AccountStatus, Admin } from '@prisma/client';
-import { IPayloadDto } from '../../dtos/payload.dto';
-import { LoginDto } from '../../dtos/login.dto';
-import { ForgotPasswordDto, ResetPasswordDto } from '../../dtos/password';
+import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
+import { LoginDto } from 'modules/auth/dtos/login.dto';
+import { ForgotPasswordDto, ResetPasswordDto } from 'modules/auth/dtos/password';
 
-import CodeHelper from '@helpers/code';
-import JwtHelper from '@helpers/token';
-import PasswordHelper from '@helpers/password';
+import CodeHelper from '@helpers/code.helper';
+import JwtHelper from '@helpers/token.helper';
+import PasswordHelper from '@helpers/password.helper';
 import MailService from 'modules/mail/mail.service';
 
 class Service {

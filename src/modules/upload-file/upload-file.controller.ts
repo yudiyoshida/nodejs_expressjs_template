@@ -1,17 +1,10 @@
-import { RequestHandler } from 'express';
-import AppException from '@errors/app-exception';
+import BaseController from '@abstracts/controller';
 
-class Controller {
-  public upload: RequestHandler = async(req, res, next) => {
-    try {
-      const { location:url } = req.file ?? { location: null };
-      res.status(201).json({ url });
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+class Controller extends BaseController {
+  public upload = this.handleRequest((req) => {
+    const url = req.file?.location ?? null;
+    return Promise.resolve({ url });
+  });
 }
 
 export default new Controller();

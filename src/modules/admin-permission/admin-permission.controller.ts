@@ -1,19 +1,10 @@
-import { RequestHandler } from 'express';
-
+import BaseController from '@abstracts/controller';
 import Service from './admin-permission.service';
-import AppException from '@errors/app-exception';
 
-class Controller {
-  public findAll: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await Service.findAll();
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+class Controller extends BaseController {
+  public findAll = this.handleRequest(() => {
+    return Service.findAll();
+  });
 }
 
 export default new Controller();

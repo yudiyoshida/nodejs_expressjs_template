@@ -1,19 +1,15 @@
+import BaseValidator from '@abstracts/validator';
 import { RequestHandler } from 'express';
 import { CreateFaq } from './dtos/create-faq.dto';
 import { UpdateFaq } from './dtos/update-faq.dto';
-import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {
-  constructor() {
-    super();
-  }
-
-  public createOne: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', CreateFaq, req, next);
+  public createOne: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', CreateFaq);
   };
 
-  public updateOne: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', UpdateFaq, req, next);
+  public updateOne: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', UpdateFaq);
   };
 }
 

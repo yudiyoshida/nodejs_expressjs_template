@@ -1,8 +1,6 @@
-// import { RequestHandler } from 'express';
-
+// import BaseController from '@abstracts/controller';
 // import Service from './user.service';
-// import AppException from '@errors/app-exception';
 
-// class Controller {}
+// class Controller extends BaseController {}
 
 // export default new Controller();

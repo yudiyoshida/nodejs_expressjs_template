@@ -1,4 +1,5 @@
 import Repository from './admin-permission.repository';
+
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
@@ -10,8 +11,10 @@ class Service {
   public async findById(id: number) {
     const permission = await Repository.findById(id);
 
-    if (!permission) throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
-    else return permission;
+    if (!permission) {
+      throw new AppException(404, ErrorMessages.PERMISSION_NOT_FOUND);
+    }
+    return permission;
   }
 
   public async checkIfPermissionsExists(objectIds: Array<{ id: number }>) {

@@ -10,14 +10,14 @@ class Repository {
     this.repository = DataSource.text;
   }
 
-  public async findByType(type: TextType) {
+  public findOne(type: TextType) {
     return this.repository.findUnique({
       where: { type },
       select: TextDto,
     });
   }
 
-  public async updateOne(id: number, data: Prisma.TextUpdateInput) {
+  public updateOne(id: number, data: Prisma.TextUpdateInput) {
     return this.repository.update({
       where: { id },
       data,

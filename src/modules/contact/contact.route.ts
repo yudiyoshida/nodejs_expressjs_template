@@ -8,8 +8,8 @@ const router = Router();
 router
 .route('/')
 .post(
-  Validator.sendContactMail,
-  Controller.sendContactMail,
+  Validator.sendContactEmail,
+  Controller.sendContactEmail,
 );
 
 export default router;

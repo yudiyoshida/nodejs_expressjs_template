@@ -1,35 +1,16 @@
-import { RequestHandler } from 'express';
+import BaseController from '@abstracts/controller';
+import Service from './text.service';
+
 import { TextType } from '@prisma/client';
 
-import Service from './text.service';
-import AppException from '@errors/app-exception';
+class Controller extends BaseController {
+  public findOne = this.handleRequest((req) => {
+    return Service.findOne(req.query.type as TextType);
+  });
 
-class Controller {
-  public findByType: RequestHandler = async(req, res, next) => {
-    try {
-      const { type } = req.query;
-
-      const response = await Service.findByType(type as TextType);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
-  public updateOne: RequestHandler = async(req, res, next) => {
-    try {
-      const { type } = req.query;
-
-      const response = await Service.updateOne(type as TextType, req.body);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+  public updateOne = this.handleRequest((req) => {
+    return Service.updateOne(req.query.type as TextType, req.body);
+  });
 }
 
 export default new Controller();

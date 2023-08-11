@@ -1,76 +1,32 @@
-import { RequestHandler } from 'express';
-
+import BaseController from '@abstracts/controller';
 import AdminService from './services/admin/admin.service';
 import UserService from './services/user/user.service';
-import AppException from '@errors/app-exception';
 
-class Controller {
-  public loginAdm: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await AdminService.loginAdm(req.body);
-      res.status(200).json(response);
+class Controller extends BaseController {
+  public loginAdm = this.handleRequest((req) => {
+    return AdminService.loginAdm(req.body);
+  });
 
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
+  public forgotPasswordAdm = this.handleRequest((req) => {
+    return AdminService.forgotPasswordAdm(req.body);
+  });
 
-    }
-  };
-
-  public forgotPasswordAdm: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await AdminService.forgotPasswordAdm(req.body);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
-  public resetPasswordAdm: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await AdminService.resetPasswordAdm(req.body);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+  public resetPasswordAdm = this.handleRequest((req) => {
+    return AdminService.resetPasswordAdm(req.body);
+  });
 
 
-  public loginUser: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await UserService.loginUser(req.body);
-      res.status(200).json(response);
+  public loginUser = this.handleRequest((req) => {
+    return UserService.loginUser(req.body);
+  });
 
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
+  public forgotPasswordUser = this.handleRequest((req) => {
+    return UserService.forgotPasswordUser(req.body);
+  });
 
-    }
-  };
-
-  public forgotPasswordUser: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await UserService.forgotPasswordUser(req.body);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
-
-  public resetPasswordUser: RequestHandler = async(req, res, next) => {
-    try {
-      const response = await UserService.resetPasswordUser(req.body);
-      res.status(200).json(response);
-
-    } catch (err: any) {
-      next(new AppException(err.status ?? 500, err.message));
-
-    }
-  };
+  public resetPasswordUser = this.handleRequest((req) => {
+    return UserService.resetPasswordUser(req.body);
+  });
 }
 
 export default new Controller();

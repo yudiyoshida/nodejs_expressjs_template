@@ -7,7 +7,7 @@ class Repository {
     this.repository = DataSource.user;
   }
 
-  public async findByCredential(credential: string, code?: string) {
+  public findByCredential(credential: string, code?: string) {
     return this.repository.findFirst({
       where: {
         OR: [
@@ -18,7 +18,7 @@ class Repository {
     });
   }
 
-  public async storeCode(id: number, code: string, codeExpiresIn: Date) {
+  public storeCode(id: number, code: string, codeExpiresIn: Date) {
     return this.repository.update({
       where: { id },
       data: {
@@ -28,7 +28,7 @@ class Repository {
     });
   }
 
-  public async changePassword(id: number, password: string) {
+  public changePassword(id: number, password: string) {
     return this.repository.update({
       where: { id },
       data: {

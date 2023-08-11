@@ -1,23 +1,19 @@
+import BaseValidator from '@abstracts/validator';
 import { RequestHandler } from 'express';
 import { Login } from './dtos/login.dto';
 import { ForgotPassword, ResetPassword } from './dtos/password';
-import BaseValidator from '@abstracts/validator';
 
 class Validator extends BaseValidator {
-  constructor() {
-    super();
-  }
-
-  public login: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', Login, req, next);
+  public login: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', Login);
   };
 
-  public forgotPassword: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', ForgotPassword, req, next);
+  public forgotPassword: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', ForgotPassword);
   };
 
-  public resetPassword: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', ResetPassword, req, next);
+  public resetPassword: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', ResetPassword);
   };
 }
 

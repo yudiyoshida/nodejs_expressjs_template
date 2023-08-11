@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler } from 'express';
 import { RequestPropertyType } from '@customTypes/request.type';
 import { AccountStatus } from '@prisma/client';
 import { z } from 'zod';
@@ -40,17 +40,17 @@ abstract class BaseValidator {
     }
   }
 
-  public pathParams(req: Request, res: Response, next: NextFunction) {
+  public pathParams: RequestHandler = (req, res, next) => {
     this.validateSchema(req, next, 'params', this.pathSchema);
-  }
+  };
 
-  public queryParams(req: Request, res: Response, next: NextFunction) {
+  public queryParams: RequestHandler = (req, res, next) => {
     this.validateSchema(req, next, 'query', this.querySchema);
-  }
+  };
 
-  public updateStatus(req: Request, res: Response, next: NextFunction) {
+  public updateStatus: RequestHandler = (req, res, next) => {
     this.validateSchema(req, next, 'body', this.updateStatusSchema);
-  }
+  };
 }
 
 export default BaseValidator;

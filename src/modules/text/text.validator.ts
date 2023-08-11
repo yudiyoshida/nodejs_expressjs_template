@@ -1,24 +1,20 @@
-import { RequestHandler } from 'express';
-import { UpdateText } from './dtos/update-text.dto';
-import { TextType } from '@prisma/client';
-import { z } from 'zod';
 import BaseValidator from '@abstracts/validator';
+import { RequestHandler } from 'express';
+import { TextType } from '@prisma/client';
+import { UpdateText } from './dtos/update-text.dto';
+import { z } from 'zod';
 
 class Validator extends BaseValidator {
-  constructor() {
-    super();
-  }
-
-  public updateOne: RequestHandler = async(req, res, next) => {
-    this.validateSchema('body', UpdateText, req, next);
+  public updateOne: RequestHandler = (req, res, next) => {
+    this.validateSchema(req, next, 'body', UpdateText);
   };
 
-  public queryParams: RequestHandler = async(req, res, next) => {
+  public queryParams: RequestHandler = (req, res, next) => {
     const schema = z.object({
       type: z.nativeEnum(TextType),
     });
 
-    this.validateSchema('query', schema, req, next);
+    this.validateSchema(req, next, 'query', schema);
   };
 }
 
