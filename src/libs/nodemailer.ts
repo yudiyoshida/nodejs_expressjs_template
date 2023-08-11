@@ -27,11 +27,10 @@ class Mail {
     this.transporter.use('compile', hbs(options));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async sendEmail(to: string, subject: string, template: string, context: any) {
     try {
       const options = {
-        from: process.env.SMTP_FROM,
+        from: process.env.SMTP_FROM as string,
         to,
         subject,
         template,

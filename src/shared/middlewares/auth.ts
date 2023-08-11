@@ -1,14 +1,14 @@
-import { RequestHandler, Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AccountRole, Permissions } from '@prisma/client';
 import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
 
-import Passport from '@libs/passport';
+import AdminService from 'modules/auth/services/admin/admin.service';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
-import AdminService from 'modules/auth/services/admin/admin.service';
+import Passport from '@libs/passport';
 
 class AuthMiddleware {
-  public authentication: RequestHandler = (req, res, next) => {
+  public authentication(req: Request, res: Response, next: NextFunction) {
     Passport.authenticate('jwt', { session: false, failWithError: true },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (err: any, payload: IPayloadDto, info: any) => {
@@ -18,7 +18,7 @@ class AuthMiddleware {
       },
     )(req, res, next);
     next();
-  };
+  }
 
   public roles(...roles: AccountRole[]) {
     return async(req: Request, res: Response, next: NextFunction) => {

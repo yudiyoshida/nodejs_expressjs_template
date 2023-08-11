@@ -1,5 +1,7 @@
+import { IPagination } from '@interfaces/pagination.interface';
+
 class PaginationHelper {
-  public paginate(data: [any[], number], limit: number, page: number) {
+  public paginate(data: [any[], number], limit: number, page: number): IPagination<any> {
     const [rows, count] = data;
     return {
       data: rows,

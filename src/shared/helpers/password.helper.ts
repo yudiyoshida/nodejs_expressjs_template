@@ -2,19 +2,19 @@ import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 
 class PasswordHelper {
-  public comparePasswordAndConfirmation(password: string, confirmation: string) {
-    return (password === confirmation);
+  public comparePasswordAndConfirmation(password: string, confirmation: string): boolean {
+    return password === confirmation;
   }
 
-  public comparePasswordAndHash(password: string, hash: string) {
+  public comparePasswordAndHash(password: string, hash: string): boolean {
     return bcryptjs.compareSync(password, hash);
   }
 
-  public generate() {
+  public generate(): string {
     return crypto.randomBytes(12).toString('hex').slice(0, 8);
   }
 
-  public hash(password: string) {
+  public hash(password: string): string {
     const salt = bcryptjs.genSaltSync(8);
     return bcryptjs.hashSync(password, salt);
   }

@@ -1,9 +1,23 @@
 class DocumentHelper {
-  public removePunctuation(text: string) {
+  public removePunctuation(text: string): string {
     return text.replace(/[\s./-]*/gim, '');
   }
 
-  public validateCpf(cpf: string) {
+  public validateCpfOrCnpj(document: string): boolean {
+    document = this.removePunctuation(document);
+    if (document.length === 11) {
+      return this.validateCpf(document);
+
+    } else if (document.length === 14) {
+      return this.validateCnpj(document);
+
+    } else {
+      return false;
+
+    }
+  }
+
+  public validateCpf(cpf: string): boolean {
     cpf = this.removePunctuation(cpf);
     if (cpf.length !== 11) return false;
 
@@ -33,7 +47,7 @@ class DocumentHelper {
     return true;
   }
 
-  public validateCnpj(cnpj: string) {
+  public validateCnpj(cnpj: string): boolean {
     cnpj = this.removePunctuation(cnpj);
     if (cnpj.length !== 14) return false;
 
@@ -66,20 +80,6 @@ class DocumentHelper {
     if (rest !== Number(cnpj[13])) return false;
 
     return true;
-  }
-
-  public validateCpfOrCnpj(document: string) {
-    document = this.removePunctuation(document);
-    if (document.length === 11) {
-      return this.validateCpf(document);
-
-    } else if (document.length === 14) {
-      return this.validateCnpj(document);
-
-    } else {
-      return false;
-
-    }
   }
 }
 

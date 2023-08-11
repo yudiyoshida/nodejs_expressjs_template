@@ -1,14 +1,10 @@
+import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
+import { Strategy } from 'passport-jwt';
 import passport from 'passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-
-const options = {
-  secretOrKey: process.env.JWT_SECRET as string,
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-};
+import passportOptions from '@config/passport';
 
 passport.use(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new Strategy(options, (payload, done) => {
+  new Strategy(passportOptions, (payload: IPayloadDto, done) => {
     done(null, payload);
   }),
 );
