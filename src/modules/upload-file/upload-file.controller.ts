@@ -4,7 +4,7 @@ class Controller {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async upload(req: Request, res: Response) {
     const url = req.file?.location ?? null;
-    return { url };
+    res.status(200).json({ url });
   }
 }
 
