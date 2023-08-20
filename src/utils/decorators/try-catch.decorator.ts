@@ -7,7 +7,6 @@ export function TryCatch() {
 
     descriptor.value = async function(req: Request, res: Response, next: NextFunction) {
       try {
-        console.log('caiu no decorator');
         await originalMethod.call(this, req, res, next);
 
       } catch (err: any) {
