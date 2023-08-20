@@ -1,10 +1,11 @@
-import BaseController from '@abstracts/controller';
+import { Request, Response } from 'express';
 
-class Controller extends BaseController {
-  public upload = this.handleRequest((req) => {
+class Controller {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async upload(req: Request, res: Response) {
     const url = req.file?.location ?? null;
-    return Promise.resolve({ url });
-  });
+    return { url };
+  }
 }
 
 export default new Controller();

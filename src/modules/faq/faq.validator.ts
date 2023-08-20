@@ -1,4 +1,4 @@
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
 import { CreateFaq } from './dtos/create-faq.dto';
 import { UpdateFaq } from './dtos/update-faq.dto';

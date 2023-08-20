@@ -1,4 +1,4 @@
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
 import { Login } from './dtos/login.dto';
 import { ForgotPassword, ResetPassword } from './dtos/password';

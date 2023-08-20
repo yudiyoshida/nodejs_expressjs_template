@@ -1,16 +1,19 @@
-import BaseController from '@abstracts/controller';
 import Service from './text.service';
-
+import { TryCatch } from '@decorators/try-catch.decorator';
+import { Request, Response } from 'express';
 import { TextType } from '@prisma/client';
 
-class Controller extends BaseController {
-  public findOne = this.handleRequest((req) => {
-    return Service.findOne(req.query.type as TextType);
-  });
+class Controller {
+  @TryCatch()
+  public async findOne(req: Request, res: Response) {
+    const result = await Service.findOne(req.query.type as TextType);
+    res.status(200).json(result);
+  }
 
-  public updateOne = this.handleRequest((req) => {
-    return Service.updateOne(req.query.type as TextType, req.body);
-  });
+  public async updateOne(req: Request, res: Response) {
+    const result = await Service.updateOne(req.query.type as TextType, req.body);
+    res.status(200).json(result);
+  }
 }
 
 export default new Controller();

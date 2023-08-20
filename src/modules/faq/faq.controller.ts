@@ -1,27 +1,39 @@
-import BaseController from '@abstracts/controller';
 import Service from './faq.service';
+import { TryCatch } from '@decorators/try-catch.decorator';
+import { Request, Response } from 'express';
 
-class Controller extends BaseController {
-  public findAll = this.handleRequest((req) => {
+class Controller {
+  @TryCatch()
+  public async findAll(req: Request, res: Response) {
     const { limit = 10, page = 1, search } = req.query;
-    return Service.findAll(+limit, +page, search as string);
-  });
 
-  public findOne = this.handleRequest((req) => {
-    return Service.findOne(+req.params.id);
-  });
+    const result = await Service.findAll(+limit, +page, search as string);
+    res.status(200).json(result);
+  }
 
-  public createOne = this.handleRequest((req) => {
-    return Service.createOne(req.body);
-  }, 201);
+  @TryCatch()
+  public async findOne(req: Request, res: Response) {
+    const result = await Service.findOne(+req.params.id);
+    res.status(200).json(result);
+  }
 
-  public updateOne = this.handleRequest((req) => {
-    return Service.updateOne(+req.params.id, req.body);
-  });
+  @TryCatch()
+  public async createOne(req: Request, res: Response) {
+    const result = await Service.createOne(req.body);
+    res.status(201).json(result);
+  }
 
-  public deleteOne = this.handleRequest((req) => {
-    return Service.deleteOne(+req.params.id);
-  });
+  @TryCatch()
+  public async updateOne(req: Request, res: Response) {
+    const result = await Service.updateOne(+req.params.id, req.body);
+    res.status(200).json(result);
+  }
+
+  @TryCatch()
+  public async deleteOne(req: Request, res: Response) {
+    const result = await Service.deleteOne(+req.params.id);
+    res.status(200).json(result);
+  }
 }
 
 export default new Controller();

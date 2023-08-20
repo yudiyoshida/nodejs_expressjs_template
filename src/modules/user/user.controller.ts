@@ -1,6 +1,5 @@
-// import BaseController from '@abstracts/controller';
 // import Service from './user.service';
 
-// class Controller extends BaseController {}
+// class Controller {}
 
 // export default new Controller();

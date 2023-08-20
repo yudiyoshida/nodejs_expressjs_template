@@ -10,6 +10,7 @@ module.exports = {
     '@helpers/(.*)': ['<rootDir>/src/shared/helpers/$1'],
     '@middlewares/(.*)': ['<rootDir>/src/shared/middlewares/$1'],
     '@abstracts/(.*)': ['<rootDir>/src/utils/abstracts/$1'],
+    '@decorators/(.*)': ['<rootDir>/src/utils/decorators/$1'],
     '@interfaces/(.*)': ['<rootDir>/src/utils/interfaces/$1'],
     '@customTypes/(.*)': ['<rootDir>/src/utils/types/$1'],
   },

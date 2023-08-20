@@ -1,4 +1,4 @@
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
 import { CreateAdmin } from './dtos/create-admin.dto';
 import { UpdateAdmin } from './dtos/update-admin.dto';

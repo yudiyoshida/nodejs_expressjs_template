@@ -77,7 +77,7 @@ model Text {
 enum Permissions {
   configuracoes
   faqs
-  texts
+  textos
 }
 
 enum AccountRole {

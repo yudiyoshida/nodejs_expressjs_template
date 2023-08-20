@@ -1,4 +1,4 @@
-import BaseValidator from '@abstracts/validator';
+import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
 import { TextType } from '@prisma/client';
 import { UpdateText } from './dtos/update-text.dto';

@@ -19,12 +19,12 @@ class App {
 
   constructor() {
     this.app = express();
-    this.middlewares();
-    this.routes();
-    this.globalErrorHandlerRoute();
+    this.registerMiddlewares();
+    this.registerRoutes();
+    this.registerGlobalErrorHandlerRoute();
   }
 
-  public middlewares() {
+  private registerMiddlewares() {
     this.app.use('/files', express.static(process.env.STORAGE_LOCAL as string));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
@@ -34,12 +34,12 @@ class App {
     this.app.use(helmet());
   }
 
-  public routes() {
+  private registerRoutes() {
     this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
     this.app.use(routes);
   }
 
-  public globalErrorHandlerRoute() {
+  private registerGlobalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
       if (err instanceof AppException) {
