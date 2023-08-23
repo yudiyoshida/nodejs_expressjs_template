@@ -91,7 +91,7 @@ class Service {
 
   private async checkUniqueFieldsExcludingMyself(id: number, email: string) {
     const account = await Repository.findByUniqueFields(email);
-    if (account && account.id === id) {
+    if (account && account.id !== id) {
       throw new AppException(409, ErrorMessages.ACCOUNT_ALREADY_EXISTS);
     }
   }
