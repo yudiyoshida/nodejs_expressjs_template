@@ -17,12 +17,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginAdminSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
 
   /auth/forgot-password/adm:
     post:
@@ -44,10 +38,6 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Código de recuperação de senha enviado no seu email!'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
 
   /auth/reset-password/adm:
     post:
@@ -69,12 +59,6 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Senha atualizada com sucesso!'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
   /auth/login:
     post:
@@ -94,12 +78,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginUserSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
 
   /auth/forgot-password:
     post:
@@ -121,10 +99,6 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Código de recuperação de senha enviado no seu email!'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
 
   /auth/reset-password:
     post:
@@ -146,9 +120,3 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Senha atualizada com sucesso!'
-        '400':
-          $ref: '#/components/responses/400'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'

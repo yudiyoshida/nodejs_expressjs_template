@@ -14,10 +14,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TextSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
 
     put:
       summary: 'Rota utilizada para editar um texto (termos de uso, políticas de privacidade e sobre)'
@@ -38,11 +34,3 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TextSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'

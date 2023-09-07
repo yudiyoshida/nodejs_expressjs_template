@@ -24,10 +24,6 @@ paths:
                           allOf:
                             - $ref: '#/components/schemas/FaqSchema'
                   - $ref: '#/components/schemas/PaginationSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'
 
     post:
       summary: 'Rota utilizada para cadastrar uma faq'
@@ -48,14 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FaqSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
 
   /faqs/{id}:
     parameters:
@@ -74,16 +62,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/FaqSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
     put:
       summary: 'Rota utilizada para editar uma faq'
@@ -106,16 +84,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FaqSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
     delete:
       summary: 'Rota utilizada para deletar uma faq'
@@ -130,13 +98,3 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FaqSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'

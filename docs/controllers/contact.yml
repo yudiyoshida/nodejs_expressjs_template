@@ -20,7 +20,3 @@ paths:
                 $ref: '#/components/schemas/SuccessSchema'
               example:
                 message: 'Mensagem enviada com sucesso! Em breve entraremos em contato.'
-        '400':
-          $ref: '#/components/responses/400'
-        '500':
-          $ref: '#/components/responses/500'

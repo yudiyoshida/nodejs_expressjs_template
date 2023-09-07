@@ -1,9 +1,6 @@
 components:
   # Reusable responses, such as 401 Unauthorized or 400 Bad Request
   responses:
-    '204':
-      description: 'No Content'
-
     '400':
       description: 'Bad Request'
       content:
@@ -11,7 +8,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorSchema'
           example:
-            error: 'Parâmetro foo é um campo obrigatório.'
+            error: 'Parâmetro foo é obrigatório.'
 
     '401':
       description: 'Unauthorized'

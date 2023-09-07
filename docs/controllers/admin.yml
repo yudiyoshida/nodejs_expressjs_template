@@ -1,7 +1,7 @@
 paths:
   /admins/permissions:
     get:
-      summary: 'Rota utilizada para listar as permissões'
+      summary: 'Rota utilizada para listar as permissões de admin'
       tags:
         - Gerencial - Colaboradores
       security:
@@ -15,12 +15,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PermissionSchema'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
 
   /admins:
     get:
@@ -49,14 +43,6 @@ paths:
                           allOf:
                             - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PaginationSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
 
     post:
       summary: 'Rota utilizada para cadastrar um novo usuário admin'
@@ -85,18 +71,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PermissionArraySchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-        '500':
-          $ref: '#/components/responses/500'
 
   /admins/{id}:
     parameters:
@@ -116,22 +90,10 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PermissionArraySchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
     put:
       summary: 'Rota utilizada para editar um usuário admin'
       description: >
-        ## - Não tem necessidade de enviar todos os campos novamente. Só precisa enviar aqueles que deseja editar.
-
         ## - "permissions" é um array de ids. Os ids das permissões podem ser obtidos na rota GET /admins/permissions.
       tags:
         - Gerencial - Colaboradores
@@ -154,18 +116,6 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
                   - $ref: '#/components/schemas/PermissionArraySchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-        '500':
-          $ref: '#/components/responses/500'
 
     delete:
       summary: 'Rota utilizada para deletar um usuário admin'
@@ -181,16 +131,6 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
   /admins/{id}/update-status:
     parameters:
@@ -215,13 +155,3 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/AdminSchema'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
