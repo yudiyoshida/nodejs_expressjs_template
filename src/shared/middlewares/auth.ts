@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { AccountRole, Permissions } from '@prisma/client';
-import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
+import { IPayloadDto } from '../../modules/auth/dtos/payload.dto';
 
-import AdminService from 'modules/auth/services/admin/admin.service';
+import AdminService from '../../modules/auth/services/admin/admin.service';
 import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 import Passport from '@libs/passport';

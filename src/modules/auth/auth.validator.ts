@@ -1,7 +1,7 @@
 import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
 import { Login } from './dtos/login.dto';
-import { ForgotPassword, ResetPassword } from './dtos/password';
+import { ForgotPassword, ResetPassword } from './dtos/password.dto';
 
 class Validator extends BaseValidator {
   public login: RequestHandler = (req, res, next) => {

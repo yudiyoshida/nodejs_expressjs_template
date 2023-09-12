@@ -4,14 +4,14 @@ import AppException from '@errors/app-exception';
 import ErrorMessages from '@errors/error-messages';
 
 import { AccountStatus, User } from '@prisma/client';
-import { IPayloadDto } from 'modules/auth/dtos/payload.dto';
-import { LoginDto } from 'modules/auth/dtos/login.dto';
-import { ForgotPasswordDto, ResetPasswordDto } from 'modules/auth/dtos/password';
+import { IPayloadDto } from '../../dtos/payload.dto';
+import { LoginDto } from '../../dtos/login.dto';
+import { ForgotPasswordDto, ResetPasswordDto } from '../../dtos/password.dto';
 
 import CodeHelper from '@helpers/code.helper';
 import JwtHelper from '@helpers/token.helper';
 import PasswordHelper from '@helpers/password.helper';
-import MailService from 'modules/mail/mail.service';
+import MailService from '../../../mail/mail.service';
 
 class Service {
   public async loginUser(data: LoginDto) {
