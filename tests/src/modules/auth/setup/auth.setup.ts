@@ -5,20 +5,16 @@ import {
   AccountRole,
   AccountStatus,
   Permissions,
-  TextType,
   UserType,
 } from '@prisma/client';
 
-import PasswordHelper from '../../src/shared/helpers/password.helper';
+import PasswordHelper from '../../../../../src/shared/helpers/password.helper';
 
 const prisma = new PrismaClient();
 
 class SetupDatabase {
   private userAdmin: Prisma.AdminCreateInput;
   private userApp: Prisma.UserCreateInput;
-
-  public adminToken: string;
-  public userToken: string;
 
   constructor() {
     this.userAdmin = {
@@ -36,15 +32,14 @@ class SetupDatabase {
       password: PasswordHelper.hash('123456789'),
       status: AccountStatus.ativo,
     };
-    this.adminToken = '';
-    this.userToken = '';
   }
 
-  public async dropDatabase() {
-    await prisma.faq.deleteMany({ where: {} });
+  public async dropAdminDatabase() {
+    await prisma.admin.deleteMany({ where: {} });
     await prisma.permission.deleteMany({ where: {} });
-    await prisma.security.deleteMany({ where: {} });
-    await prisma.text.deleteMany({ where: {} });
+  }
+
+  public async dropUserDatabase() {
     await prisma.user.deleteMany({ where: {} });
   }
 
@@ -71,35 +66,26 @@ class SetupDatabase {
     });
   }
 
-  public async seedTexts() {
-    for (const text of Object.values(TextType)) {
-      await prisma.text.create({
-        data: {
-          type: text,
-          content: `${text} vindo da API. Rota integrada.`,
-        },
-      });
-    }
-  }
-
   public async loginAdmin(app: any) {
-    const admin = await request(app)
-    .post('/auth/login')
+    const account = await request(app)
+    .post('/auth/login/adm')
     .send({
-      'username': 'admin@getnada.com',
+      'credential': 'admin@getnada.com',
       'password': '123456789',
     });
-    this.adminToken = admin.body.token;
+
+    return account.body.token;
   }
 
   public async loginUser(app: any) {
-    const user = await request(app)
+    const account = await request(app)
     .post('/auth/login')
     .send({
-      'username': 'userapp@getnada.com',
+      'credential': 'userapp@getnada.com',
       'password': '123456789',
     });
-    this.userToken = user.body.token;
+
+    return account.body.token;
   }
 }
 

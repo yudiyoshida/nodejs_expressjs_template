@@ -1,4 +1,4 @@
-import CodeHelper from '../../../../src/shared/helpers/code';
+import CodeHelper from '../../../../src/shared/helpers/code.helper';
 
 describe('generate method', () => {
   test('it should return a code of type string', () => {
@@ -33,6 +33,7 @@ describe('generate method', () => {
     expect(codeExpiresIn.getMinutes()).toBe(tenMinutesLater.getMinutes());
   });
 });
+
 
 describe('isExpired method', () => {
   test('it should return false when sending a future date', () => {
