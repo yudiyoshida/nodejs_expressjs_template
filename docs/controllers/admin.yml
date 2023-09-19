@@ -19,6 +19,12 @@ paths:
   /admins:
     get:
       summary: 'Rota utilizada para listar todos os usuários admins'
+      description: >
+        ## Como funciona a paginação nessa rota?
+
+        ### - Caso não sejam informados valores para 'page' e 'limit', o retorno da api será um array com todos os registros.
+
+        ### - Caso sejam informados valores para 'page' e 'limit', o retorno será semelhante ao response abaixo.
       tags:
         - Gerencial - Colaboradores
       security:
