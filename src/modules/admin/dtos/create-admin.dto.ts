@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export type CreateAdminDto = z.output<typeof CreateAdmin>
+export type CreateAdminDto = z.output<typeof CreateAdmin>;
 export const CreateAdmin = z.object({
   name: z.string().trim().min(1),
   email: z.string().trim().email(),

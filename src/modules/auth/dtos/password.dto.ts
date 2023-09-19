@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-export type ForgotPasswordDto = z.output<typeof ForgotPassword>
+export type ForgotPasswordDto = z.output<typeof ForgotPassword>;
 export const ForgotPassword = z.object({
   credential: z.string().trim().email(),
 });
 
-export type ResetPasswordDto = z.output<typeof ResetPassword>
+export type ResetPasswordDto = z.output<typeof ResetPassword>;
 export const ResetPassword = z.object({
   credential: z.string().trim().email(),
   code: z.string().trim().min(1),
