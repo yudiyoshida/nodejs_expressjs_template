@@ -4,11 +4,7 @@ import { Prisma } from '@prisma/client';
 import { FaqDto } from './dtos/faq.dto';
 
 class Repository {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.faq;
-  }
+  constructor(private readonly repository = DataSource.faq) {}
 
   public findAll(limit: number, page: number, search?: string) {
     const where: Prisma.FaqWhereInput = {

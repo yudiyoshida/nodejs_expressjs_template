@@ -1,20 +1,16 @@
 import Service from './faq.service';
 import { TryCatch } from '@decorators/try-catch.decorator';
 import { Request, Response } from 'express';
+import { RequestQueryDto } from '@dtos/request-query.dto';
 
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit, page, search } = req.query;
+    const { limit, page, search } = req.query as RequestQueryDto;
 
-    let result;
-    if (page && limit) {
-      result = await Service.findAll(+limit, +page, search as string);
-
-    } else {
-      result = await Service.findAllNoPagination(search as string);
-
-    }
+    const result = (page && limit)
+      ? await Service.findAll(limit, page, search)
+      : await Service.findAllNoPagination(search);
     res.status(200).json(result);
   }
 

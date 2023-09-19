@@ -1,11 +1,7 @@
 import DataSource from '@database/data-source';
 
 class Repository {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.permission;
-  }
+  constructor(private readonly repository = DataSource.permission) {}
 
   public findAll() {
     return this.repository.findMany();

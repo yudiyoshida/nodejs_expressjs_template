@@ -1,21 +1,16 @@
 import Service from './admin.service';
 import { TryCatch } from '@decorators/try-catch.decorator';
 import { Request, Response } from 'express';
-import { AccountStatus } from '@prisma/client';
+import { RequestQueryDto } from '@dtos/request-query.dto';
 
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit, page, status, search } = req.query;
+    const { limit, page, status, search } = req.query as RequestQueryDto;
 
-    let result;
-    if (limit && page) {
-      result = await Service.findAll(+limit, +page, status as AccountStatus, search as string);
-
-    } else {
-      result = await Service.findAllNoPagination(status as AccountStatus, search as string);
-
-    }
+    const result = (limit && page)
+      ? await Service.findAll(limit, page, status, search)
+      : await Service.findAllNoPagination(status, search);
     res.status(200).json(result);
   }
 

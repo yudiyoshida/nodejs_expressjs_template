@@ -6,7 +6,7 @@ class PaginationHelper {
     return {
       data: rows,
       totalItems: count,
-      totalPages: Math.ceil(count/limit),
+      totalPages: Math.ceil(count / limit),
       itemsPerPage: limit,
       page: page,
     };

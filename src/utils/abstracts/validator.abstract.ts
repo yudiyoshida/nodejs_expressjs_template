@@ -1,29 +1,18 @@
 import { NextFunction, Request, RequestHandler } from 'express';
 import { RequestPropertyType } from '@customTypes/request.type';
-import { AccountStatus } from '@prisma/client';
 import { z } from 'zod';
 
 import AppException from '@errors/app-exception';
+import { RequestPath } from '@dtos/request-path.dto';
+import { RequestQuery } from '@dtos/request-query.dto';
+import { UpdateStatus } from '@dtos/update-status.dto';
 
 abstract class BaseValidator {
-  protected readonly pathSchema;
-  protected readonly querySchema;
-  protected readonly updateStatusSchema;
-
-  constructor() {
-    this.pathSchema = z.object({
-      id: z.coerce.number().positive().int(),
-    });
-    this.querySchema = z.object({
-      limit: z.coerce.number().positive().int().optional(),
-      page: z.coerce.number().positive().int().optional(),
-      search: z.string().optional(),
-      status: z.nativeEnum(AccountStatus).optional(),
-    });
-    this.updateStatusSchema = z.object({
-      status: z.enum([AccountStatus.ativo, AccountStatus.inativo]),
-    });
-  }
+  constructor(
+    protected readonly pathSchema = RequestPath,
+    protected readonly querySchema = RequestQuery,
+    protected readonly updateStatusSchema = UpdateStatus,
+  ) {}
 
   private zodValidation<T extends z.ZodTypeAny>(schema: T, value: any) {
     return schema.parse(value);

@@ -4,11 +4,7 @@ import { Prisma, TextType } from '@prisma/client';
 import { TextDto } from './dtos/text.dto';
 
 class Repository {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.text;
-  }
+  constructor(private readonly repository = DataSource.text) {}
 
   public findOne(type: TextType) {
     return this.repository.findUnique({

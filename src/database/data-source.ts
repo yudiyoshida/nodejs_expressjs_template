@@ -5,8 +5,7 @@ class DataSource {
   private static db?: PrismaClient;
 
   // The singleton's constructor should always be private to prevent direct construction calls with the `new` operator.
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() { }
+  private constructor() {}
 
   public static getInstance(): PrismaClient {
     if (!DataSource.db) {

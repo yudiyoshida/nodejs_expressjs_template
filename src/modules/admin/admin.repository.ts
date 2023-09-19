@@ -4,11 +4,7 @@ import { Prisma, AccountStatus } from '@prisma/client';
 import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
 
 class Repository {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.admin;
-  }
+  constructor(private readonly repository = DataSource.admin) {}
 
   public findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
     const where: Prisma.AdminWhereInput = {

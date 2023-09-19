@@ -1,8 +1,7 @@
 import BaseValidator from '@abstracts/validator.abstract';
 import { RequestHandler } from 'express';
-import { TextType } from '@prisma/client';
+import { RequestTextType } from './dtos/request-text-type.dto';
 import { UpdateText } from './dtos/update-text.dto';
-import { z } from 'zod';
 
 class Validator extends BaseValidator {
   public updateOne: RequestHandler = (req, res, next) => {
@@ -10,11 +9,7 @@ class Validator extends BaseValidator {
   };
 
   public queryParams: RequestHandler = (req, res, next) => {
-    const schema = z.object({
-      type: z.nativeEnum(TextType),
-    });
-
-    this.validateSchema(req, next, 'query', schema);
+    this.validateSchema(req, next, 'query', RequestTextType);
   };
 }
 

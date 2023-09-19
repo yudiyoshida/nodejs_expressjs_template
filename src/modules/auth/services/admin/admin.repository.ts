@@ -1,11 +1,7 @@
 import DataSource from '@database/data-source';
 
 class Repository {
-  private readonly repository;
-
-  constructor() {
-    this.repository = DataSource.admin;
-  }
+  constructor(private readonly repository = DataSource.admin) {}
 
   public findAllPermissions(id: number) {
     return this.repository.findUnique({

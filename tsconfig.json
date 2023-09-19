@@ -38,6 +38,7 @@
       "@middlewares/*": ["shared/middlewares/*"],
       "@abstracts/*": ["utils/abstracts/*"],
       "@decorators/*": ["utils/decorators/*"],
+      "@dtos/*": ["utils/dtos/*"],
       "@interfaces/*": ["utils/interfaces/*"],
       "@customTypes/*": ["utils/types/*"],
     },                                                   /* Specify a set of entries that re-map imports to additional lookup locations. */
