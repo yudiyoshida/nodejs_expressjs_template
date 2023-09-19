@@ -22,7 +22,7 @@ $ npm install
 
 02 - Configure as variáveis de ambiente:
   - Crie uma copia do arquivo .env.example.
-  - Modifique o nome de uma copia para `.env` e preencha com as informações necessárias do ambiente de **PRODUÇÃO**.
+  - Modifique o nome de uma copia para `.env` e preencha com as informações necessárias.
 
 03 - Rode as migrations e seeds:
 ```bash
