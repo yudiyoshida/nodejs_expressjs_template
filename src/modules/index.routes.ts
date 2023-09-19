@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import AdminPermissionRoutes from './admin-permission/admin-permission.route';
-import AdminRoutes from './admin/admin.route';
-import AuthRoutes from './auth/auth.route';
-import ContactRoutes from './contact/contact.route';
-import FaqRoutes from './faq/faq.route';
-import TextRoutes from './text/text.route';
-import UploadFileRoutes from './upload-file/upload-file.route';
+import AdminPermissionRoutes from './admin-permission/admin-permission.routes';
+import AdminRoutes from './admin/admin.routes';
+import AuthRoutes from './auth/auth.routes';
+import ContactRoutes from './contact/contact.routes';
+import FaqRoutes from './faq/faq.routes';
+import TextRoutes from './text/text.routes';
+import UploadFileRoutes from './upload-file/upload-file.routes';
 
 const router = Router();
 
