@@ -14,6 +14,10 @@ class Service {
     return PaginationHelper.paginate(faqs, limit, page);
   }
 
+  public async findAllNoPagination(search?: string) {
+    return await Repository.findAllNoPagination(search);
+  }
+
   public async findOne(id: number) {
     const faq = await Repository.findOne(id);
 

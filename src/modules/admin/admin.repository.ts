@@ -16,12 +16,8 @@ class Repository {
         { status },
         { OR:
           [
-            {
-              name: { contains: search },
-            },
-            {
-              email: { contains: search },
-            },
+            { name: { contains: search } },
+            { email: { contains: search } },
           ],
         },
       ],
@@ -36,6 +32,25 @@ class Repository {
       }),
       this.repository.count({ where }),
     ]);
+  }
+
+  public findAllNoPagination(status?: AccountStatus, search?: string) {
+    const where: Prisma.AdminWhereInput = {
+      AND: [
+        { status },
+        { OR:
+          [
+            { name: { contains: search } },
+            { email: { contains: search } },
+          ],
+        },
+      ],
+    };
+
+    return this.repository.findMany({
+      where,
+      select: AdminDto,
+    });
   }
 
   public findOne(id: number) {

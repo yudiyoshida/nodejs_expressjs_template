@@ -19,6 +19,10 @@ class Service {
     return PaginationHelper.paginate(admins, limit, page);
   }
 
+  public async findAllNoPagination(status?: AccountStatus, search?: string) {
+    return await Repository.findAllNoPagination(status, search);
+  }
+
   public async findOne(id: number) {
     const admin = await Repository.findOne(id);
 

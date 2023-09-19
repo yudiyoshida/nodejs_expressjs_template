@@ -15,12 +15,8 @@ class Repository {
       AND: [
         { OR:
           [
-            {
-              question: { contains: search },
-            },
-            {
-              answer: { contains: search },
-            },
+            { question: { contains: search } },
+            { answer: { contains: search } },
           ],
         },
       ],
@@ -36,6 +32,25 @@ class Repository {
       }),
       this.repository.count({ where }),
     ]);
+  }
+
+  public findAllNoPagination(search?: string) {
+    const where: Prisma.FaqWhereInput = {
+      AND: [
+        { OR:
+          [
+            { question: { contains: search } },
+            { answer: { contains: search } },
+          ],
+        },
+      ],
+    };
+
+    return this.repository.findMany({
+      where,
+      select: FaqDto,
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   public findOne(id: number) {

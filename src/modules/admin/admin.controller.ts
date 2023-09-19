@@ -6,9 +6,16 @@ import { AccountStatus } from '@prisma/client';
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit = 10, page = 1, status, search } = req.query;
+    const { limit, page, status, search } = req.query;
 
-    const result = await Service.findAll(+limit, +page, status as AccountStatus, search as string);
+    let result;
+    if (limit && page) {
+      result = await Service.findAll(+limit, +page, status as AccountStatus, search as string);
+
+    } else {
+      result = await Service.findAllNoPagination(status as AccountStatus, search as string);
+
+    }
     res.status(200).json(result);
   }
 

@@ -5,9 +5,16 @@ import { Request, Response } from 'express';
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit = 10, page = 1, search } = req.query;
+    const { limit, page, search } = req.query;
 
-    const result = await Service.findAll(+limit, +page, search as string);
+    let result;
+    if (page && limit) {
+      result = await Service.findAll(+limit, +page, search as string);
+
+    } else {
+      result = await Service.findAllNoPagination(search as string);
+
+    }
     res.status(200).json(result);
   }
 
