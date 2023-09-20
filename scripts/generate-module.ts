@@ -29,6 +29,10 @@ const createModule = async(moduleName: string) => {
     path.join(dtoPath, `update-${moduleName}.dto.ts`),
     generateUpdateDtoContent(moduleName),
   );
+  await fs.writeFile(
+    path.join(dtoPath, `${moduleName}.dto.ts`),
+    generateDtoContent(moduleName),
+  );
 
   // Cria os arquivos básicos.
   await fs.writeFile(
@@ -107,40 +111,45 @@ function generateRepositoryContent(module: string) {
 import DataSource from '@database/data-source';
 
 import { Prisma } from '@prisma/client';
+import { ${titleCase(module)}Dto } from './dtos/${module}.dto';
 
 class Repository {
   constructor(private readonly repository = DataSource.${module}) {}
 
   public findAll(limit: number, page: number, search?: string) {
-    const where = {};
+    const where: Prisma.${titleCase(module)}WhereInput = {};
 
     return DataSource.$transaction([
       this.repository.findMany({
         where,
         take: limit,
         skip: ((page - 1) * limit),
+        select: ${titleCase(module)}Dto,
       }),
       this.repository.count({ where }),
     ]);
   }
 
   public findAllNoPagination(search?: string) {
-    const where = {};
+    const where: Prisma.${titleCase(module)}WhereInput = {};
 
     return this.repository.findMany({
       where,
+      select: ${titleCase(module)}Dto,
     });
   }
 
   public findOne(id: number) {
     return this.repository.findUnique({
       where: { id },
+      select: ${titleCase(module)}Dto,
     });
   }
 
   public createOne(data: any) {
     return this.repository.create({
       data,
+      select: ${titleCase(module)}Dto,
     });
   }
 
@@ -148,12 +157,14 @@ class Repository {
     return this.repository.update({
       where: { id },
       data,
+      select: ${titleCase(module)}Dto,
     });
   }
 
   public deleteOne(id: number) {
     return this.repository.delete({
       where: { id },
+      select: ${titleCase(module)}Dto,
     });
   }
 }
@@ -291,6 +302,14 @@ import { z } from 'zod';
 
 export type Update${titleCase(module)}Dto = z.output<typeof Update${titleCase(module)}>;
 export const Update${titleCase(module)} = z.object({});
+`;
+}
+
+function generateDtoContent(module: string) {
+  return `
+import { Prisma } from '@prisma/client';
+
+export const ${titleCase(module)}Dto = Prisma.validator<Prisma.${titleCase(module)}Select>()({});
 `;
 }
 
