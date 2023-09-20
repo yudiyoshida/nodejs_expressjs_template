@@ -146,14 +146,14 @@ class Repository {
     });
   }
 
-  public createOne(data: any) {
+  public createOne(data: Prisma.${titleCase(module)}CreateInput) {
     return this.repository.create({
       data,
       select: ${titleCase(module)}Dto,
     });
   }
 
-  public updateOne(id: number, data: any) {
+  public updateOne(id: number, data: Prisma.${titleCase(module)}UpdateInput) {
     return this.repository.update({
       where: { id },
       data,
