@@ -177,7 +177,7 @@ function generateRouteContent(module: string) {
   return `
 import { Router } from 'express';
 
-// import Auth from '@middlewares/auth';
+// import Auth from '@middlewares/auth.middleware';
 import Controller from './${module}.controller';
 import Validator from './${module}.validator';
 

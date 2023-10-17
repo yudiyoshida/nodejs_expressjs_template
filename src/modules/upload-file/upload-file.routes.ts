@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-// import Auth from '@middlewares/auth';
+// import Auth from '@middlewares/auth.middleware';
 import multer from 'multer';
 import multerOptions from '@config/storage';
 import Controller from './upload-file.controller';

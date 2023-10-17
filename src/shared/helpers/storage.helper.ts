@@ -1,6 +1,6 @@
-import { S3 } from '@aws-sdk/client-s3';
 import fs from 'fs';
 import path from 'path';
+import { S3 } from '@aws-sdk/client-s3';
 import { promisify } from 'util';
 
 class StorageHelper {
