@@ -6,7 +6,7 @@ import { FaqDto } from './dtos/faq.dto';
 class Repository {
   constructor(private readonly repository = DataSource.faq) {}
 
-  public findAll(limit: number, page: number, search?: string) {
+  public findAll(size: number, page: number, search?: string) {
     const where: Prisma.FaqWhereInput = {
       AND: [
         { OR:
@@ -21,8 +21,8 @@ class Repository {
     return DataSource.$transaction([
       this.repository.findMany({
         where,
-        take: limit,
-        skip: ((page - 1) * limit),
+        take: size,
+        skip: ((page - 1) * size),
         select: FaqDto,
         orderBy: { createdAt: 'desc' },
       }),

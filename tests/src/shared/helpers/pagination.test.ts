@@ -20,7 +20,7 @@ test('it should contains the IPagination attributes', () => {
   expect(resultPaginated).toHaveProperty('page');
 });
 
-test('it should have only one page (limit=10, page=1)', () => {
+test('it should have only one page (size=10, page=1)', () => {
   const resultPaginated = PaginationHelper.paginate(RESULT, 10, 1);
 
   expect(resultPaginated.data).toEqual(RESULT[0]);
@@ -30,7 +30,7 @@ test('it should have only one page (limit=10, page=1)', () => {
   expect(resultPaginated.page).toBe(1);
 });
 
-test('it should have 3 pages with 2 items per page (limit=2, page=1)', () => {
+test('it should have 3 pages with 2 items per page (size=2, page=1)', () => {
   const resultPaginated = PaginationHelper.paginate(RESULT, 2, 1);
 
   expect(resultPaginated.totalItems).toBe(5);

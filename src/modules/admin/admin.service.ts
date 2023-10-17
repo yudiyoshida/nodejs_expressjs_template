@@ -13,10 +13,10 @@ import { CreateAdminDto } from './dtos/create-admin.dto';
 import { UpdateAdminDto } from './dtos/update-admin.dto';
 
 class Service {
-  public async findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
-    const admins = await Repository.findAll(limit, page, status, search);
+  public async findAll(size: number, page: number, status?: AccountStatus, search?: string) {
+    const admins = await Repository.findAll(size, page, status, search);
 
-    return PaginationHelper.paginate(admins, limit, page);
+    return PaginationHelper.paginate(admins, size, page);
   }
 
   public async findAllNoPagination(status?: AccountStatus, search?: string) {

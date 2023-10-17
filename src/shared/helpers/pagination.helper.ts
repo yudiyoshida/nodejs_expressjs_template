@@ -1,13 +1,13 @@
 import { IPagination } from '@interfaces/pagination.interface';
 
 class PaginationHelper {
-  public paginate(data: [any[], number], limit: number, page: number): IPagination<any> {
+  public paginate(data: [any[], number], size: number, page: number): IPagination<any> {
     const [rows, count] = data;
     return {
       data: rows,
       totalItems: count,
-      totalPages: Math.ceil(count / limit),
-      itemsPerPage: limit,
+      totalPages: Math.ceil(count / size),
+      itemsPerPage: size,
       page: page,
     };
   }

@@ -69,10 +69,10 @@ import { RequestQueryDto } from '@dtos/request-query.dto';
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit, page, search } = req.query as RequestQueryDto;
+    const { size, page, search } = req.query as RequestQueryDto;
 
-    const result = (page && limit)
-      ? await Service.findAll(limit, page, search)
+    const result = (size && page)
+      ? await Service.findAll(size, page, search)
       : await Service.findAllNoPagination(search);
     res.status(200).json(result);
   }
@@ -116,14 +116,14 @@ import { ${titleCase(module)}Dto } from './dtos/${module}.dto';
 class Repository {
   constructor(private readonly repository = DataSource.${module}) {}
 
-  public findAll(limit: number, page: number, search?: string) {
+  public findAll(size: number, page: number, search?: string) {
     const where: Prisma.${titleCase(module)}WhereInput = {};
 
     return DataSource.$transaction([
       this.repository.findMany({
         where,
-        take: limit,
-        skip: ((page - 1) * limit),
+        take: size,
+        skip: ((page - 1) * size),
         select: ${titleCase(module)}Dto,
       }),
       this.repository.count({ where }),
@@ -226,10 +226,10 @@ import { Create${titleCase(module)}Dto } from './dtos/create-${module}.dto';
 import { Update${titleCase(module)}Dto } from './dtos/update-${module}.dto';
 
 class Service {
-  public async findAll(limit: number, page: number, search?: string) {
-    const ${module}s = await Repository.findAll(limit, page, search);
+  public async findAll(size: number, page: number, search?: string) {
+    const ${module}s = await Repository.findAll(size, page, search);
 
-    return PaginationHelper.paginate(${module}s, limit, page);
+    return PaginationHelper.paginate(${module}s, size, page);
   }
 
   public async findAllNoPagination(search?: string) {

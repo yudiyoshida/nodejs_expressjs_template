@@ -1,30 +1,13 @@
 paths:
-  /admins/permissions:
-    get:
-      summary: 'Rota utilizada para listar as permissões de admin'
-      tags:
-        - Gerencial - Colaboradores
-      security:
-        - BearerAuth: []
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PermissionSchema'
-
   /admins:
     get:
       summary: 'Rota utilizada para listar todos os usuários admins'
       description: >
         ## Como funciona a paginação nessa rota?
 
-        ### - Caso não sejam informados valores para 'page' e 'limit', o retorno da api será um array com todos os registros.
+        ### - Caso não sejam informados valores para 'page' e 'size', o retorno da api será um array com todos os registros.
 
-        ### - Caso sejam informados valores para 'page' e 'limit', o retorno será semelhante ao response abaixo.
+        ### - Caso sejam informados valores para 'page' e 'size', o retorno será semelhante ao response abaixo.
       tags:
         - Gerencial - Colaboradores
       security:
@@ -33,7 +16,7 @@ paths:
         - $ref: '#/components/parameters/AccountStatusParameter'
         - $ref: '#/components/parameters/SearchParameter'
         - $ref: '#/components/parameters/PageParameter'
-        - $ref: '#/components/parameters/LimitParameter'
+        - $ref: '#/components/parameters/SizeParameter'
       responses:
         '200':
           description: 'OK'

@@ -6,7 +6,7 @@ import { AdminDto, AdminWithPermissionsDto } from './dtos/admin.dto';
 class Repository {
   constructor(private readonly repository = DataSource.admin) {}
 
-  public findAll(limit: number, page: number, status?: AccountStatus, search?: string) {
+  public findAll(size: number, page: number, status?: AccountStatus, search?: string) {
     const where: Prisma.AdminWhereInput = {
       AND: [
         { status },
@@ -22,8 +22,8 @@ class Repository {
     return DataSource.$transaction([
       this.repository.findMany({
         where,
-        take: limit,
-        skip: ((page - 1) * limit),
+        take: size,
+        skip: ((page - 1) * size),
         select: AdminDto,
       }),
       this.repository.count({ where }),

@@ -6,10 +6,10 @@ import { RequestQueryDto } from '@dtos/request-query.dto';
 class Controller {
   @TryCatch()
   public async findAll(req: Request, res: Response) {
-    const { limit, page, status, search } = req.query as RequestQueryDto;
+    const { size, page, status, search } = req.query as RequestQueryDto;
 
-    const result = (limit && page)
-      ? await Service.findAll(limit, page, status, search)
+    const result = (size && page)
+      ? await Service.findAll(size, page, status, search)
       : await Service.findAllNoPagination(status, search);
     res.status(200).json(result);
   }
