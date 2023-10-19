@@ -1,14 +1,15 @@
-import PasswordHelper from '../../../../src/shared/helpers/password.helper';
+import { beforeAll, describe, expect, it } from 'vitest';
+import PasswordHelper from './password.helper';
 
 describe('comparePasswordAndConfirmation method', () => {
-  test('compare two differents passwords should return false', () => {
-    const isMatch = PasswordHelper.comparePasswordAndConfirmation('pass01', 'pass02');
+  it('should return false when comparing two differents passwords', () => {
+    const isMatch = PasswordHelper.comparePasswordAndConfirmation('Diff', 'diff');
 
     expect(isMatch).toBe(false);
   });
 
-  test('compare two identical passwords should return true', () => {
-    const isMatch = PasswordHelper.comparePasswordAndConfirmation('pass01', 'pass01');
+  it('should return true when comparing two identical passwords', () => {
+    const isMatch = PasswordHelper.comparePasswordAndConfirmation('same', 'same');
 
     expect(isMatch).toBe(true);
   });
@@ -24,13 +25,13 @@ describe('comparePasswordAndHash method', () => {
     hashPass02 = PasswordHelper.hash('pass02');
   });
 
-  test('compare plain password and its hash should return true', () => {
+  it('should return true when comparing a plain password and its hash', () => {
     const isMatch = PasswordHelper.comparePasswordAndHash('pass01', hashPass01);
 
     expect(isMatch).toBe(true);
   });
 
-  test('compare plain password and another password\'shash should return false', () => {
+  it('should return false when comparing a plain password and another hash', () => {
     const isMatch = PasswordHelper.comparePasswordAndHash('pass01', hashPass02);
 
     expect(isMatch).toBe(false);
@@ -39,16 +40,16 @@ describe('comparePasswordAndHash method', () => {
 
 
 describe('generate method', () => {
-  test('it should generate a random password with 8 characters', () => {
+  it('should generate a random password with 8 characters', () => {
     const password = PasswordHelper.generate();
 
-    expect(password.length).toBe(8);
+    expect(password.length).toEqual(8);
   });
 });
 
 
 describe('hash method', () => {
-  test('it should hash the password', () => {
+  it('should hash the password', () => {
     const password = 'plainPassword';
     const hashedPassword = PasswordHelper.hash(password);
 
