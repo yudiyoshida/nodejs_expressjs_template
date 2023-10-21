@@ -7,8 +7,14 @@ class FaqSetup {
     await prisma.faq.deleteMany({ where: {} });
   }
 
+  public async createFaq(data: Prisma.FaqCreateInput) {
+    return await prisma.faq.create({
+      data,
+    });
+  }
+
   public async createFaqs(data: Prisma.FaqCreateInput[]) {
-    await prisma.faq.createMany({
+    return await prisma.faq.createMany({
       data,
     });
   }

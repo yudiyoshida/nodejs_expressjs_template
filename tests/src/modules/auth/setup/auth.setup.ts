@@ -70,22 +70,22 @@ class SetupDatabase {
     const account = await request(app)
     .post('/auth/login/adm')
     .send({
-      'credential': 'admin@getnada.com',
+      'credential': this.userAdmin.email,
       'password': '123456789',
     });
 
-    return account.body.token;
+    return `Bearer ${account.body.token}`;
   }
 
   public async loginUser(app: any) {
     const account = await request(app)
     .post('/auth/login')
     .send({
-      'credential': 'userapp@getnada.com',
+      'credential': this.userApp.email,
       'password': '123456789',
     });
 
-    return account.body.token;
+    return `Bearer ${account.body.token}`;
   }
 }
 
