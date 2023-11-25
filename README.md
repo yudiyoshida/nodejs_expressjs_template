@@ -10,7 +10,7 @@
 
 ## Pré-Requisitos
 
-  * NodeJS (v18.16.0) e npm (v9.5.1).
+  * NodeJS (v20.10.0) e npm (v10.2.3).
   * MySQL (v8.0).
 
 ## Executando o projeto
@@ -58,4 +58,4 @@ $ npm run prisma:seed
 
 ## Documentação
 
-A documentação pode ser consultada através do endpoint: `/api-docs`
+A documentação pode ser consultada através do endpoint: `/swagger`
