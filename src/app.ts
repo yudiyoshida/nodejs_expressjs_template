@@ -35,7 +35,7 @@ class App {
   }
 
   private registerRoutes() {
-    this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
+    this.app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerJsdoc(swaggerOptions), { explorer: true }));
     this.app.use(routes);
   }
 

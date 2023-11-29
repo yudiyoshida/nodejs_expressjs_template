@@ -13,7 +13,7 @@ async function start() {
     const server = (process.env.NODE_ENV === 'production') ? https.createServer(sslOptions, app) : http.createServer(app);
     server.listen(process.env.PORT, () => {
       console.log('Projeto iniciado com sucesso!');
-      console.log(`Documentação da API disponível em ${process.env.APP_URL}/api-docs`);
+      console.log(`Documentação da API disponível em ${process.env.APP_URL}/swagger`);
     });
 
   } catch (err: any) {
