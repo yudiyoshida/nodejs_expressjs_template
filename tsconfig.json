@@ -34,6 +34,7 @@
       "@database/*": ["database/*"],
       "@errors/*": ["errors/*"],
       "@libs/*": ["libs/*"],
+      "@modules/*": ["modules/*"],
       "@middlewares/*": ["shared/middlewares/*"],
       "@abstracts/*": ["utils/abstracts/*"],
       "@decorators/*": ["utils/decorators/*"],
