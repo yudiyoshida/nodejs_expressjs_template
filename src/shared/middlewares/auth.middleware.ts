@@ -10,14 +10,14 @@ import Passport from '@libs/passport';
 class AuthMiddleware {
   public authentication(req: Request, res: Response, next: NextFunction) {
     Passport.authenticate('jwt', { session: false, failWithError: true },
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (err: any, payload: IPayloadDto, info: any) => {
+      (err: any, payload: IPayloadDto) => {
         if (err) return next(err);
         if (!payload) return next(new AppException(401, ErrorMessages.UNATHORIZED));
-        else req.auth = payload;
+
+        req.auth = payload;
+        next();
       },
     )(req, res, next);
-    next();
   }
 
   public roles(...roles: AccountRole[]) {

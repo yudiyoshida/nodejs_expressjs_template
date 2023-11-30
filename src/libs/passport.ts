@@ -1,13 +1,10 @@
 import passport from 'passport';
-import passportOptions from '@config/passport';
 
-import { IPayloadDto } from '../modules/auth/dtos/payload.dto';
 import { Strategy } from 'passport-jwt';
+import { options } from '@config/passport';
 
 passport.use(
-  new Strategy(passportOptions, (payload: IPayloadDto, done) => {
-    done(null, payload);
-  }),
+  new Strategy(options, (payload, done) => done(null, payload)),
 );
 
 export default passport;

@@ -1,6 +1,6 @@
-import { ExtractJwt } from 'passport-jwt';
+import { ExtractJwt, StrategyOptions } from 'passport-jwt';
 
-export default {
+export const options: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET as string,
 };
