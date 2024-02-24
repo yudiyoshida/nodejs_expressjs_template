@@ -10,4 +10,6 @@
 - criar tabela com permissions baseadas nos useCases
 - todos os usuarios (seja admin ou user comum) terão relacionamento com as permissions dos useCases
 - mas deve manter as adminPermissions devido o portal gerencial dos projetos
-- 
+
+- alterar interfaces de dados para types
+- utilizar DP adapter

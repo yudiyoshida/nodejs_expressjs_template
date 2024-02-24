@@ -36,12 +36,12 @@
       "@libs/*": ["libs/*"],
       "@modules/*": ["modules/*"],
       "@middlewares/*": ["shared/middlewares/*"],
-      "@abstracts/*": ["utils/abstracts/*"],
-      "@decorators/*": ["utils/decorators/*"],
-      "@dtos/*": ["utils/dtos/*"],
-      "@helpers/*": ["utils/helpers/*"],
-      "@interfaces/*": ["utils/interfaces/*"],
-      "@customTypes/*": ["utils/types/*"],
+      "@abstracts/*": ["shared/abstracts/*"],
+      "@decorators/*": ["shared/decorators/*"],
+      "@dtos/*": ["shared/dtos/*"],
+      "@helpers/*": ["shared/helpers/*"],
+      "@interfaces/*": ["shared/interfaces/*"],
+      "@customTypes/*": ["shared/types/*"],
     },                                                   /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": [

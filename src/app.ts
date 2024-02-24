@@ -1,26 +1,34 @@
 import 'express-async-errors';
 
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import express from 'express';
 import helmet from 'helmet';
+import http from 'http';
+import https from 'https';
 import multer from 'multer';
 
-import swaggerUI from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
+import sslOptions from '@config/ssl';
 import swaggerOptions from '@config/swagger';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
+
+import appException from '@errors/app-exception';
+import errorMessages from '@errors/error-messages';
 
 import routes from './modules/index.routes';
 
-import AppException from '@errors/app-exception';
-import ErrorMessages from '@errors/error-messages';
-
 class App {
   public app: express.Application;
+  public server: http.Server | https.Server;
 
   constructor() {
     this.app = express();
+    this.server = (process.env.NODE_ENV === 'production')
+      ? https.createServer(sslOptions, this.app)
+      : http.createServer(this.app);
+
     this.registerMiddlewares();
     this.registerRoutes();
     this.registerGlobalErrorHandlerRoute();
@@ -44,18 +52,18 @@ class App {
   private registerGlobalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-      if (err instanceof AppException) {
+      if (err instanceof appException) {
         res.status(err.status).json({ error: err.message });
 
       } else if (err instanceof multer.MulterError) {
         res.status(400).json({ error: err.message });
 
       } else {
-        res.status(500).json({ error: ErrorMessages.INTERNAL_SERVER_ERROR });
+        res.status(500).json({ error: errorMessages.INTERNAL_SERVER_ERROR });
 
       }
     });
   }
 }
 
-export default new App().app;
+export default new App();
