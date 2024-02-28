@@ -1,9 +1,9 @@
 import AppException from '@errors/app-exception';
 import errorMessages from '@errors/error-messages';
 
-import { IFaqRepository } from '@modules/faqs/repositories/faqs-repositories.interface';
+import { IFaqRepository } from '@modules/faqs/repositories/faqs-repository.interface';
 import { inject, injectable } from 'inversify';
-import { TOKENS } from 'shared/di/token';
+import { TOKENS } from 'shared/ioc/token';
 
 @injectable()
 export class GetFaqByIdService {

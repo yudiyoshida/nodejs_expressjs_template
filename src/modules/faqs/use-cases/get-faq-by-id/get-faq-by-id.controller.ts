@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { container } from 'shared/di/inversify.config';
+import { container } from 'shared/ioc/inversify.config';
 import { GetFaqByIdService } from './get-faq-by-id.service';
 
 export class GetFaqByIdController {
