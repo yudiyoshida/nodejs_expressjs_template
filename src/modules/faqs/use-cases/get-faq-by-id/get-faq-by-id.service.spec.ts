@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-import AppException from '@errors/app-exception';
-import { Faq } from '@modules/faqs/entities/faq.entity';
-import { IFaqRepository } from '@modules/faqs/repositories/faqs-repository.interface';
-import { Container } from 'inversify';
-import { TOKENS } from 'shared/ioc/token';
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import AppException from 'src/errors/app-exception';
+
+import { TestBed } from '@automock/jest';
+import { Faq } from 'src/modules/faqs/entities/faq.entity';
+import { FaqsInMemoryAdapterRepository } from 'src/modules/faqs/repositories/adapters/faqs-in-memory.repository';
+import { TOKENS } from 'src/shared/ioc/token';
 import { GetFaqByIdService } from './get-faq-by-id.service';
 
 const faq: Faq = {
@@ -16,14 +16,15 @@ const faq: Faq = {
 
 describe('GetFaqByIdService', () => {
   let service: GetFaqByIdService;
+  let mockRepository: jest.Mocked<FaqsInMemoryAdapterRepository>;
 
-  beforeEach(async() => {
-    const container = new Container();
-    const mockFaqRepository = { findById: vitest.fn().mockResolvedValueOnce(faq).mockResolvedValue(null) };
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(GetFaqByIdService).compile();
 
-    container.bind<IFaqRepository>(TOKENS.IFaqRepository).toConstantValue(mockFaqRepository);
+    service = unit;
+    mockRepository = unitRef.get(TOKENS.IFaqRepository);
 
-    service = container.resolve(GetFaqByIdService);
+    mockRepository.findById.mockResolvedValueOnce(faq).mockResolvedValue(null);
   });
 
   it('should return a faq', async() => {
@@ -44,5 +45,17 @@ describe('GetFaqByIdService', () => {
       expect(err.status).toBe(404);
       expect(err.message).toBe('FAQ não encontrada na base de dados.');
     });
+  });
+
+  it('should call the repository only once', async() => {
+    await service.execute('random-id');
+
+    expect(mockRepository.findById).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call the repository with correct arguments', async() => {
+    await service.execute('argument-id');
+
+    expect(mockRepository.findById).toHaveBeenCalledWith('argument-id');
   });
 });

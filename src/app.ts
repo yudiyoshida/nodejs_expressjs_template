@@ -10,13 +10,14 @@ import http from 'http';
 import https from 'https';
 import multer from 'multer';
 
-import sslOptions from '@config/ssl';
-import swaggerOptions from '@config/swagger';
+import sslOptions from './config/ssl';
+import swaggerOptions from './config/swagger';
+
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
-import appException from '@errors/app-exception';
-import errorMessages from '@errors/error-messages';
+import AppException from './errors/app-exception';
+import errorMessages from './errors/error-messages';
 
 import routes from './modules/index.routes';
 
@@ -53,7 +54,7 @@ class App {
   private registerGlobalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-      if (err instanceof appException) {
+      if (err instanceof AppException) {
         res.status(err.status).json({ error: err.message });
 
       } else if (err instanceof multer.MulterError) {
