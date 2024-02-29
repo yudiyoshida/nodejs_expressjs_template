@@ -5,7 +5,7 @@
   <img width="auto" height="23em" src="https://img.shields.io/badge/Express.js-323330?style=flat&logo=express">
   <img width="auto" height="23em" src="https://img.shields.io/badge/Prisma-323330?style=flat&logo=Prisma">
   <img width="auto" height="23em" src="https://img.shields.io/badge/MySQL-323330?style=flate&logo=mysql">
-  <img width="auto" height="23em" src="https://img.shields.io/badge/Vitest-323330?style=flat&logo=vitest">
+  <img width="auto" height="23em" src="https://img.shields.io/badge/Jest-323330?style=flat&logo=jest&logoColor=99424F">
 </div>
 
 ## Pré-Requisitos
