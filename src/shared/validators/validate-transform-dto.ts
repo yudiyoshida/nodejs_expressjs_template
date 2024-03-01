@@ -14,5 +14,6 @@ export function validateAndTransformDto(dto: ClassConstructor<any>, plain: any) 
     throw new AppException(400, errors);
   }
 
+  // return instance with transformed values.
   return dtoInstance;
 }
