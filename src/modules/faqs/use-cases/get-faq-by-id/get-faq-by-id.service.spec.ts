@@ -43,7 +43,7 @@ describe('GetFaqByIdService', () => {
     return service.execute('random-id').catch(err => {
       expect(err).toBeInstanceOf(AppException);
       expect(err.status).toBe(404);
-      expect(err.message).toBe('FAQ não encontrada na base de dados.');
+      expect(err.error).toBe('FAQ não encontrada na base de dados.');
     });
   });
 
