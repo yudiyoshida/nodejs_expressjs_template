@@ -1,8 +1,8 @@
 import { Container } from 'inversify';
-import { TOKENS } from 'src/shared/ioc/token';
+import { TOKENS } from 'shared/ioc/token';
 
-import { FaqsInMemoryAdapterRepository } from 'src/modules/faqs/repositories/adapters/faqs-in-memory.repository';
-import { IFaqRepository } from 'src/modules/faqs/repositories/faqs-repository.interface';
+import { FaqsInMemoryAdapterRepository } from 'modules/faqs/repositories/adapters/faqs-in-memory.repository';
+import { IFaqRepository } from 'modules/faqs/repositories/faqs-repository.interface';
 
 const container = new Container({ defaultScope: 'Singleton' });
 

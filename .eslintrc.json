@@ -24,7 +24,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "comma-spacing": ["error", { "before": false, "after": true }],
     "eol-last": ["error", "always"],
-    "indent": ["error", 2, { "MemberExpression": 0, "SwitchCase": 1 }],
+    "indent": ["error", 2, { "MemberExpression": 1, "SwitchCase": 1, "ignoredNodes": ["PropertyDefinition"] }],
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "linebreak-style": ["error", "unix"],
     "no-multi-spaces": "error",

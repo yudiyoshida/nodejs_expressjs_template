@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-import AppException from 'src/errors/app-exception';
+import AppException from 'errors/app-exception';
 
 import { TestBed } from '@automock/jest';
-import { Faq } from 'src/modules/faqs/entities/faq.entity';
-import { FaqsInMemoryAdapterRepository } from 'src/modules/faqs/repositories/adapters/faqs-in-memory.repository';
-import { TOKENS } from 'src/shared/ioc/token';
+import { Faq } from 'modules/faqs/entities/faq.entity';
+import { FaqsInMemoryAdapterRepository } from 'modules/faqs/repositories/adapters/faqs-in-memory.repository';
+import { TOKENS } from 'shared/ioc/token';
 import { GetFaqByIdService } from './get-faq-by-id.service';
 
 const faq: Faq = {

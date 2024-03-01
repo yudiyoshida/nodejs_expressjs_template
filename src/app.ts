@@ -55,7 +55,7 @@ class App {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
       if (err instanceof AppException) {
-        res.status(err.status).json({ error: err.message });
+        res.status(err.status).json({ error: err.error });
 
       } else if (err instanceof multer.MulterError) {
         res.status(400).json({ error: err.message });

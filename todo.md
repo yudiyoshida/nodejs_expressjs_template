@@ -1,15 +1,4 @@
-- mover helpers para a pasta utils
-- apagar pasta middlewares
-- apagar pasta abstracts
-- mover validação para helper
-- criar decorator para validators
-- criar decorator para autenticação
-- mudar estrutura para useCases
-- atualizar script
-
-- criar tabela com permissions baseadas nos useCases
-- todos os usuarios (seja admin ou user comum) terão relacionamento com as permissions dos useCases
-- mas deve manter as adminPermissions devido o portal gerencial dos projetos
-
-- alterar interfaces de dados para types
-- utilizar DP adapter
+- ler documentação do inversify
+- criar script para criar pastas de um módulo (entity, repositories)
+- criar script para criar um use case (controller, service, service.spec e dtos)
+- criar testes unitários para arquivos na pasta validators.
