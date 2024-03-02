@@ -1,13 +1,13 @@
-import { ValidatorOptions, validateSync } from 'class-validator';
+import { ValidatorOptions, validate } from 'class-validator';
 
 const options: ValidatorOptions = {
   whitelist: true,
 };
 
-export function validateDto(dto: any): string[] {
+export async function validateDto(dto: any): Promise<string[]> {
   let messages: string[] = [];
 
-  validateSync(dto, options).forEach((error) => {
+  (await validate(dto, options)).forEach((error) => {
     messages = messages.concat(Object.values(error.constraints ?? []));
   });
 
