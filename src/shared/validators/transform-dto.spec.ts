@@ -22,11 +22,11 @@ describe('transformDto', () => {
     expect(result).toBeInstanceOf(UserTest);
   });
 
-  it('should make implicit transformations', () => {
+  it('should not make implicit transformations', () => {
     const result = transformDto(UserTest, plainUser);
 
     expect(result.name).toBe('Jhon Doe');
-    expect(result.age).toBe(30);
+    expect(result.age).not.toBe(30);
   });
 
   it('should remove extra fields', () => {

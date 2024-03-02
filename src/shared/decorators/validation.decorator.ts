@@ -1,6 +1,6 @@
 import { ClassConstructor } from 'class-transformer';
 import { NextFunction, Request, Response } from 'express';
-import { RequestPropertyType } from '../types/request.type';
+import { RequestPropertyType } from '../types/request-property.type';
 import { validateAndTransformDto } from '../validators/validate-transform-dto';
 
 export function ValidateDto(property: RequestPropertyType, dto: ClassConstructor<any>) {

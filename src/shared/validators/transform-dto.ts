@@ -1,7 +1,6 @@
 import { ClassConstructor, ClassTransformOptions, plainToClass } from 'class-transformer';
 
 const options: ClassTransformOptions = {
-  enableImplicitConversion: true,
   excludeExtraneousValues: true,
 };
 

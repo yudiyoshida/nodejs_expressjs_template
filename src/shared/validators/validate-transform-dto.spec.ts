@@ -36,6 +36,7 @@ describe('validateAndTransformDto', () => {
   });
 
   it('should throw an error when providing invalid data', () => {
+    expect.assertions(3);
     try {
       validateAndTransformDto(Login, invalidPlainLogin);
 
