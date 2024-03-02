@@ -1,3 +1,2 @@
-- ler documentação do inversify
 - criar script para criar pastas de um módulo (entity, repositories)
 - criar script para criar um use case (controller, service, service.spec e dtos)

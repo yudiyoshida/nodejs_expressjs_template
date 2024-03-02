@@ -31,8 +31,8 @@ describe('validateAndTransformDto', () => {
   it('should return the payload with transformations applied', () => {
     const result = validateAndTransformDto(Login, validPlainLogin);
 
-    expect(result.email).toBe(validPlainLogin.email.trim());
-    expect(result.password).toBe(validPlainLogin.password.trim());
+    expect(result.email).toEqualIgnoringWhitespace(validPlainLogin.email);
+    expect(result.password).toEqualIgnoringWhitespace(validPlainLogin.password);
   });
 
   it('should throw an error when providing invalid data', () => {

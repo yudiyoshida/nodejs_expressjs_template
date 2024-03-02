@@ -26,7 +26,7 @@ describe('validateDto', () => {
     const signin = new SigninTest();
     signin.email = 'valid@email.com',
     signin.password = '1XVjQupy2_sBtK';
-    signin.nickname = (true as unknown as string);
+    signin.nickname = (true as unknown as string); // wrong data.
 
     const result = validateDto(signin);
 
