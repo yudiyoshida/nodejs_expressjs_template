@@ -20,12 +20,15 @@ describe('transformDto', () => {
     const result = transformDto(UserTest, plainUser);
 
     expect(result).toBeInstanceOf(UserTest);
+    expect(result.name).toBe(plainUser.name);
+    expect(result.age).toBe(plainUser.age);
   });
 
   it('should not make implicit transformations', () => {
     const result = transformDto(UserTest, plainUser);
 
     expect(result.name).toBe('Jhon Doe');
+    expect(result.age).toBe('30');
     expect(result.age).not.toBe(30);
   });
 

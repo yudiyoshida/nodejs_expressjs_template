@@ -23,6 +23,7 @@ describe('validateDto', () => {
   });
 
   it('should remove fields that do not have decorators', async() => {
+    // providing invalid data to nickname, but no error will be returned since nickname does not have decorators.
     const signup = new SignupTest();
     signup.email = 'valid@email.com',
     signup.password = '1XVjQupy2_sBtK';
