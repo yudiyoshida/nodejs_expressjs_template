@@ -28,8 +28,8 @@ const invalidPlainLogin: Login = {
 };
 
 describe('validateAndTransformDto', () => {
-  it('should return the payload with transformations applied', () => {
-    const result = validateAndTransformDto(Login, validPlainLogin);
+  it('should return the payload with transformations applied', async() => {
+    const result = await validateAndTransformDto(Login, validPlainLogin);
 
     expect(result.email).toEqualIgnoringWhitespace(validPlainLogin.email);
     expect(result.password).toEqualIgnoringWhitespace(validPlainLogin.password);
@@ -37,13 +37,10 @@ describe('validateAndTransformDto', () => {
 
   it('should throw an error when providing invalid data', () => {
     expect.assertions(3);
-    try {
-      validateAndTransformDto(Login, invalidPlainLogin);
-
-    } catch (err: any) {
+    return validateAndTransformDto(Login, invalidPlainLogin).catch(err => {
       expect(err).toBeInstanceOf(AppException);
       expect(err.status).toBe(400);
       expect(err.error).toBeArray();
-    }
+    });
   });
 });
