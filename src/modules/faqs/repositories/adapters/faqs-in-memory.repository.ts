@@ -15,7 +15,6 @@ export class FaqsInMemoryAdapterRepository implements IFaqRepository {
 
   public async create(data: CreateFaqDto) {
     const now = new Date().getTime();
-
     const newFaq = { id: now.toString(), ...data };
 
     this._faqs.push(newFaq);

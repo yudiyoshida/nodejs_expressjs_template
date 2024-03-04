@@ -142,4 +142,14 @@ describe('CreateFaqDto', () => {
     });
   });
 
+  describe('all fields together', () => {
+    it('should pass all tests', async() => {
+      const data: CreateFaqDto = { question: ' foo ', answer: ' bar ' };
+
+      const result = await validateAndTransformDto(CreateFaqDto, data);
+
+      expect(result).toHaveProperty('question', data.question.trim());
+      expect(result).toHaveProperty('answer', data.answer.trim());
+    });
+  });
 });
