@@ -1,7 +1,7 @@
 import { IsEmail, IsStrongPassword } from 'class-validator';
 import { validateDto } from './validate-dto';
 
-class SigninTest {
+class SignupTest {
   nickname!: string;
 
   @IsEmail()
@@ -12,23 +12,23 @@ class SigninTest {
 }
 
 describe('validateDto', () => {
-  it('should return an array of errors', async() => {
-    const signin = new SigninTest();
-    signin.email = 'invalid@@email.com',
-    signin.password = 'qwerty';
+  it('should return an array of errors', () => {
+    const signup = new SignupTest();
+    signup.email = 'invalid@@email.com',
+    signup.password = 'qwerty';
 
-    const result = await validateDto(signin);
+    const result = validateDto(signup);
 
     expect(result.length).toBeGreaterThan(0);
   });
 
-  it('should remove fields that do not have decorators', async() => {
-    const signin = new SigninTest();
-    signin.email = 'valid@email.com',
-    signin.password = '1XVjQupy2_sBtK';
-    signin.nickname = (true as unknown as string); // wrong data.
+  it('should remove fields that do not have decorators', () => {
+    const signup = new SignupTest();
+    signup.email = 'valid@email.com',
+    signup.password = '1XVjQupy2_sBtK';
+    signup.nickname = (true as unknown as string);
 
-    const result = await validateDto(signin);
+    const result = validateDto(signup);
 
     expect(result).toHaveLength(0);
   });

@@ -4,8 +4,8 @@ import { ClassConstructor } from 'class-transformer';
 import { transformDto } from './transform-dto';
 import { validateDto } from './validate-dto';
 
-export async function validateAndTransformDto(dto: ClassConstructor<any>, plain: any) {
-  // create new instance of dto class and copies all values from req.body to instance.
+export function validateAndTransformDto(dto: ClassConstructor<any>, plain: any) {
+  // create new instance of dto class and copy all values from req.body to instance.
   const dtoInstance = transformDto(dto, plain);
 
   // validate using class-validator.
@@ -14,5 +14,6 @@ export async function validateAndTransformDto(dto: ClassConstructor<any>, plain:
     throw new AppException(400, errors);
   }
 
+  // return instance with transformed values.
   return dtoInstance;
 }
