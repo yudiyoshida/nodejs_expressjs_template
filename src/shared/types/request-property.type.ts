@@ -1,1 +1,1 @@
-export type RequestPropertyType = 'body' | 'path' | 'query';
+export type RequestPropertyType = 'body' | 'params' | 'query';
