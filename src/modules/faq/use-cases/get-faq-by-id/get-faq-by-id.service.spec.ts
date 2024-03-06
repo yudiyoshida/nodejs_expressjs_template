@@ -46,6 +46,8 @@ describe('GetFaqByIdService', () => {
   });
 
   it('should call the repository with correct arguments', async() => {
+    mockRepository.findById.mockResolvedValue(faq);
+
     await service.execute('argument-id');
 
     expect(mockRepository.findById).toHaveBeenCalledExactlyOnceWith('argument-id');
