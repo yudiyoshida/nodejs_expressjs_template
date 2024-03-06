@@ -1,7 +1,7 @@
 import { AppException } from 'errors/app-exception';
 import { Errors } from 'errors/error-messages';
 import { inject, injectable } from 'inversify';
-import { IFaqRepository } from 'modules/faqs/repositories/faqs-repository.interface';
+import { IFaqRepository } from 'modules/faq/repositories/faq-repository.interface';
 import { TOKENS } from 'shared/ioc/token';
 
 @injectable()

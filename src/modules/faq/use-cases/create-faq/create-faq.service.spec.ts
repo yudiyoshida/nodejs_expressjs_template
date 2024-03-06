@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 
 import { TestBed } from '@automock/jest';
-import { Faq } from 'modules/faqs/entities/faq.entity';
-import { FaqsInMemoryAdapterRepository } from 'modules/faqs/repositories/adapters/faqs-in-memory.repository';
+import { Faq } from 'modules/faq/entities/faq.entity';
+import { FaqInMemoryAdapterRepository } from 'modules/faq/repositories/adapters/faq-in-memory.repository';
 import { TOKENS } from 'shared/ioc/token';
 import { CreateFaqService } from './create-faq.service';
 import { CreateFaqDto } from './dtos/create-faq.dto';
@@ -15,27 +15,29 @@ const faq: Faq = {
 
 describe('CreateFaqService', () => {
   let service: CreateFaqService;
-  let mockRepository: jest.Mocked<FaqsInMemoryAdapterRepository>;
+  let mockRepository: jest.Mocked<FaqInMemoryAdapterRepository>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(CreateFaqService).compile();
 
     service = unit;
     mockRepository = unitRef.get(TOKENS.IFaqRepository);
-
-    mockRepository.create.mockResolvedValue(faq);
   });
 
   it('should create a new faq', async() => {
+    mockRepository.create.mockResolvedValue(faq);
+
     const result = await service.execute({} as CreateFaqDto);
 
     expect(result).toBe(faq);
   });
 
-  it('should call the repository only once', async() => {
-    await service.execute({} as CreateFaqDto);
+  it('should return the result without adding or removing any field', async() => {
+    mockRepository.create.mockResolvedValue(faq);
 
-    expect(mockRepository.create).toHaveBeenCalledTimes(1);
+    const result = await service.execute({} as CreateFaqDto);
+
+    expect(result).toEqual(faq);
   });
 
   it('should call the repository with correct arguments', async() => {
@@ -43,6 +45,6 @@ describe('CreateFaqService', () => {
 
     await service.execute(argument);
 
-    expect(mockRepository.create).toHaveBeenCalledWith(argument);
+    expect(mockRepository.create).toHaveBeenCalledExactlyOnceWith(argument);
   });
 });

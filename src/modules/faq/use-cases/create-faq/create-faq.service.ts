@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { TOKENS } from 'shared/ioc/token';
-import { IFaqRepository } from '../../repositories/faqs-repository.interface';
+import { IFaqRepository } from '../../repositories/faq-repository.interface';
 import { CreateFaqDto } from './dtos/create-faq.dto';
 
 @injectable()

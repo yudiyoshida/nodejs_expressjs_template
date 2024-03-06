@@ -1,10 +1,10 @@
 import { injectable } from 'inversify';
-import { Faq } from 'modules/faqs/entities/faq.entity';
-import { CreateFaqDto } from 'modules/faqs/use-cases/create-faq/dtos/create-faq.dto';
-import { IFaqRepository } from '../faqs-repository.interface';
+import { Faq } from 'modules/faq/entities/faq.entity';
+import { CreateFaqDto } from 'modules/faq/use-cases/create-faq/dtos/create-faq.dto';
+import { IFaqRepository } from '../faq-repository.interface';
 
 @injectable()
-export class FaqsInMemoryAdapterRepository implements IFaqRepository {
+export class FaqInMemoryAdapterRepository implements IFaqRepository {
   private _faqs: Faq[] = [];
 
   public async findById(id: string) {

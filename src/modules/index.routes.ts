@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const router = Router();
 
-import FaqRoutes from './faqs/faqs.routes';
+import FaqRoutes from './faq/faq.routes';
 
 router.use('/faqs', FaqRoutes);
 
