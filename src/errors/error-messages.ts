@@ -1,4 +1,4 @@
-export default {
+const Errors = {
   ACCOUNT_ALREADY_EXISTS: 'Já existe uma conta com os dados informados.',
   EMAIL_NOT_VALIDATED: 'Para continuar, é necessário validar o email.',
   CODE_EXPIRED: 'Código expirado. Solicite um novo código.',
@@ -18,3 +18,5 @@ export default {
   REPROVED: 'Sua conta não foi aceita, pois não condiz com nossos termos de uso.',
   UNATHORIZED: 'Você precisa estar autenticado para prosseguir.',
 };
+
+export { Errors };

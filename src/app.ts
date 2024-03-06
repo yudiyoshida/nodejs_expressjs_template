@@ -16,8 +16,8 @@ import swaggerOptions from './config/swagger';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 
-import AppException from './errors/app-exception';
-import errorMessages from './errors/error-messages';
+import { AppException } from './errors/app-exception';
+import { Errors } from './errors/error-messages';
 
 import routes from './modules/index.routes';
 
@@ -61,7 +61,7 @@ class App {
         res.status(400).json({ error: err.message });
 
       } else {
-        res.status(500).json({ error: errorMessages.INTERNAL_SERVER_ERROR });
+        res.status(500).json({ error: Errors.INTERNAL_SERVER_ERROR });
 
       }
     });

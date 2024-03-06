@@ -1,6 +1,5 @@
-import AppException from 'errors/app-exception';
-
 import { ClassConstructor } from 'class-transformer';
+import { AppException } from 'errors/app-exception';
 import { transformDto } from './transform-dto';
 import { validateDto } from './validate-dto';
 

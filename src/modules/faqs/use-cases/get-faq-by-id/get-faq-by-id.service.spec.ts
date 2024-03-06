@@ -1,8 +1,7 @@
 import 'reflect-metadata';
 
-import AppException from 'errors/app-exception';
-
 import { TestBed } from '@automock/jest';
+import { AppException } from 'errors/app-exception';
 import { Faq } from 'modules/faqs/entities/faq.entity';
 import { FaqsInMemoryAdapterRepository } from 'modules/faqs/repositories/adapters/faqs-in-memory.repository';
 import { TOKENS } from 'shared/ioc/token';

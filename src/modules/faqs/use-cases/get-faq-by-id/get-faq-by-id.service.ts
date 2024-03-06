@@ -1,6 +1,5 @@
-import AppException from 'errors/app-exception';
-import errorMessages from 'errors/error-messages';
-
+import { AppException } from 'errors/app-exception';
+import { Errors } from 'errors/error-messages';
 import { inject, injectable } from 'inversify';
 import { IFaqRepository } from 'modules/faqs/repositories/faqs-repository.interface';
 import { TOKENS } from 'shared/ioc/token';
@@ -15,7 +14,7 @@ export class GetFaqByIdService {
     const faq = await this.faqRepository.findById(id);
 
     if (!faq) {
-      throw new AppException(404, errorMessages.FAQ_NOT_FOUND);
+      throw new AppException(404, Errors.FAQ_NOT_FOUND);
     }
     return faq;
   }

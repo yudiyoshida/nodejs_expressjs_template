@@ -9,4 +9,4 @@ class AppException extends Error {
   }
 }
 
-export default AppException;
+export { AppException };

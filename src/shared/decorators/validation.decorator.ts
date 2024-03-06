@@ -8,7 +8,7 @@ export function ValidateDto(property: RequestPropertyType, dto: ClassConstructor
     const originalMethod = descriptor.value;
 
     descriptor.value = async function(req: Request, res: Response, next: NextFunction) {
-      req[property] = await validateAndTransformDto(dto, req.body);
+      req[property] = await validateAndTransformDto(dto, req[property]);
 
       await originalMethod.call(this, req, res, next);
     };
