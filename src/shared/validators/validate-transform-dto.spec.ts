@@ -25,6 +25,7 @@ describe('validateAndTransformDto', () => {
 
     const result = await validateAndTransformDto(Login, validPlainLogin);
 
+    expect(result).toBeInstanceOf(Login);
     expect(result.email).toEqualIgnoringWhitespace(validPlainLogin.email);
     expect(result.password).toEqualIgnoringWhitespace(validPlainLogin.password);
   });
