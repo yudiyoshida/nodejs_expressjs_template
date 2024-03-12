@@ -4,6 +4,6 @@ const options: ClassTransformOptions = {
   excludeExtraneousValues: true,
 };
 
-export function transformDto(dto: ClassConstructor<any>, plain: any) {
+export function transformDto<T>(dto: ClassConstructor<T>, plain: any): T {
   return plainToClass(dto, plain, options);
 }

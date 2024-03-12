@@ -57,6 +57,12 @@ async function main(moduleName: string) {
   await fs.mkdir(useCasesPath);
   await fs.writeFile(path.join(useCasesPath, '.gitkeep'), '');
 
+  // Cria o arquivo routes.
+  await fs.writeFile(
+    path.join(modulePath, `${moduleName}.routes.ts`),
+    generateRouteContent(),
+  );
+
   console.log(`Módulo "${moduleName}" criado com sucesso.`);
 }
 
@@ -66,4 +72,16 @@ function generateEntityContent(module: string) {
 
 function generateRepositoryInterfaceContent(module: string) {
   return `export interface I${convertToPascalCase(module)}Repository {}`;
+}
+
+function generateRouteContent() {
+  return `import { Router } from 'express';
+const router = Router();
+
+const controller = new Controller();
+
+router.post('/:id/approve', controller.handle);
+
+export default router;  
+`;
 }

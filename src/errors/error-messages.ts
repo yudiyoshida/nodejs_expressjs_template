@@ -1,5 +1,6 @@
 const Errors = {
   ACCOUNT_ALREADY_EXISTS: 'Já existe uma conta com os dados informados.',
+  DUPLICATE_EMAIL: 'O email informado já está sendo utilizado.',
   EMAIL_NOT_VALIDATED: 'Para continuar, é necessário validar o email.',
   CODE_EXPIRED: 'Código expirado. Solicite um novo código.',
   INCORRECT_CODE_PASS: 'Erro. Código incorreto.',

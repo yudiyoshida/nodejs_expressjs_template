@@ -1,1 +1,1 @@
-export type AccountStatus = 'ativo' | 'inativo' | 'pendente'
+export type AccountStatus = 'active' | 'inactive' | 'pending'
