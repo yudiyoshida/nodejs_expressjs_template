@@ -1,17 +1,12 @@
 import 'reflect-metadata';
 
 import { TestBed } from '@automock/jest';
+import { createMock } from '@golevelup/ts-jest';
 import { AppException } from 'errors/app-exception';
 import { Faq } from 'modules/faq/entities/faq.entity';
 import { FaqInMemoryAdapterRepository } from 'modules/faq/repositories/adapters/faq-in-memory.repository';
 import { TOKENS } from 'shared/ioc/token';
 import { GetFaqByIdService } from './get-faq-by-id.service';
-
-const faq: Faq = {
-  id: 'faq-id',
-  question: 'question foo',
-  answer: 'answer bar',
-};
 
 describe('GetFaqByIdService', () => {
   let service: GetFaqByIdService;
@@ -25,6 +20,7 @@ describe('GetFaqByIdService', () => {
   });
 
   it('should return a faq', async() => {
+    const faq = createMock<Faq>({ id: 'faq-id' });
     mockRepository.findById.mockResolvedValue(faq);
 
     const result = await service.execute('random-id');
@@ -37,7 +33,6 @@ describe('GetFaqByIdService', () => {
 
     // a fulfilled promise will not fail the test. So, this line prevents it.
     expect.assertions(3);
-
     return service.execute('random-id').catch(err => {
       expect(err).toBeInstanceOf(AppException);
       expect(err.status).toBe(404);
@@ -46,6 +41,7 @@ describe('GetFaqByIdService', () => {
   });
 
   it('should call the repository with correct arguments', async() => {
+    const faq = createMock<Faq>({ id: 'faq-id' });
     mockRepository.findById.mockResolvedValue(faq);
 
     await service.execute('argument-id');
