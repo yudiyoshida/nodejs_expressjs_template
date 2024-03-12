@@ -1,0 +1,4 @@
+- faltou criar arquivo .routes.ts no script de modulos
+- testes no use case find-acocunt-by-email
+- testes para login.dto.ts
+- 
