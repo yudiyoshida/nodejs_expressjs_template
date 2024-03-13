@@ -63,7 +63,7 @@ async function main(moduleName: string, useCaseName: string) {
   );
   await fs.writeFile(
     path.join(useCasesPath, `${useCaseName}.service.spec.ts`),
-    generateServiceSpecContent(useCaseName),
+    generateServiceSpecContent(moduleName, useCaseName),
   );
 
   console.log(`Use case "${useCaseName}" criado com sucesso.`);
@@ -74,11 +74,50 @@ function generateDtoContent(useCase: string) {
 }
 
 function generateDtoSpecContent(useCase: string) {
-  return `describe('${convertToPascalCase(useCase)}Dto', () => {});`;
+  return `import { AppException } from 'errors/app-exception';
+import { validateAndTransformDto } from 'shared/validators/validate-transform-dto';
+import { ${convertToPascalCase(useCase)}Dto } from './${useCase}.dto';
+
+describe('${convertToPascalCase(useCase)}Dto', () => {
+  describe('X field', () => {
+    it('should validate X field', async() => {
+      const data = {};
+
+      expect.assertions(3);
+      return validateAndTransformDto(${convertToPascalCase(useCase)}Dto, data).catch((err: AppException) => {
+        expect(err).toBeInstanceOf(AppException);
+        expect(err.status).toBe(400);
+        expect(err.error).toContain('X é um campo obrigatório.');
+      });
+    });
+  });
+});
+`;
 }
 
-function generateServiceSpecContent(useCase: string) {
-  return `describe('${convertToPascalCase(useCase)}Service', () => {});`;
+function generateServiceSpecContent(module: string, useCase: string) {
+  return `import { TestBed } from '@automock/jest';
+import { ${convertToPascalCase(module)}InMemoryAdapterRepository } from 'modules/${module}/repositories/adapters/${module}-in-memory.repository';
+import { TOKENS } from 'shared/ioc/token';
+import { ${convertToPascalCase(useCase)}Service } from './${useCase}.service';
+
+describe('${convertToPascalCase(useCase)}Service', () => {
+  let service: ${convertToPascalCase(useCase)}Service;
+  let mockRepository: jest.Mocked<${convertToPascalCase(module)}InMemoryAdapterRepository>;
+
+  beforeEach(() => {
+    const { unit, unitRef } = TestBed.create(${convertToPascalCase(useCase)}Service).compile();
+
+    service = unit;
+    mockRepository = unitRef.get(TOKENS.I${convertToPascalCase(module)}Repository);
+  });
+
+  it('should be defined', async() => {
+    expect(service).toBeDefined();
+    expect(mockRepository).toBeDefined();
+  });
+});
+`;
 }
 
 function generateControllerContent(useCase: string) {

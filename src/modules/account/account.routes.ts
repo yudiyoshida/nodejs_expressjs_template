@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { CreateAccountController } from './use-cases/create-account/create-account.controller';
+import { CreateAccountController } from './use-cases/create/create-account.controller';
 
 const router = Router();
 

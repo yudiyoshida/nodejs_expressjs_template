@@ -3,7 +3,7 @@ import { TOKENS } from 'shared/ioc/token';
 
 import { IAccountRepository } from 'modules/account/repositories/account-repository.interface';
 import { AccountInMemoryAdapterRepository } from 'modules/account/repositories/adapters/account-in-memory.repository';
-import { FindAccountByEmailService } from 'modules/account/use-cases/find-account-by-email/find-account-by-email.service';
+import { FindAccountByEmailService } from 'modules/account/use-cases/find-by-email/find-account-by-email.service';
 import { FaqInMemoryAdapterRepository } from 'modules/faq/repositories/adapters/faq-in-memory.repository';
 import { IFaqRepository } from 'modules/faq/repositories/faq-repository.interface';
 import { AuthenticationJwtAdapterService } from 'shared/helpers/authentication/adapters/authentication-jwt.service';

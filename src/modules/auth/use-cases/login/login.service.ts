@@ -1,7 +1,7 @@
 import { AppException } from 'errors/app-exception';
 import { Errors } from 'errors/error-messages';
 import { inject, injectable } from 'inversify';
-import { FindAccountByEmailService } from 'modules/account/use-cases/find-account-by-email/find-account-by-email.service';
+import { FindAccountByEmailService } from 'modules/account/use-cases/find-by-email/find-account-by-email.service';
 import { IAuthenticationService } from 'shared/helpers/authentication/authentication-service.interface';
 import { IHashingService } from 'shared/helpers/hashing/hashing-service.interface';
 import { TOKENS } from 'shared/ioc/token';

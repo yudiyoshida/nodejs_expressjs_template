@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { IAccount } from 'modules/account/entities/account.entity';
-import { CreateAccountOutputDto } from 'modules/account/use-cases/create-account/dtos/create-account-output.dto';
+import { CreateAccountOutputDto } from 'modules/account/use-cases/create/dtos/create-account-output.dto';
 import { IAccountRepository } from '../account-repository.interface';
 
 @injectable()

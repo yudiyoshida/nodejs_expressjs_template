@@ -5,7 +5,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { AppException } from 'errors/app-exception';
 import { Errors } from 'errors/error-messages';
 import { IAccount } from 'modules/account/entities/account.entity';
-import { FindAccountByEmailService } from 'modules/account/use-cases/find-account-by-email/find-account-by-email.service';
+import { FindAccountByEmailService } from 'modules/account/use-cases/find-by-email/find-account-by-email.service';
 import { AuthenticationJwtAdapterService } from 'shared/helpers/authentication/adapters/authentication-jwt.service';
 import { BcryptAdapterService } from 'shared/helpers/hashing/adapters/hashing.service';
 import { TOKENS } from 'shared/ioc/token';

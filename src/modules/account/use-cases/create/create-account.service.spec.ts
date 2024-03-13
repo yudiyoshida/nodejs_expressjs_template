@@ -6,7 +6,7 @@ import { IAccount } from 'modules/account/entities/account.entity';
 import { AccountInMemoryAdapterRepository } from 'modules/account/repositories/adapters/account-in-memory.repository';
 import { BcryptAdapterService } from 'shared/helpers/hashing/adapters/hashing.service';
 import { TOKENS } from 'shared/ioc/token';
-import { FindAccountByEmailService } from '../find-account-by-email/find-account-by-email.service';
+import { FindAccountByEmailService } from '../find-by-email/find-account-by-email.service';
 import { CreateAccountService } from './create-account.service';
 import { CreateAccountInputDto } from './dtos/create-account-input.dto';
 

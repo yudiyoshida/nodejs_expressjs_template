@@ -6,7 +6,7 @@ import { IAccountRepository } from 'modules/account/repositories/account-reposit
 import { IHashingService } from 'shared/helpers/hashing/hashing-service.interface';
 import { TOKENS } from 'shared/ioc/token';
 import { transformDto } from 'shared/validators/transform-dto';
-import { FindAccountByEmailService } from '../find-account-by-email/find-account-by-email.service';
+import { FindAccountByEmailService } from '../find-by-email/find-account-by-email.service';
 import { CreateAccountInputDto } from './dtos/create-account-input.dto';
 
 @injectable()
