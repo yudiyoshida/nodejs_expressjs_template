@@ -7,6 +7,19 @@ import { IAccountRepository } from '../account-repository.interface';
 export class AccountInMemoryAdapterRepository implements IAccountRepository {
   private _accounts: IAccount[] = [];
 
+  public async findAllPaginated(page: number, size: number): Promise<[IAccount[], number]> {
+    const take = size;
+    const skip = ((page - 1) * size);
+
+    const accounts = this._accounts.slice(skip, skip + take);
+
+    return [accounts, this._accounts.length] as [IAccount[], number];
+  }
+
+  public async findAll(): Promise<IAccount[]> {
+    return this._accounts;
+  }
+
   public async findByEmail(email: string): Promise<IAccount | null> {
     const acc = this._accounts.find(item => item.email === email);
 

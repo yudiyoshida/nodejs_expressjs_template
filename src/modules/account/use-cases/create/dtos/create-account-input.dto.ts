@@ -1,12 +1,13 @@
 import { Expose } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { AccountRole } from 'modules/account/types/account-role.type';
 import { Trim } from 'shared/validators/decorators/trim';
 
 export class CreateAccountInputDto {
   @Expose()
-  @IsString()
-  @IsNotEmpty()
+  @IsEnum(['buyer', 'seller'], {
+    message: 'role deve ser buyer ou seller.',
+  })
   role!: AccountRole;
 
   @Expose()
