@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { IAccount } from 'modules/account/entities/account.entity';
 import { IAccountRepository } from 'modules/account/repositories/account-repository.interface';
 import { AccountRole } from 'modules/account/types/account-role.type';
-import { Auth } from 'modules/auth/entities/auth.entity';
+import { Payload } from 'modules/auth/entities/payload.entity';
 import { IAuthenticationService } from 'shared/helpers/authentication/authentication-service.interface';
 import { TOKENS } from 'shared/ioc/token';
 
@@ -39,7 +39,7 @@ export class AuthenticationGuard {
     @inject(TOKENS.IAccountRepository) private accountRepository: IAccountRepository,
   ) {}
 
-  public getPayload(bearerToken?: string): Auth {
+  public getPayload(bearerToken?: string): Payload {
     const token = this.extractTokenFromHeader(bearerToken);
 
     return token ? this.extractPayloadFromToken(token) : null;
