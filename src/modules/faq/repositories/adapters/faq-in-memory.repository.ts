@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { Faq } from 'modules/faq/entities/faq.entity';
-import { CreateFaqDto } from 'modules/faq/use-cases/create-faq/dtos/create-faq.dto';
+import { CreateFaqDto } from 'modules/faq/use-cases/create/dtos/create-faq.dto';
 import { IFaqRepository } from '../faq-repository.interface';
 
 @injectable()
