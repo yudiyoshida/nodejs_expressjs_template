@@ -6,13 +6,11 @@ import { IAccount } from 'modules/account/entities/account.entity';
 import { AccountInMemoryAdapterRepository } from 'modules/account/repositories/adapters/account-in-memory.repository';
 import { BcryptAdapterService } from 'shared/helpers/hashing/adapters/hashing.service';
 import { TOKENS } from 'shared/ioc/token';
-import { FindAccountByEmailService } from '../find-by-email/find-account-by-email.service';
 import { CreateAccountService } from './create-account.service';
 import { CreateAccountInputDto } from './dtos/create-account-input.dto';
 
 describe('CreateAccountService', () => {
   let service: CreateAccountService;
-  let mockFindAccountByEmailService: jest.Mocked<FindAccountByEmailService>;
   let mockHashingService: jest.Mocked<BcryptAdapterService>;
   let mockRepository: jest.Mocked<AccountInMemoryAdapterRepository>;
 
@@ -20,7 +18,6 @@ describe('CreateAccountService', () => {
     const { unit, unitRef } = TestBed.create(CreateAccountService).compile();
 
     service = unit;
-    mockFindAccountByEmailService = unitRef.get(FindAccountByEmailService);
     mockHashingService = unitRef.get(TOKENS.IHashingService);
     mockRepository = unitRef.get(TOKENS.IAccountRepository);
   });
@@ -28,7 +25,7 @@ describe('CreateAccountService', () => {
   it('should throw an error when the provided emails ia already in use', async() => {
     const account = createMock<IAccount>();
     const CreateAccountInputDto = createMock<CreateAccountInputDto>({ email: 'jhondoe@email.com' });
-    mockFindAccountByEmailService.execute.mockResolvedValue(account);
+    mockRepository.findByEmail.mockResolvedValue(account);
 
     expect.assertions(6);
     return service.execute(CreateAccountInputDto).catch((err: any) => {
@@ -36,7 +33,7 @@ describe('CreateAccountService', () => {
       expect(err.status).toBe(409);
       expect(err.error).toBe(Errors.DUPLICATE_EMAIL);
 
-      expect(mockFindAccountByEmailService.execute).toHaveBeenCalledWith(CreateAccountInputDto.email);
+      expect(mockRepository.findByEmail).toHaveBeenCalledWith(CreateAccountInputDto.email);
       expect(mockHashingService.hash).not.toHaveBeenCalled();
       expect(mockRepository.save).not.toHaveBeenCalled();
     });
@@ -44,12 +41,12 @@ describe('CreateAccountService', () => {
 
   it('should hash the password before creating account', async() => {
     const CreateAccountInputDto = createMock<CreateAccountInputDto>({ password: '123' });
-    mockFindAccountByEmailService.execute.mockResolvedValue(null);
+    mockRepository.findByEmail.mockResolvedValue(null);
     mockHashingService.hash.mockReturnValue('hashPassword');
 
     await service.execute(CreateAccountInputDto);
 
-    expect(mockFindAccountByEmailService.execute).toHaveBeenCalledOnce();
+    expect(mockRepository.findByEmail).toHaveBeenCalledOnce();
     expect(mockHashingService.hash).toHaveBeenCalledWith(CreateAccountInputDto.password);
     expect(mockRepository.save).toHaveBeenCalledWith(expect.objectContaining({ password: 'hashPassword' }));
   });
@@ -57,13 +54,12 @@ describe('CreateAccountService', () => {
   it('should create a new account and omit pasword field', async() => {
     const CreateAccountInputDto = createMock<CreateAccountInputDto>();
     const account = createMock<IAccount>({ id: 'acc-id', password: '123dbc' });
-    mockFindAccountByEmailService.execute.mockResolvedValue(null);
+    mockRepository.findByEmail.mockResolvedValue(null);
     mockHashingService.hash.mockReturnValue('hashPassword');
     mockRepository.save.mockResolvedValue(account);
 
     const result = await service.execute(CreateAccountInputDto);
 
-    expect(result).toHaveProperty('id');
-    expect(result).not.toHaveProperty('password');
+    expect(result).toHaveProperty('message', 'Conta criada com sucesso!');
   });
 });

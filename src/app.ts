@@ -54,6 +54,8 @@ class App {
   private registerGlobalErrorHandlerRoute() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+      console.log(err);
+
       if (err instanceof AppException) {
         res.status(err.status).json({ error: err.error });
 
