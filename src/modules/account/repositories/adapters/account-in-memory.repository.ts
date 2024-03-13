@@ -20,6 +20,12 @@ export class AccountInMemoryAdapterRepository implements IAccountRepository {
     return this._accounts;
   }
 
+  public async findById(id: string): Promise<IAccount | null> {
+    const acc = this._accounts.find(item => item.id === id);
+
+    return acc ?? null;
+  }
+
   public async findByEmail(email: string): Promise<IAccount | null> {
     const acc = this._accounts.find(item => item.email === email);
 
