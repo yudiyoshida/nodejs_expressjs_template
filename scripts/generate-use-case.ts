@@ -16,6 +16,8 @@ async function main(moduleName: string, useCaseName: string) {
   const modulePath = path.join(__dirname, '..', 'src', 'modules', moduleName);
   const useCasesPath = path.join(modulePath, 'use-cases', useCaseName);
   const useCasesDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos');
+  const useCasesInputDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos', 'input');
+  const useCasesOutputDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos', 'output');
 
   // Tenta acessar a pasta do módulo para ver se existe.
   try {
@@ -37,17 +39,29 @@ async function main(moduleName: string, useCaseName: string) {
   // Cria a pasta do use-case.
   await fs.mkdir(useCasesPath);
 
-  // Cria a pasta dtos em use-case.
+  // Cria as pastas dtos input e output em use-case.
   await fs.mkdir(useCasesDtoPath);
+  await fs.mkdir(useCasesInputDtoPath);
+  await fs.mkdir(useCasesOutputDtoPath);
 
-  // Cria o arquivo dto e teste.
+  // Cria o arquivo input-dto e teste.
   await fs.writeFile(
-    path.join(useCasesDtoPath, `${useCaseName}.dto.ts`),
-    generateDtoContent(useCaseName),
+    path.join(useCasesInputDtoPath, `${useCaseName}-input.dto.ts`),
+    generateDtoContent(useCaseName, 'input'),
   );
   await fs.writeFile(
-    path.join(useCasesDtoPath, `${useCaseName}.dto.spec.ts`),
-    generateDtoSpecContent(useCaseName),
+    path.join(useCasesInputDtoPath, `${useCaseName}-input.dto.spec.ts`),
+    generateDtoSpecContent(useCaseName, 'input'),
+  );
+
+  // Cria o arquivo output-dto e teste.
+  await fs.writeFile(
+    path.join(useCasesOutputDtoPath, `${useCaseName}-output.dto.ts`),
+    generateDtoContent(useCaseName, 'output'),
+  );
+  await fs.writeFile(
+    path.join(useCasesOutputDtoPath, `${useCaseName}-output.dto.spec.ts`),
+    generateDtoSpecContent(useCaseName, 'output'),
   );
 
   // Cria o arquivo controller.
@@ -69,22 +83,22 @@ async function main(moduleName: string, useCaseName: string) {
   console.log(`Use case "${useCaseName}" criado com sucesso.`);
 }
 
-function generateDtoContent(useCase: string) {
-  return `export class ${convertToPascalCase(useCase)}Dto {}`;
+function generateDtoContent(useCase: string, type: 'input' | 'output') {
+  return `export class ${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto {}`;
 }
 
-function generateDtoSpecContent(useCase: string) {
+function generateDtoSpecContent(useCase: string, type: 'input' | 'output') {
   return `import { AppException } from 'errors/app-exception';
 import { validateAndTransformDto } from 'shared/validators/validate-transform-dto';
-import { ${convertToPascalCase(useCase)}Dto } from './${useCase}.dto';
+import { ${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto } from './${useCase}-${type}.dto';
 
-describe('${convertToPascalCase(useCase)}Dto', () => {
+describe('${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto', () => {
   describe('X field', () => {
     it('should validate X field', async() => {
       const data = {};
 
       expect.assertions(3);
-      return validateAndTransformDto(${convertToPascalCase(useCase)}Dto, data).catch((err: AppException) => {
+      return validateAndTransformDto(${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto, data).catch((err: AppException) => {
         expect(err).toBeInstanceOf(AppException);
         expect(err.status).toBe(400);
         expect(err.error).toContain('X é um campo obrigatório.');
@@ -130,7 +144,7 @@ import { ${pascalUseCase}Service } from './${useCase}.service';
 export class ${pascalUseCase}Controller {
   // local para decorators de autenticação.
   // local para decorators de validação.
-  public async handle(req: Request, res: Response) {
+  public async handle(req: Request, res: Response): Promise<void> {
     const service = container.resolve(${pascalUseCase}Service);
 
     const result = await service.execute();
@@ -146,7 +160,8 @@ function generateServiceContent(module: string, useCase: string) {
   return `import { inject, injectable } from 'inversify';
 import { TOKENS } from 'shared/ioc/token';
 import { I${pascalModule}Repository } from '../../repositories/${module}-repository.interface';
-import { ${pascalUseCase}Dto } from './dtos/${useCase}.dto';
+import { ${pascalUseCase}InputDto } from './dtos/input/${useCase}-input.dto';
+import { ${pascalUseCase}OutputDto } from './dtos/output/${useCase}-output.dto';
 
 @injectable()
 export class ${pascalUseCase}Service {
@@ -154,6 +169,6 @@ export class ${pascalUseCase}Service {
     @inject(TOKENS.I${pascalModule}Repository) private repository: I${pascalModule}Repository,
   ) {}
 
-  public async execute(data: ${pascalUseCase}Dto) {}
+  public async execute(data: ${pascalUseCase}InputDto): Promise<${pascalUseCase}OutputDto> {}
 }`;
 }
