@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { Faq } from 'modules/faq/entities/faq.entity';
-import { CreateFaqDto } from 'modules/faq/use-cases/create/dtos/create-faq.dto';
-import { IFaqRepository } from '../faq-repository.interface';
+import { ICreateFaqDto, IFaqRepository } from '../faq-repository.interface';
 
 @injectable()
 export class FaqInMemoryAdapterRepository implements IFaqRepository {
@@ -13,7 +12,7 @@ export class FaqInMemoryAdapterRepository implements IFaqRepository {
     return faq ?? null;
   }
 
-  public async create(data: CreateFaqDto) {
+  public async create(data: ICreateFaqDto) {
     const now = new Date().getTime();
     const newFaq = { id: now.toString(), ...data };
 

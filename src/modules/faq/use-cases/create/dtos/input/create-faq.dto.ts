@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Trim } from 'shared/validators/decorators/trim';
 
-export class CreateFaqDto {
+export class CreateFaqInputDto {
   @Expose()
   @IsString({
     message: 'question deve ser do tipo string.',

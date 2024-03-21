@@ -1,13 +1,13 @@
 import { validateAndTransformDto } from 'shared/validators/validate-transform-dto';
-import { CreateFaqDto } from './create-faq.dto';
+import { CreateFaqInputDto } from './create-faq.dto';
 
-describe('CreateFaqDto', () => {
+describe('CreateFaqInputDto', () => {
   describe('question field', () => {
     it('should throw an error about required field when not providing any question', async() => {
       const data = {};
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('question é um campo obrigatório.');
       });
     });
@@ -16,7 +16,7 @@ describe('CreateFaqDto', () => {
       const data = { question: null };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('question é um campo obrigatório.');
       });
     });
@@ -25,7 +25,7 @@ describe('CreateFaqDto', () => {
       const data = { question: '  ' };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('question é um campo obrigatório.');
       });
     });
@@ -34,7 +34,7 @@ describe('CreateFaqDto', () => {
       const data = { question: 123 };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('question é um campo obrigatório.');
         expect(err.error).toContain('question deve ser do tipo string.');
       });
@@ -44,7 +44,7 @@ describe('CreateFaqDto', () => {
       const data = { question: true };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('question é um campo obrigatório.');
         expect(err.error).toContain('question deve ser do tipo string.');
       });
@@ -54,7 +54,7 @@ describe('CreateFaqDto', () => {
       const data = { question: {} };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('question é um campo obrigatório.');
         expect(err.error).toContain('question deve ser do tipo string.');
       });
@@ -64,7 +64,7 @@ describe('CreateFaqDto', () => {
       const data = { question: [] };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('question é um campo obrigatório.');
         expect(err.error).toContain('question deve ser do tipo string.');
       });
@@ -74,7 +74,7 @@ describe('CreateFaqDto', () => {
       const data = { question: ' foo ' };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toEqual(expect.arrayContaining([expect.stringMatching(/question/)]));
       });
     });
@@ -85,7 +85,7 @@ describe('CreateFaqDto', () => {
       const data = {};
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('answer é um campo obrigatório.');
       });
     });
@@ -94,7 +94,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: null };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('answer é um campo obrigatório.');
       });
     });
@@ -103,7 +103,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: '  ' };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).toContain('answer é um campo obrigatório.');
       });
     });
@@ -112,7 +112,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: 123 };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('answer é um campo obrigatório.');
         expect(err.error).toContain('answer deve ser do tipo string.');
       });
@@ -122,7 +122,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: true };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('answer é um campo obrigatório.');
         expect(err.error).toContain('answer deve ser do tipo string.');
       });
@@ -132,7 +132,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: {} };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('answer é um campo obrigatório.');
         expect(err.error).toContain('answer deve ser do tipo string.');
       });
@@ -142,7 +142,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: [] };
 
       expect.assertions(2);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toContain('answer é um campo obrigatório.');
         expect(err.error).toContain('answer deve ser do tipo string.');
       });
@@ -152,7 +152,7 @@ describe('CreateFaqDto', () => {
       const data = { answer: ' foo ' };
 
       expect.assertions(1);
-      return validateAndTransformDto(CreateFaqDto, data).catch(err => {
+      return validateAndTransformDto(CreateFaqInputDto, data).catch(err => {
         expect(err.error).not.toEqual(expect.arrayContaining([expect.stringMatching(/answer/)]));
       });
     });
@@ -160,9 +160,9 @@ describe('CreateFaqDto', () => {
 
   describe('all fields together', () => {
     it('should pass all tests', async() => {
-      const data: CreateFaqDto = { question: ' foo ', answer: ' bar ' };
+      const data: CreateFaqInputDto = { question: ' foo ', answer: ' bar ' };
 
-      const result = await validateAndTransformDto(CreateFaqDto, data);
+      const result = await validateAndTransformDto(CreateFaqInputDto, data);
 
       expect(result).toHaveProperty('question', data.question.trim());
       expect(result).toHaveProperty('answer', data.answer.trim());
