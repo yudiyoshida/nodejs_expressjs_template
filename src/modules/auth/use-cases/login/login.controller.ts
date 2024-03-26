@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { ValidateDto } from 'shared/decorators/validation.decorator';
 import { container } from 'shared/ioc/inversify.config';
-import { LoginDto } from './dtos/login.dto';
+import { LoginInputDto } from './dtos/login.dto';
 import { LoginService } from './login.service';
 
 export class LoginController {
-  @ValidateDto('body', LoginDto)
+  @ValidateDto('body', LoginInputDto)
   public async handle(req: Request, res: Response) {
     const service = container.resolve(LoginService);
 

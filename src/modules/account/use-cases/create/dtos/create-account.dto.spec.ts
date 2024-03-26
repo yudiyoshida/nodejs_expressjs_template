@@ -1,6 +1,6 @@
 import { AppException } from 'errors/app-exception';
 import { validateAndTransformDto } from 'shared/validators/validate-transform-dto';
-import { CreateAccountInputDto } from './create-account-input.dto';
+import { CreateAccountInputDto } from './create-account.dto';
 
 describe('CreateAccountInputDto', () => {
   describe('name field', () => {

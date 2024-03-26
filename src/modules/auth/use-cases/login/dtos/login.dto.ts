@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Trim } from 'shared/validators/decorators/trim';
 
-export class LoginDto {
+export class LoginInputDto {
   @Expose()
   @IsString({
     message: 'credential deve ser do tipo string.',
@@ -21,4 +21,8 @@ export class LoginDto {
     message: 'password é um campo obrigatório.',
   })
   password!: string;
+}
+
+export class LoginOutputDto {
+  accessToken!: string;
 }

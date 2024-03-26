@@ -1,27 +1,45 @@
-import { Expose } from 'class-transformer';
 import { AccountRole } from '../types/account-role.type';
 import { AccountStatus } from '../types/account-status.type';
 
-export abstract class IAccount {
-  @Expose() public id!: string;
-  @Expose() public role!: AccountRole;
-  @Expose() public name!: string;
-  @Expose() public email!: string;
-  @Expose() public password!: string;
-  @Expose() public status!: AccountStatus;
+export interface Account {
+  id: string;
+  role: AccountRole;
+  name: string;
+  email: string;
+  password: string;
+  status: AccountStatus;
 }
 
-export class Account extends IAccount {
-  public getStatus(type: AccountRole): AccountStatus {
-    return (type === 'seller' ? 'pending' : 'active');
+export class AccountEntity {
+  private _props: Account;
+
+  constructor(props: Partial<Account>) {
+    this._props = props as Account;
   }
 
-  public getCreateAccountDto() {
-    return {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-      status: this.status,
-    };
+  // Getters
+  get role(): AccountRole {
+    return this._props.role;
+  }
+  get name(): string {
+    return this._props.name;
+  }
+  get email(): string {
+    return this._props.email;
+  }
+  get password(): string {
+    return this._props.password;
+  }
+  get status(): AccountStatus {
+    return this._props.status;
+  }
+
+  // Business logic
+  setStatus(role: AccountRole): void {
+    this._props.status = role === 'seller' ? 'pending' : 'active';
+  }
+
+  hashPassword(password: string): void {
+    this._props.password = password;
   }
 }

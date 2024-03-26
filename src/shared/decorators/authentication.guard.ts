@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { IAccount } from 'modules/account/entities/account.entity';
+import { Account } from 'modules/account/entities/account.entity';
 import { IAccountRepository } from 'modules/account/repositories/account-repository.interface';
 import { AccountRole } from 'modules/account/types/account-role.type';
 import { Payload } from 'modules/auth/entities/payload.entity';
@@ -45,7 +45,7 @@ export class AuthenticationGuard {
     return token ? this.extractPayloadFromToken(token) : null;
   }
 
-  public async getAccount(sub: string): Promise<IAccount|null> {
+  public async getAccount(sub: string): Promise<Account|null> {
     return this.accountRepository.findById(sub);
   }
 

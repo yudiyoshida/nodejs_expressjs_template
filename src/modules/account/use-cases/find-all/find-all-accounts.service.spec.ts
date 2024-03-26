@@ -4,18 +4,18 @@ import { TOKENS } from 'shared/ioc/token';
 import { FindAllAccountsService } from './find-all-accounts.service';
 
 describe('FindAllAccountsService', () => {
-  let service: FindAllAccountsService;
+  let sut: FindAllAccountsService;
   let mockRepository: jest.Mocked<AccountInMemoryAdapterRepository>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(FindAllAccountsService).compile();
 
-    service = unit;
+    sut = unit;
     mockRepository = unitRef.get(TOKENS.IAccountRepository);
   });
 
   it('should be defined', async() => {
-    expect(service).toBeDefined();
+    expect(sut).toBeDefined();
     expect(mockRepository).toBeDefined();
   });
 });

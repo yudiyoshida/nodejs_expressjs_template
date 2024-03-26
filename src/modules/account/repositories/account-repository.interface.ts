@@ -1,10 +1,19 @@
-import { IAccount } from '../entities/account.entity';
-import { CreateAccountOutputDto } from '../use-cases/create/dtos/create-account-output.dto';
+import { Account } from '../entities/account.entity';
+import { AccountRole } from '../types/account-role.type';
+import { AccountStatus } from '../types/account-status.type';
 
 export interface IAccountRepository {
-  findAllPaginated(page: number, size: number): Promise<[IAccount[], number]>;
-  findAll(): Promise<IAccount[]>;
-  findById(id: string): Promise<IAccount|null>;
-  findByEmail(email: string): Promise<IAccount|null>;
-  save(data: CreateAccountOutputDto): Promise<IAccount>;
+  findAll(): Promise<Account[]>;
+  findAllPaginated(page: number, size: number): Promise<[Account[], number]>;
+  findById(id: string): Promise<Account|null>;
+  findByEmail(email: string): Promise<Account|null>;
+  save(data: ICreateAccountDto): Promise<Account>;
+}
+
+export interface ICreateAccountDto {
+  role: AccountRole;
+  name: string;
+  email: string;
+  password: string;
+  status: AccountStatus;
 }

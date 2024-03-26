@@ -45,3 +45,7 @@ export class CreateAccountInputDto {
   })
   password!: string;
 }
+
+export class CreateAccountOutputDto {
+  id!: string;
+}

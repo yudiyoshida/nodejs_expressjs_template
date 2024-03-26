@@ -1,38 +1,37 @@
 import { injectable } from 'inversify';
-import { IAccount } from 'modules/account/entities/account.entity';
-import { CreateAccountOutputDto } from 'modules/account/use-cases/create/dtos/create-account-output.dto';
-import { IAccountRepository } from '../account-repository.interface';
+import { Account } from 'modules/account/entities/account.entity';
+import { IAccountRepository, ICreateAccountDto } from '../account-repository.interface';
 
 @injectable()
 export class AccountInMemoryAdapterRepository implements IAccountRepository {
-  private _accounts: IAccount[] = [];
+  private _accounts: Account[] = [];
 
-  public async findAllPaginated(page: number, size: number): Promise<[IAccount[], number]> {
+  public async findAllPaginated(page: number, size: number): Promise<[Account[], number]> {
     const take = size;
     const skip = ((page - 1) * size);
 
     const accounts = this._accounts.slice(skip, skip + take);
 
-    return [accounts, this._accounts.length] as [IAccount[], number];
+    return [accounts, this._accounts.length] as [Account[], number];
   }
 
-  public async findAll(): Promise<IAccount[]> {
+  public async findAll(): Promise<Account[]> {
     return this._accounts;
   }
 
-  public async findById(id: string): Promise<IAccount | null> {
+  public async findById(id: string): Promise<Account | null> {
     const acc = this._accounts.find(item => item.id === id);
 
     return acc ?? null;
   }
 
-  public async findByEmail(email: string): Promise<IAccount | null> {
+  public async findByEmail(email: string): Promise<Account | null> {
     const acc = this._accounts.find(item => item.email === email);
 
     return acc ?? null;
   }
 
-  public async save(data: CreateAccountOutputDto): Promise<IAccount> {
+  public async save(data: ICreateAccountDto): Promise<Account> {
     const id = new Date().getTime().toString();
     const newAcc = { ...data, id };
 

@@ -5,7 +5,7 @@ import { FindAccountByEmailService } from 'modules/account/use-cases/find-by-ema
 import { IAuthenticationService } from 'shared/helpers/authentication/authentication-service.interface';
 import { IHashingService } from 'shared/helpers/hashing/hashing-service.interface';
 import { TOKENS } from 'shared/ioc/token';
-import { LoginDto } from './dtos/login.dto';
+import { LoginInputDto, LoginOutputDto } from './dtos/login.dto';
 
 @injectable()
 export class LoginService {
@@ -15,20 +15,20 @@ export class LoginService {
     @inject(FindAccountByEmailService) private findAccountByEmailService: FindAccountByEmailService,
   ) {}
 
-  public async execute(data: LoginDto) {
+  public async execute(data: LoginInputDto): Promise<LoginOutputDto> {
     const account = await this.findAccountByEmailService.execute(data.credential);
     if (!account) {
       throw new AppException(409, Errors.INVALID_CREDENTIALS);
     }
 
     const isPasswordCorrect = this.hashingService.compare(data.password, account.password);
-    if (!isPasswordCorrect) {
-      throw new AppException(409, Errors.INVALID_CREDENTIALS);
+    if (isPasswordCorrect) {
+      const payload = { sub: account.id };
+      const accessToken = this.jwtService.sign(payload);
+
+      return { accessToken };
     }
 
-    const payload = { sub: account.id };
-    const accessToken = this.jwtService.sign(payload);
-
-    return { accessToken };
+    throw new AppException(409, Errors.INVALID_CREDENTIALS);
   }
 }
