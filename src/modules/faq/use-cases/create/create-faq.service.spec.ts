@@ -5,26 +5,26 @@ import { FaqInMemoryAdapterRepository } from 'modules/faq/repositories/adapters/
 import { ICreateFaqDto } from 'modules/faq/repositories/faq-repository.interface';
 import { TOKENS } from 'shared/ioc/token';
 import { CreateFaqService } from './create-faq.service';
-import { CreateFaqInputDto } from './dtos/input/create-faq.dto';
+import { CreateFaqInputDto } from './dtos/create-faq.dto';
 
 describe('CreateFaqService', () => {
-  let service: CreateFaqService;
+  let sut: CreateFaqService;
   let mockRepository: jest.Mocked<FaqInMemoryAdapterRepository>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(CreateFaqService).compile();
 
-    service = unit;
+    sut = unit;
     mockRepository = unitRef.get(TOKENS.IFaqRepository);
+
+    const faq = createMock<Faq>();
+    mockRepository.create.mockResolvedValueOnce(faq);
   });
 
-  it('should return a success message', async() => {
-    const faq = createMock<Faq>();
-    mockRepository.create.mockResolvedValue(faq);
+  it('should return the id of the created faq', async() => {
+    const result = await sut.execute(createMock<CreateFaqInputDto>());
 
-    const result = await service.execute({} as CreateFaqInputDto);
-
-    expect(result).toHaveProperty('message', 'Faq created successfully');
+    expect(result).toHaveProperty('id');
   });
 
   it('should call the repository with correct arguments', async() => {
@@ -38,7 +38,7 @@ describe('CreateFaqService', () => {
       question: createFaqDto.question,
     };
 
-    await service.execute(createFaqDto);
+    await sut.execute(createFaqDto);
 
     expect(mockRepository.create).toHaveBeenCalledExactlyOnceWith(iCreateFaqDto);
   });

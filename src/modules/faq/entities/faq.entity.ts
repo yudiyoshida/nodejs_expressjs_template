@@ -1,13 +1,22 @@
-import { Expose } from 'class-transformer';
 
-export abstract class Faq {
-  @Expose() id!: string;
-  @Expose() question!: string;
-  @Expose() answer!: string;
+export interface Faq {
+  id: string;
+  question: string;
+  answer: string;
 }
 
-export class FaqEntity extends Faq {
-  constructor() {
-    super();
+export class FaqEntity {
+  private _props: Faq;
+
+  constructor(props: Partial<Faq>) {
+    this._props = props as Faq;
+  }
+
+  // Getters.
+  get question(): string {
+    return this._props.question;
+  }
+  get answer(): string {
+    return this._props.answer;
   }
 }

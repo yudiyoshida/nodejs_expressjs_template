@@ -4,7 +4,7 @@ import { PermissionEnum } from 'shared/decorators/authentication.guard';
 import { ValidateDto } from 'shared/decorators/validation.decorator';
 import { container } from 'shared/ioc/inversify.config';
 import { CreateFaqService } from './create-faq.service';
-import { CreateFaqInputDto } from './dtos/input/create-faq.dto';
+import { CreateFaqInputDto } from './dtos/create-faq.dto';
 
 export class CreateFaqController {
   @RequiredPermission(PermissionEnum.CREATE_FAQ)

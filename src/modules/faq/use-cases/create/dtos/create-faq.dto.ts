@@ -23,3 +23,7 @@ export class CreateFaqInputDto {
   @Trim()
   answer!: string;
 }
+
+export class CreateFaqOutputDto {
+  id!: string;
+}

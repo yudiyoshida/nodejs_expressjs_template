@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { TestBed } from '@automock/jest';
 import { createMock } from '@golevelup/ts-jest';
 import { AppException } from 'errors/app-exception';
@@ -9,13 +7,13 @@ import { TOKENS } from 'shared/ioc/token';
 import { GetFaqByIdService } from './get-faq-by-id.service';
 
 describe('GetFaqByIdService', () => {
-  let service: GetFaqByIdService;
+  let sut: GetFaqByIdService;
   let mockRepository: jest.Mocked<FaqInMemoryAdapterRepository>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(GetFaqByIdService).compile();
 
-    service = unit;
+    sut = unit;
     mockRepository = unitRef.get(TOKENS.IFaqRepository);
   });
 
@@ -23,7 +21,7 @@ describe('GetFaqByIdService', () => {
     const faq = createMock<Faq>({ id: 'faq-id' });
     mockRepository.findById.mockResolvedValue(faq);
 
-    const result = await service.execute('random-id');
+    const result = await sut.execute('random-id');
 
     expect(result).toEqual(faq);
   });
@@ -33,7 +31,7 @@ describe('GetFaqByIdService', () => {
 
     // a fulfilled promise will not fail the test. So, this line prevents it.
     expect.assertions(3);
-    return service.execute('random-id').catch(err => {
+    return sut.execute('random-id').catch(err => {
       expect(err).toBeInstanceOf(AppException);
       expect(err.status).toBe(404);
       expect(err.error).toBe('FAQ não encontrada na base de dados.');
@@ -44,7 +42,7 @@ describe('GetFaqByIdService', () => {
     const faq = createMock<Faq>({ id: 'faq-id' });
     mockRepository.findById.mockResolvedValue(faq);
 
-    await service.execute('argument-id');
+    await sut.execute('argument-id');
 
     expect(mockRepository.findById).toHaveBeenCalledExactlyOnceWith('argument-id');
   });
