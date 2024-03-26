@@ -18,7 +18,7 @@ export class LoginService {
   public async execute(data: LoginInputDto): Promise<LoginOutputDto> {
     const account = await this.findAccountByEmailService.execute(data.credential);
     if (!account) {
-      throw new AppException(409, Errors.INVALID_CREDENTIALS);
+      throw new AppException(400, Errors.INVALID_CREDENTIALS);
     }
 
     const isPasswordCorrect = this.hashingService.compare(data.password, account.password);
@@ -29,6 +29,6 @@ export class LoginService {
       return { accessToken };
     }
 
-    throw new AppException(409, Errors.INVALID_CREDENTIALS);
+    throw new AppException(400, Errors.INVALID_CREDENTIALS);
   }
 }

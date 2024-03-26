@@ -32,7 +32,7 @@ describe('LoginService', () => {
     expect.assertions(6);
     return sut.execute(loginDto).catch((err: any) => {
       expect(err).toBeInstanceOf(AppException);
-      expect(err.status).toBe(409);
+      expect(err.status).toBe(400);
       expect(err.error).toBe(Errors.INVALID_CREDENTIALS);
 
       expect(mockFindAccountByEmailService.execute).toHaveBeenCalledWith(loginDto.credential);
@@ -50,7 +50,7 @@ describe('LoginService', () => {
     expect.assertions(6);
     return sut.execute(loginDto).catch((err: any) => {
       expect(err).toBeInstanceOf(AppException);
-      expect(err.status).toBe(409);
+      expect(err.status).toBe(400);
       expect(err.error).toBe(Errors.INVALID_CREDENTIALS);
 
       expect(mockFindAccountByEmailService.execute).toHaveBeenCalledOnce();
