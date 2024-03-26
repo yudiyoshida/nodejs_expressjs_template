@@ -76,6 +76,7 @@ function generateRepositoryInterfaceContent(module: string) {
 
 function generateRouteContent() {
   return `import { Router } from 'express';
+
 const router = Router();
 
 const controller = new Controller();

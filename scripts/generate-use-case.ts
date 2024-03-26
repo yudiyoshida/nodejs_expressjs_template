@@ -105,18 +105,18 @@ import { TOKENS } from 'shared/ioc/token';
 import { ${convertToPascalCase(useCase)}Service } from './${useCase}.service';
 
 describe('${convertToPascalCase(useCase)}Service', () => {
-  let service: ${convertToPascalCase(useCase)}Service;
+  let sut: ${convertToPascalCase(useCase)}Service;
   let mockRepository: jest.Mocked<${convertToPascalCase(module)}InMemoryAdapterRepository>;
 
   beforeEach(() => {
     const { unit, unitRef } = TestBed.create(${convertToPascalCase(useCase)}Service).compile();
 
-    service = unit;
+    sut = unit;
     mockRepository = unitRef.get(TOKENS.I${convertToPascalCase(module)}Repository);
   });
 
   it('should be defined', async() => {
-    expect(service).toBeDefined();
+    expect(sut).toBeDefined();
     expect(mockRepository).toBeDefined();
   });
 });
