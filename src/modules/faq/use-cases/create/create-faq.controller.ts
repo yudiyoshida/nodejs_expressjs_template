@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { RequiredPermission } from 'shared/decorators/authentication.decorator';
-import { PermissionEnum } from 'shared/decorators/authentication.guard';
 import { ValidateDto } from 'shared/decorators/validation.decorator';
+import { PermissionEnum } from 'shared/guards/authentication.guard';
 import { container } from 'shared/ioc/inversify.config';
 import { CreateFaqService } from './create-faq.service';
 import { CreateFaqInputDto } from './dtos/create-faq.dto';

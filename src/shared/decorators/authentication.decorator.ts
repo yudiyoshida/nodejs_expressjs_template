@@ -2,7 +2,7 @@ import { AppException } from 'errors/app-exception';
 import { Errors } from 'errors/error-messages';
 import { NextFunction, Request, Response } from 'express';
 import { container } from 'shared/ioc/inversify.config';
-import { AuthenticationGuard, PermissionEnum } from './authentication.guard';
+import { AuthenticationGuard, PermissionEnum } from '../guards/authentication.guard';
 
 export function RequiredPermission(permission: PermissionEnum) {
   return (target: any, key: string, descriptor: PropertyDescriptor) => {
