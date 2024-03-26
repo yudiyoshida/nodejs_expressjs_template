@@ -16,8 +16,6 @@ async function main(moduleName: string, useCaseName: string) {
   const modulePath = path.join(__dirname, '..', 'src', 'modules', moduleName);
   const useCasesPath = path.join(modulePath, 'use-cases', useCaseName);
   const useCasesDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos');
-  const useCasesInputDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos', 'input');
-  const useCasesOutputDtoPath = path.join(modulePath, 'use-cases', useCaseName, 'dtos', 'output');
 
   // Tenta acessar a pasta do módulo para ver se existe.
   try {
@@ -41,27 +39,15 @@ async function main(moduleName: string, useCaseName: string) {
 
   // Cria as pastas dtos input e output em use-case.
   await fs.mkdir(useCasesDtoPath);
-  await fs.mkdir(useCasesInputDtoPath);
-  await fs.mkdir(useCasesOutputDtoPath);
 
-  // Cria o arquivo input-dto e teste.
+  // Cria o arquivo dto e teste.
   await fs.writeFile(
-    path.join(useCasesInputDtoPath, `${useCaseName}-input.dto.ts`),
-    generateDtoContent(useCaseName, 'input'),
+    path.join(useCasesDtoPath, `${useCaseName}.dto.ts`),
+    generateDtoContent(useCaseName),
   );
   await fs.writeFile(
-    path.join(useCasesInputDtoPath, `${useCaseName}-input.dto.spec.ts`),
-    generateDtoSpecContent(useCaseName, 'input'),
-  );
-
-  // Cria o arquivo output-dto e teste.
-  await fs.writeFile(
-    path.join(useCasesOutputDtoPath, `${useCaseName}-output.dto.ts`),
-    generateDtoContent(useCaseName, 'output'),
-  );
-  await fs.writeFile(
-    path.join(useCasesOutputDtoPath, `${useCaseName}-output.dto.spec.ts`),
-    generateDtoSpecContent(useCaseName, 'output'),
+    path.join(useCasesDtoPath, `${useCaseName}.dto.spec.ts`),
+    generateDtoSpecContent(useCaseName),
   );
 
   // Cria o arquivo controller.
@@ -83,22 +69,25 @@ async function main(moduleName: string, useCaseName: string) {
   console.log(`Use case "${useCaseName}" criado com sucesso.`);
 }
 
-function generateDtoContent(useCase: string, type: 'input' | 'output') {
-  return `export class ${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto {}`;
+function generateDtoContent(useCase: string) {
+  return `export class ${convertToPascalCase(useCase)}InputDto {}
+
+export class ${convertToPascalCase(useCase)}OutputDto {}
+`;
 }
 
-function generateDtoSpecContent(useCase: string, type: 'input' | 'output') {
+function generateDtoSpecContent(useCase: string) {
   return `import { AppException } from 'errors/app-exception';
 import { validateAndTransformDto } from 'shared/validators/validate-transform-dto';
-import { ${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto } from './${useCase}-${type}.dto';
+import { ${convertToPascalCase(useCase)}InputDto } from './${useCase}.dto';
 
-describe('${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto', () => {
+describe('${convertToPascalCase(useCase)}InputDto', () => {
   describe('X field', () => {
     it('should validate X field', async() => {
       const data = {};
 
       expect.assertions(3);
-      return validateAndTransformDto(${convertToPascalCase(useCase)}${convertToPascalCase(type)}Dto, data).catch((err: AppException) => {
+      return validateAndTransformDto(${convertToPascalCase(useCase)}InputDto, data).catch((err: AppException) => {
         expect(err).toBeInstanceOf(AppException);
         expect(err.status).toBe(400);
         expect(err.error).toContain('X é um campo obrigatório.');
@@ -160,8 +149,7 @@ function generateServiceContent(module: string, useCase: string) {
   return `import { inject, injectable } from 'inversify';
 import { TOKENS } from 'shared/ioc/token';
 import { I${pascalModule}Repository } from '../../repositories/${module}-repository.interface';
-import { ${pascalUseCase}InputDto } from './dtos/input/${useCase}-input.dto';
-import { ${pascalUseCase}OutputDto } from './dtos/output/${useCase}-output.dto';
+import { ${pascalUseCase}InputDto, ${pascalUseCase}OutputDto } from './dtos/${useCase}.dto';
 
 @injectable()
 export class ${pascalUseCase}Service {
